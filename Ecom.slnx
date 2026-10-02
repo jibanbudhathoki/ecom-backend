@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Ecom.Admin/Ecom.Admin.csproj" />
+    <Project Path="src/Ecom.Api/Ecom.Api.csproj" />
+    <Project Path="src/Ecom.Application/Ecom.Application.csproj" />
+    <Project Path="src/Ecom.Domain/Ecom.Domain.csproj" />
+    <Project Path="src/Ecom.Infrastructure/Ecom.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Ecom.Api.Tests/Ecom.Api.Tests.csproj" />
+    <Project Path="tests/Ecom.Application.Tests/Ecom.Application.Tests.csproj" />
+    <Project Path="tests/Ecom.Domain.Tests/Ecom.Domain.Tests.csproj" />
+    <Project Path="tests/Ecom.Integration.Tests/Ecom.Integration.Tests.csproj" />
+  </Folder>
+</Solution>
