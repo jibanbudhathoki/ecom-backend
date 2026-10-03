@@ -17,8 +17,19 @@
         .admin-sidebar { background-color: #1c2434; color: #8a99af; }
         .admin-sidebar a { color: #8a99af; font-weight: 500; font-size: 0.875rem; transition: all 0.2s ease-in-out; border-radius: 0.375rem; }
         .admin-sidebar a:hover, .admin-sidebar .nav-link:hover { background-color: #333a48; color: #ffffff; }
-        .admin-sidebar .nav-item .collapse .nav-link { font-size: 0.8rem; padding-left: 2.5rem; font-weight: 400; }
+        .admin-sidebar .nav-item .collapse .nav-link { font-size: 0.8rem; padding-left: 2.5rem; font-weight: 400; position: relative; }
         .admin-sidebar .nav-item .collapse .nav-link:hover { color: #ffffff; background-color: transparent; padding-left: 2.8rem; }
+        .admin-sidebar .nav-item .collapse .nav-link.active { color: #ffffff; padding-left: 2.5rem; }
+        .admin-sidebar .nav-item .collapse .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            height: 70%;
+            width: 3px;
+            background-color: #0d6efd;
+            border-radius: 0 4px 4px 0;
+        }
         .admin-sidebar-brand { color: #ffffff; font-weight: 600; letter-spacing: 0.5px; }
         .admin-sidebar hr { border-color: #333a48; }
         .dropdown-menu-dark { background-color: #24303f; border-color: #333a48; }
@@ -201,9 +212,9 @@
 
                 if (isMatch) {
                     // Add active state to the actual link
+                    link.classList.add('active');
                     link.style.color = '#ffffff';
                     link.style.fontWeight = '600';
-                    link.parentElement.style.borderLeft = '3px solid #0d6efd';
                     
                     // If the link is inside a dropdown collapse, open it
                     const collapseDiv = link.closest('.collapse');

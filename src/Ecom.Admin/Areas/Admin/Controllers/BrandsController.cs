@@ -14,7 +14,15 @@ namespace Ecom.Admin.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
+            ViewData["Action"] = "Create";
             return View();
+        }
+
+        public IActionResult Edit(int id)
+        {
+            ViewData["Action"] = "Edit";
+            // In the future, fetch from DB using id
+            return View("Create");
         }
     }
 }

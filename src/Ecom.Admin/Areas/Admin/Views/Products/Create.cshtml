@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Add Product";
+    ViewData["Title"] = ViewData["Action"]?.ToString() == "Edit" ? "Edit Product" : "Add Product";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-1">
                 <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Products</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add Product</li>
+                <li class="breadcrumb-item active" aria-current="page">@(ViewData["Action"]?.ToString() == "Edit" ? "Edit" : "Add") Product</li>
             </ol>
         </nav>
         <h2 class="h3 mb-0 text-gray-800 fw-bold">Add New Product</h2>
