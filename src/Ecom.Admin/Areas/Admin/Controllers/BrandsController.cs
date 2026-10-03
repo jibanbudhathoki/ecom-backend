@@ -11,5 +11,10 @@ namespace Ecom.Admin.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

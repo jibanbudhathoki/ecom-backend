@@ -5,14 +5,13 @@ namespace Ecom.Admin.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    public class ProductsController : Controller
+    public class CollectionsController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
         public IActionResult Create()
         {
             return View();

@@ -3,7 +3,242 @@
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Products</h2>
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Products</h2>
+        <p class="text-muted mb-0">Manage your store's inventory and product catalog.</p>
+    </div>
+    <div>
+        <a asp-action="Create" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Add Product
+        </a>
+    </div>
 </div>
 
-<p class="text-muted">This is the simple, empty placeholder page for Products. You can start adding your tables and forms here!</p>
+<!-- Filters and Search -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="Search products...">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select border-0 bg-light rounded-pill shadow-none">
+                    <option selected>All Categories</option>
+                    <option value="1">Electronics</option>
+                    <option value="2">Clothing</option>
+                    <option value="3">Home & Garden</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select border-0 bg-light rounded-pill shadow-none">
+                    <option selected>All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                    <option value="outofstock">Out of Stock</option>
+                </select>
+            </div>
+            <div class="col-md-2 text-end">
+                <button class="btn btn-light rounded-pill w-100 border text-muted">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Products Table -->
+<div class="card border-0 shadow-sm rounded-4">
+    <!-- Table Header Toolbar -->
+    <div class="card-header bg-white border-bottom-0 pt-4 pb-2 px-4 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <div class="form-check mb-0">
+                <input class="form-check-input shadow-none" type="checkbox" id="selectAll" style="cursor: pointer;">
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light border text-muted dropdown-toggle rounded-pill px-3" type="button" id="bulkActions" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                    Bulk Actions
+                </button>
+                <ul class="dropdown-menu shadow border-0" aria-labelledby="bulkActions">
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-tag me-2"></i>Edit Tags</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-eye-slash me-2"></i>Set as Draft</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete Selected</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-muted small fw-semibold">3 items total</div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 custom-table">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 py-3" style="width: 40px; border-top-left-radius: 1rem;"></th>
+                        <th class="py-3 text-muted fw-semibold">Product</th>
+                        <th class="py-3 text-muted fw-semibold">Category</th>
+                        <th class="py-3 text-muted fw-semibold">Price</th>
+                        <th class="py-3 text-muted fw-semibold">Stock</th>
+                        <th class="py-3 text-muted fw-semibold">Status</th>
+                        <th class="pe-4 py-3 text-end text-muted fw-semibold" style="border-top-right-radius: 1rem;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    <!-- Mock Data Row 1 -->
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <input class="form-check-input shadow-none row-checkbox" type="checkbox" style="cursor: pointer;">
+                        </td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-laptop fs-4 text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-semibold text-dark">MacBook Pro 16"</h6>
+                                    <small class="text-muted">SKU: APP-MBP-16 <span class="mx-1">&bull;</span> 3 Variants</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 text-secondary">Electronics</td>
+                        <td class="py-3 fw-semibold text-dark">$2,499.00</td>
+                        <td class="py-3">
+                            <span class="text-dark fw-medium">42</span>
+                            <small class="d-block text-success" style="font-size: 0.7rem;">In Stock</small>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2 fw-normal"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Active</span>
+                        </td>
+                        <td class="pe-4 py-3 text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light rounded-circle text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>Preview</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Mock Data Row 2 -->
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <input class="form-check-input shadow-none row-checkbox" type="checkbox" style="cursor: pointer;">
+                        </td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-smartwatch fs-4 text-info"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-semibold text-dark">Apple Watch Series 9</h6>
+                                    <small class="text-muted">SKU: APP-AW-9 <span class="mx-1">&bull;</span> 6 Variants</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 text-secondary">Electronics</td>
+                        <td class="py-3 fw-semibold text-dark">$399.00</td>
+                        <td class="py-3">
+                            <span class="text-danger fw-medium">0</span>
+                            <small class="d-block text-danger" style="font-size: 0.7rem;">Out of Stock</small>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-2 fw-normal"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Out of Stock</span>
+                        </td>
+                        <td class="pe-4 py-3 text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light rounded-circle text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>Preview</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Mock Data Row 3 -->
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <input class="form-check-input shadow-none row-checkbox" type="checkbox" style="cursor: pointer;">
+                        </td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-bag fs-4 text-warning"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-semibold text-dark">Leather Weekend Bag</h6>
+                                    <small class="text-muted">SKU: LTHR-WKND <span class="mx-1">&bull;</span> No Variants</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 text-secondary">Accessories</td>
+                        <td class="py-3 fw-semibold text-dark">$189.00</td>
+                        <td class="py-3">
+                            <span class="text-dark fw-medium">-</span>
+                            <small class="d-block text-muted" style="font-size: 0.7rem;">Not tracked</small>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 py-2 fw-normal"><i class="bi bi-circle me-1" style="font-size: 0.5rem;"></i> Draft</span>
+                        </td>
+                        <td class="pe-4 py-3 text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light rounded-circle text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>Preview</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center p-4 border-top">
+            <span class="text-muted small">Showing 1 to 3 of 24 products</span>
+            <nav>
+                <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled"><a class="page-link rounded-start-pill border-0 shadow-sm" href="#">Previous</a></li>
+                    <li class="page-item active"><a class="page-link border-0 shadow-sm" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link border-0 shadow-sm text-dark" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link border-0 shadow-sm text-dark" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link rounded-end-pill border-0 shadow-sm text-dark" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-table th {
+        border-bottom: none;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .custom-table td {
+        border-color: #f8f9fa;
+        vertical-align: middle;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+</style>

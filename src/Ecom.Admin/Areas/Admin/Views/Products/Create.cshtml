@@ -1,0 +1,415 @@
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Product</li>
+            </ol>
+        </nav>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Add New Product</h2>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Index" class="btn btn-light px-4 py-2 rounded-pill shadow-sm text-muted">Discard</a>
+        <button type="submit" form="productForm" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+            <i class="bi bi-check2 me-1"></i> Save Product
+        </button>
+    </div>
+</div>
+
+<form id="productForm">
+    <div class="row g-4">
+        <!-- Left Column: Main Details -->
+        <div class="col-lg-8">
+            <!-- Basic Info Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Basic Information</h6>
+                    
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-semibold small">Product Title</label>
+                        <input type="text" class="form-control bg-light border-0" id="title" placeholder="e.g. Apple Watch Series 9" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label for="description" class="form-label fw-semibold small mb-0">Description</label>
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText" checked>
+                                <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
+                            </div>
+                        </div>
+                        <div class="border rounded bg-light overflow-hidden">
+                            <!-- WYSIWYG Toolbar -->
+                            <div id="richTextToolbar" class="bg-white border-bottom p-2 d-flex gap-1 flex-wrap">
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-bold"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-italic"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-underline"></i></button>
+                                <div class="vr mx-1"></div>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-list-ul"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-list-ol"></i></button>
+                                <div class="vr mx-1"></div>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-link-45deg"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-image"></i></button>
+                            </div>
+                            <textarea class="form-control border-0 bg-light shadow-none" id="description" rows="5" placeholder="Detailed product description..."></textarea>
+                        </div>
+                    </div>
+
+                    <hr class="text-muted opacity-25 my-4">
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="enableSpecs" checked style="cursor: pointer;">
+                                </div>
+                                <label class="form-label fw-semibold small mb-0" for="enableSpecs" style="cursor: pointer;">Technical Specifications</label>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Spec</button>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-2 ps-4">
+                            <!-- Spec Row 1 -->
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Weight" value="Weight" style="flex: 1;">
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. 1.2 kg" value="38.8 g" style="flex: 2;">
+                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
+                            </div>
+                            <!-- Spec Row 2 -->
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Material" value="Display" style="flex: 1;">
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Aluminum" value="Always-On Retina LTPO OLED" style="flex: 2;">
+                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
+                            </div>
+                            <!-- Empty Spec Row -->
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Processor" style="flex: 1;">
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. S9 SiP" style="flex: 2;">
+                                <button type="button" class="btn btn-sm text-muted btn-light border-0"><i class="bi bi-x"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="text-muted opacity-25 my-4">
+
+                    <div class="mb-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label fw-semibold small mb-0">About this item (Key Highlights)</label>
+                            <button type="button" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Bullet</button>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-2">
+                            <!-- Highlight Row 1 -->
+                            <div class="d-flex gap-2 align-items-start">
+                                <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
+                                <input type="text" class="form-control form-control-sm bg-light border-0" value="Advanced health features including temperature sensing and crash detection." style="flex: 1;">
+                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
+                            </div>
+                            <!-- Highlight Row 2 -->
+                            <div class="d-flex gap-2 align-items-start">
+                                <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
+                                <input type="text" class="form-control form-control-sm bg-light border-0" value="Crack-resistant front crystal and IP6X dust resistance." style="flex: 1;">
+                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
+                            </div>
+                            <!-- Empty Highlight Row -->
+                            <div class="d-flex gap-2 align-items-start">
+                                <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
+                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="Add a key feature or highlight..." style="flex: 1;">
+                                <button type="button" class="btn btn-sm text-muted btn-light border-0"><i class="bi bi-x"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Media</h6>
+                    
+                    <label class="border-2 border-dashed rounded-4 p-4 text-center d-block" style="background-color: #f8f9fa; border-color: #dee2e6; cursor: pointer; transition: all 0.2s;" onmouseover="this.classList.add('border-primary')" onmouseout="this.classList.remove('border-primary')">
+                        <i class="bi bi-cloud-arrow-up fs-2 text-primary mb-2"></i>
+                        <h6 class="fw-semibold mb-1">Drag and drop images here</h6>
+                        <p class="text-muted small mb-3">PNG, JPG, or GIF up to 5MB</p>
+                        <span class="btn btn-sm btn-outline-primary rounded-pill px-4">Browse Files</span>
+                        <input type="file" class="d-none" multiple accept="image/*">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pricing Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Pricing</h6>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label fw-semibold small">Price</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">$</span>
+                                <input type="number" step="0.01" class="form-control bg-light border-0 rounded-end-pill shadow-none" id="price" placeholder="0.00" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="comparePrice" class="form-label fw-semibold small">Compare at Price</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">$</span>
+                                <input type="number" step="0.01" class="form-control bg-light border-0 rounded-end-pill shadow-none" id="comparePrice" placeholder="0.00">
+                            </div>
+                            <div class="form-text mt-2" style="font-size: 0.7rem;"><i class="bi bi-info-circle me-1"></i>To show a reduced price, move original price here.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variants Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0">Variants</h6>
+                        <a href="javascript:void(0)" id="addOptionBtn" class="text-decoration-none small text-primary"><i class="bi bi-plus"></i> Add options like size or color</a>
+                    </div>
+                    
+                    <!-- Options Container -->
+                    <div id="optionsContainer">
+                        <!-- Initial Option -->
+                        <div class="bg-light rounded p-3 mb-3 border option-row">
+                            <div class="row g-2 align-items-center">
+                                <div class="col-md-3">
+                                    <label class="form-label fw-semibold small mb-1">Option Name</label>
+                                    <input type="text" class="form-control form-control-sm border-0" value="Color">
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label fw-semibold small mb-1">Option Values</label>
+                                    <div class="border rounded p-2 bg-white d-flex flex-wrap gap-2 align-items-center">
+                                        <!-- Chip 1 -->
+                                        <div class="badge bg-light text-dark border d-flex align-items-center p-1 px-2 rounded-pill">
+                                            <span class="fw-normal me-2">Midnight</span>
+                                            <a href="javascript:void(0)" class="text-muted"><i class="bi bi-x"></i></a>
+                                        </div>
+                                        
+                                        <!-- Chip 2 -->
+                                        <div class="badge bg-light text-dark border d-flex align-items-center p-1 px-2 rounded-pill">
+                                            <span class="fw-normal me-2">Starlight</span>
+                                            <a href="javascript:void(0)" class="text-muted"><i class="bi bi-x"></i></a>
+                                        </div>
+
+                                        <!-- Chip 3 -->
+                                        <div class="badge bg-light text-dark border d-flex align-items-center p-1 px-2 rounded-pill">
+                                            <span class="fw-normal me-2">Silver</span>
+                                            <a href="javascript:void(0)" class="text-muted"><i class="bi bi-x"></i></a>
+                                        </div>
+
+                                        <input type="text" class="border-0 shadow-none outline-none flex-grow-1" style="min-width: 100px; outline: none; background: transparent;" placeholder="Add another value...">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 text-end mt-4">
+                                    <button type="button" class="btn btn-sm btn-light text-danger border-0 remove-option-btn"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Variants Table -->
+                    <h6 class="fw-semibold small mt-4 mb-3 text-muted text-uppercase">Generated Variants</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="border-0 text-muted small fw-semibold">Variant</th>
+                                    <th class="border-0 text-muted small fw-semibold">Images</th>
+                                    <th class="border-0 text-muted small fw-semibold">Price</th>
+                                    <th class="border-0 text-muted small fw-semibold">Quantity</th>
+                                    <th class="border-0 text-muted small fw-semibold">SKU</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-medium small">Midnight</td>
+                                    <td>
+                                        <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
+                                            <i class="bi bi-image"></i>
+                                            <span style="font-size: 0.75rem;">Add Images</span>
+                                            <input type="file" class="d-none" multiple accept="image/*">
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="$399.00" style="width: 80px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm bg-light border-0" value="10" style="width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="APP-AW9-MID" style="width: 120px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium small">Starlight</td>
+                                    <td>
+                                        <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
+                                            <i class="bi bi-image"></i>
+                                            <span style="font-size: 0.75rem;">Add Images</span>
+                                            <input type="file" class="d-none" multiple accept="image/*">
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="$399.00" style="width: 80px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm bg-light border-0" value="15" style="width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="APP-AW9-STAR" style="width: 120px;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Card Partial -->
+            <partial name="_SeoCard" model="@("products")" />
+        </div>
+
+        <!-- Right Column: Sidebar Settings -->
+        <div class="col-lg-4">
+            <!-- Status Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Status</h6>
+                    <select class="form-select bg-light border-0 shadow-none mb-3">
+                        <option value="active">Active</option>
+                        <option value="draft" selected>Draft</option>
+                    </select>
+                    <p class="text-muted small mb-0">This product will be hidden from all sales channels until published.</p>
+                </div>
+            </div>
+
+            <!-- Organization Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Organization</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold text-uppercase">Category</label>
+                        <select class="form-select bg-light border-0 shadow-none">
+                            <option value="">Select Category...</option>
+                            <option value="1">Electronics</option>
+                            <option value="2">Clothing</option>
+                            <option value="3">Home & Garden</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold text-uppercase">Brand</label>
+                        <select class="form-select bg-light border-0 shadow-none">
+                            <option value="">Select Brand...</option>
+                            <option value="1">Apple</option>
+                            <option value="2">Samsung</option>
+                            <option value="3">Sony</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label text-muted small fw-semibold text-uppercase">Collection</label>
+                        <select class="form-select bg-light border-0 shadow-none">
+                            <option value="">Select Collection...</option>
+                            <option value="1">Summer 2026</option>
+                            <option value="2">New Arrivals</option>
+                            <option value="3">Clearance</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Inventory</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold text-uppercase">SKU (Stock Keeping Unit)</label>
+                        <input type="text" class="form-control bg-light border-0 shadow-none">
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label text-muted small fw-semibold text-uppercase">Quantity</label>
+                        <input type="number" class="form-control bg-light border-0 shadow-none" value="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle Rich Text Toolbar
+        const toggleRichText = document.getElementById('toggleRichText');
+        const richTextToolbar = document.getElementById('richTextToolbar');
+        if (toggleRichText && richTextToolbar) {
+            toggleRichText.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    richTextToolbar.classList.remove('d-none');
+                } else {
+                    richTextToolbar.classList.add('d-none');
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    .border-dashed {
+        border-style: dashed !important;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addOptionBtn = document.getElementById('addOptionBtn');
+            const optionsContainer = document.getElementById('optionsContainer');
+
+            // Template for a new option row
+            const optionTemplate = `
+                <div class="bg-light rounded p-3 mb-3 border option-row">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold small mb-1">Option Name</label>
+                            <input type="text" class="form-control form-control-sm border-0" placeholder="e.g. Size">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label fw-semibold small mb-1">Option Values</label>
+                            <input type="text" class="form-control form-control-sm border-0" placeholder="e.g. Small, Medium, Large">
+                        </div>
+                        <div class="col-md-1 text-end mt-4">
+                            <button type="button" class="btn btn-sm btn-light text-danger border-0 remove-option-btn"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add new option when clicking the link
+            addOptionBtn.addEventListener('click', function() {
+                optionsContainer.insertAdjacentHTML('beforeend', optionTemplate);
+            });
+
+            // Remove option when clicking the trash can
+            optionsContainer.addEventListener('click', function(e) {
+                const btn = e.target.closest('.remove-option-btn');
+                if (btn) {
+                    const row = btn.closest('.option-row');
+                    if (row) {
+                        row.remove();
+                    }
+                }
+            });
+        });
+    </script>
+}
