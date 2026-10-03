@@ -1,0 +1,125 @@
+<div id="adminSidebar" class="d-flex flex-column flex-shrink-0 p-3 admin-sidebar sidebar-wrapper" style="height: 100vh;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+        <span class="fs-4 admin-sidebar-brand"><i class="bi bi-box-seam me-2 text-primary"></i><span class="sidebar-text">ECOM Admin</span></span>
+    </a>
+    <hr>
+    <ul class="nav flex-column flex-nowrap mb-auto">
+        <li class="nav-item mb-1">
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link px-2 py-2 d-flex align-items-center">
+                <i class="bi bi-grid-1x2-fill me-3 fs-5"></i> <span class="sidebar-text">Dashboard
+            </span></a>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseCatalog" role="button" aria-expanded="false" aria-controls="collapseCatalog">
+                <i class="bi bi-tags-fill me-3 fs-5"></i> <span class="sidebar-text">Catalog
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseCatalog">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Products" asp-action="Index" class="nav-link py-1">Products</a></li>
+                    <li><a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="nav-link py-1">Categories</a></li>
+                    <li><a asp-area="Admin" asp-controller="Brands" asp-action="Index" class="nav-link py-1">Brands</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseOrders" role="button" aria-expanded="false" aria-controls="collapseOrders">
+                <i class="bi bi-cart-check-fill me-3 fs-5"></i> <span class="sidebar-text">Orders
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseOrders">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="nav-link py-1">All Orders</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseInventory" role="button" aria-expanded="false" aria-controls="collapseInventory">
+                <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> <span class="sidebar-text">Inventory
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseInventory">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Inventory" asp-action="Index" class="nav-link py-1">Stock</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a asp-area="Admin" asp-controller="Customers" asp-action="Index" class="nav-link px-2 py-2 d-flex align-items-center">
+                <i class="bi bi-people-fill me-3 fs-5"></i> <span class="sidebar-text">Customers
+            </span></a>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapsePayments" role="button" aria-expanded="false" aria-controls="collapsePayments">
+                <i class="bi bi-credit-card-fill me-3 fs-5"></i> <span class="sidebar-text">Payments
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapsePayments">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Payments" asp-action="Index" class="nav-link py-1">Transactions</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseMarketing" role="button" aria-expanded="false" aria-controls="collapseMarketing">
+                <i class="bi bi-megaphone-fill me-3 fs-5"></i> <span class="sidebar-text">Marketing
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseMarketing">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Promotions" asp-action="Index" class="nav-link py-1">Promotions</a></li>
+                    <li><a asp-area="Admin" asp-controller="Banners" asp-action="Index" class="nav-link py-1">Banners</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a asp-area="Admin" asp-controller="Reviews" asp-action="Index" class="nav-link px-2 py-2 d-flex align-items-center">
+                <i class="bi bi-star-fill me-3 fs-5"></i> <span class="sidebar-text">Reviews
+            </span></a>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseReports" role="button" aria-expanded="false" aria-controls="collapseReports">
+                <i class="bi bi-graph-up-arrow me-3 fs-5"></i> <span class="sidebar-text">Reports
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseReports">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Reports" asp-action="Index" class="nav-link py-1">Sales</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
+                <i class="bi bi-shield-lock-fill me-3 fs-5"></i> <span class="sidebar-text">Users & Access
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseUsers">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Users" asp-action="Index" class="nav-link py-1">Admin Users</a></li>
+                    <li><a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="nav-link py-1">Roles</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="nav-item mb-1">
+            <a class="nav-link px-2 py-2 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseSettings" role="button" aria-expanded="false" aria-controls="collapseSettings">
+                <i class="bi bi-gear-fill me-3 fs-5"></i> <span class="sidebar-text">Settings
+                </span><i class="bi bi-chevron-down ms-auto" style="font-size: 0.75rem;"></i>
+            </a>
+            <div class="collapse" id="collapseSettings">
+                <ul class="nav flex-column mt-1">
+                    <li><a asp-area="Admin" asp-controller="Settings" asp-action="Index" class="nav-link py-1">General</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

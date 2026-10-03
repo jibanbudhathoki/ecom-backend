@@ -6,58 +6,221 @@
     <title>@ViewData["Title"] - Ecom.Admin</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Ecom.Admin.styles.css" asp-append-version="true" />
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
+        .admin-sidebar { background-color: #1c2434; color: #8a99af; }
+        .admin-sidebar a { color: #8a99af; font-weight: 500; font-size: 0.875rem; transition: all 0.2s ease-in-out; border-radius: 0.375rem; }
+        .admin-sidebar a:hover, .admin-sidebar .nav-link:hover { background-color: #333a48; color: #ffffff; }
+        .admin-sidebar .nav-item .collapse .nav-link { font-size: 0.8rem; padding-left: 2.5rem; font-weight: 400; }
+        .admin-sidebar .nav-item .collapse .nav-link:hover { color: #ffffff; background-color: transparent; padding-left: 2.8rem; }
+        .admin-sidebar-brand { color: #ffffff; font-weight: 600; letter-spacing: 0.5px; }
+        .admin-sidebar hr { border-color: #333a48; }
+        .dropdown-menu-dark { background-color: #24303f; border-color: #333a48; }
+        .sidebar-wrapper {
+            width: 280px;
+            transition: all 0.3s ease;
+        }
+        .sidebar-collapsed {
+            width: 80px !important;
+        }
+        .sidebar-collapsed .sidebar-text,
+        .sidebar-collapsed .bi-chevron-down {
+            display: none !important;
+        }
+        .sidebar-collapsed .nav-link {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        .sidebar-collapsed .nav-link .bi {
+            margin-right: 0 !important;
+            font-size: 1.5rem !important;
+        }
+        .sidebar-collapsed > a {
+            justify-content: center !important;
+        }
+        .sidebar-collapsed .admin-sidebar-brand .bi {
+            margin-right: 0 !important;
+            font-size: 1.8rem !important;
+        }
+        
+        /* Flyout Menu for Collapsed Sidebar */
+        .sidebar-collapsed .nav-item {
+            position: relative;
+        }
+        .sidebar-collapsed .collapse, 
+        .sidebar-collapsed .collapsing {
+            display: none !important;
+            transition: none !important;
+        }
+        .sidebar-collapsed .nav-item:hover .collapse {
+            display: block !important;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 220px;
+            background-color: #24303f;
+            border-radius: 0.5rem;
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
+            z-index: 1050;
+            padding: 0.5rem 0;
+            margin-left: 16px;
+        }
+        /* Invisible bridge so the mouse doesn't lose hover when moving to the tooltip */
+        .sidebar-collapsed .nav-item:hover .collapse::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 20px;
+            height: 100%;
+        }
+        .sidebar-collapsed .nav-item:hover .collapse .nav-link {
+            justify-content: flex-start !important;
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+        }
+        
+        #sidebarToggle:focus {
+            box-shadow: none;
+            outline: none;
+        }
+        
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    </style>
 </head>
 <body>
-    @if (ViewData["HideHeader"] as bool? != true)
-    {
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Ecom.Admin</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        </ul>
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
-                                        <button type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        }
+    <div class="d-flex w-100" style="height: 100vh; overflow: hidden;">
+        @if (ViewData["HideSidebar"] as bool? != true)
+        {
+            <partial name="_AdminSidebar" />
+        }
+        
+        <div class="d-flex flex-column flex-grow-1" style="overflow: hidden;">
+            <!-- Premium Header -->
+            <header class="bg-white border-bottom px-4 py-3 d-flex justify-content-between align-items-center shadow-sm" style="z-index: 10;">
+                <div class="d-flex align-items-center">
+                    <button id="sidebarToggle" class="btn btn-light me-3"><i class="bi bi-list fs-5"></i></button>
+                    <div class="input-group d-none d-md-flex" style="width: 320px;">
+                        <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="Search orders, products, etc...">
                     </div>
                 </div>
-            </nav>
-        </header>
-    }
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-light rounded-circle p-2 me-3 position-relative border-0 shadow-none d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        <i class="bi bi-bell text-muted"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle mt-1 ms-n1">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </button>
+                    
+                    <!-- Top Profile -->
+                    <div class="dropdown">
+                        @{
+                            var userName = User.Identity?.Name ?? "Admin User";
+                            var displayRole = "Store Manager";
+                        }
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="dropdownTopProfile" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name=@Uri.EscapeDataString(userName)&background=0D8ABC&color=fff" alt="@userName" width="36" height="36" class="rounded-circle me-2">
+                            <div class="d-none d-md-block text-start me-1">
+                                <div class="fw-semibold" style="font-size: 0.9rem; line-height: 1;">@userName</div>
+                                <small class="text-muted" style="font-size: 0.75rem;">@displayRole</small>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="dropdownTopProfile">
+                            <li><a class="dropdown-item py-2" href="#"><i class="bi bi-person me-2 text-muted"></i> My Profile</a></li>
+                            <li><a class="dropdown-item py-2" href="#"><i class="bi bi-gear me-2 text-muted"></i> Account Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                                    <button type="submit" class="dropdown-item py-2 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Ecom.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main" class="flex-grow-1 p-4 p-lg-5 overflow-auto fade-in">
+                <div class="bg-white rounded-4 shadow-sm border-0 p-4 p-lg-5" style="min-height: 100%;">
+                    @RenderBody()
+                </div>
+            </main>
         </div>
-    </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidebar = document.getElementById('adminSidebar');
+            
+            // Restore sidebar state from localStorage
+            if (localStorage.getItem('sidebarState') === 'collapsed') {
+                sidebar.classList.add('sidebar-collapsed');
+                // Temporarily disable transition during initial load
+                sidebar.style.transition = 'none';
+                setTimeout(() => {
+                    sidebar.style.transition = '';
+                }, 50);
+            }
+
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                sidebar.classList.toggle('sidebar-collapsed');
+                if (sidebar.classList.contains('sidebar-collapsed')) {
+                    localStorage.setItem('sidebarState', 'collapsed');
+                } else {
+                    localStorage.setItem('sidebarState', 'expanded');
+                }
+            });
+
+            const currentPath = window.location.pathname.toLowerCase();
+            const navLinks = document.querySelectorAll('#adminSidebar .nav-link');
+            
+            navLinks.forEach(link => {
+                let href = link.getAttribute('href');
+                if (!href || href === '#' || href.startsWith('#')) return;
+                href = href.toLowerCase();
+                
+                let isMatch = false;
+                if (currentPath === href || currentPath === href + '/') {
+                    isMatch = true;
+                } else if (href !== '/' && href !== '/admin' && currentPath.startsWith(href + '/')) {
+                    isMatch = true;
+                }
+
+                if (isMatch) {
+                    // Add active state to the actual link
+                    link.style.color = '#ffffff';
+                    link.style.fontWeight = '600';
+                    link.parentElement.style.borderLeft = '3px solid #0d6efd';
+                    
+                    // If the link is inside a dropdown collapse, open it
+                    const collapseDiv = link.closest('.collapse');
+                    if (collapseDiv) {
+                        collapseDiv.classList.add('show');
+                        
+                        // Highlight the parent toggle button too
+                        const parentToggle = document.querySelector('[href="#' + collapseDiv.id + '"]');
+                        if (parentToggle) {
+                            parentToggle.style.color = '#ffffff';
+                            parentToggle.style.backgroundColor = '#333a48';
+                        }
+                    }
+                }
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

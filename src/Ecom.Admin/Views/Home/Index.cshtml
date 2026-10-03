@@ -1,8 +1,138 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Dashboard Overview</h2>
+    <div>
+        <button class="btn btn-outline-secondary me-2"><i class="bi bi-calendar-range me-2"></i> Last 30 Days</button>
+        <button class="btn btn-primary"><i class="bi bi-download me-2"></i> Report</button>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="bg-primary bg-opacity-10 rounded-3 p-3">
+                        <i class="bi bi-currency-dollar text-primary fs-4"></i>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1"><i class="bi bi-arrow-up-right me-1"></i> 12.5%</span>
+                </div>
+                <h6 class="text-muted mb-2">Total Revenue</h6>
+                <h3 class="fw-bold mb-0">$24,590.00</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="bg-info bg-opacity-10 rounded-3 p-3">
+                        <i class="bi bi-cart-check text-info fs-4"></i>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1"><i class="bi bi-arrow-up-right me-1"></i> 8.2%</span>
+                </div>
+                <h6 class="text-muted mb-2">Total Orders</h6>
+                <h3 class="fw-bold mb-0">1,245</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="bg-warning bg-opacity-10 rounded-3 p-3">
+                        <i class="bi bi-people text-warning fs-4"></i>
+                    </div>
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1"><i class="bi bi-arrow-down-right me-1"></i> 2.1%</span>
+                </div>
+                <h6 class="text-muted mb-2">New Customers</h6>
+                <h3 class="fw-bold mb-0">384</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="bg-danger bg-opacity-10 rounded-3 p-3">
+                        <i class="bi bi-box-seam text-danger fs-4"></i>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1"><i class="bi bi-arrow-up-right me-1"></i> 14.8%</span>
+                </div>
+                <h6 class="text-muted mb-2">Products Sold</h6>
+                <h3 class="fw-bold mb-0">8,549</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Area (e.g. Charts, Recent Orders) -->
+<div class="row g-4">
+    <div class="col-12 col-xl-8">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">Revenue Overview</h5>
+                <button class="btn btn-sm btn-light"><i class="bi bi-three-dots"></i></button>
+            </div>
+            <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                <div class="text-center text-muted">
+                    <i class="bi bi-bar-chart fs-1 mb-2"></i>
+                    <p>Chart Placeholder</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-xl-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">Recent Orders</h5>
+                <a href="#" class="text-decoration-none small">View All</a>
+            </div>
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+                    <div class="bg-light rounded-3 p-2 me-3">
+                        <i class="bi bi-bag-check text-primary"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">#ORD-001</h6>
+                        <small class="text-muted">John Doe</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold">$120.00</div>
+                        <small class="text-success">Completed</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+                    <div class="bg-light rounded-3 p-2 me-3">
+                        <i class="bi bi-bag-dash text-warning"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">#ORD-002</h6>
+                        <small class="text-muted">Jane Smith</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold">$450.50</div>
+                        <small class="text-warning">Pending</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="bg-light rounded-3 p-2 me-3">
+                        <i class="bi bi-bag-x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">#ORD-003</h6>
+                        <small class="text-muted">Mike Johnson</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold">$85.00</div>
+                        <small class="text-danger">Cancelled</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

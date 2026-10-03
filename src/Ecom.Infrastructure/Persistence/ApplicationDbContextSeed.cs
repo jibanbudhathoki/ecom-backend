@@ -2,9 +2,6 @@ using Ecom.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-
 namespace Ecom.Infrastructure.Persistence
 {
     public static class ApplicationDbContextSeed
