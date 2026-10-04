@@ -1,9 +1,369 @@
 @{
-    ViewData["Title"] = "Reports";
+    ViewData["Title"] = "Sales Reports";
 }
 
+<!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Reports</h2>
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Sales Reports</h2>
+        <p class="text-muted mb-0 small">Analyze your store's performance and revenue.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <select id="dateRangeSelect" class="form-select bg-white border shadow-sm rounded-pill px-3 fw-medium text-dark" style="width: 180px;" onchange="handleDateRangeChange()">
+            <option>Last 7 Days</option>
+            <option selected>Last 30 Days</option>
+            <option>This Month</option>
+            <option>This Year</option>
+            <option value="custom">Custom Range...</option>
+        </select>
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm fw-medium">
+            <i class="bi bi-download me-1"></i> Export
+        </button>
+    </div>
 </div>
 
-<p class="text-muted">This is the simple, empty placeholder page for Reports. You can start adding your tables and forms here!</p>
+<!-- KPI Cards -->
+<div class="row g-4 mb-4">
+    <!-- KPI 1 -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="text-muted small fw-bold text-uppercase tracking-wide">Total Sales</div>
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-1">$24,500.00</h3>
+                <div class="small fw-medium text-success">
+                    <i class="bi bi-arrow-up-right me-1"></i> 12.5% vs last period
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- KPI 2 -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="text-muted small fw-bold text-uppercase tracking-wide">Total Orders</div>
+                    <div class="bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-bag"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-1">342</h3>
+                <div class="small fw-medium text-success">
+                    <i class="bi bi-arrow-up-right me-1"></i> 8.2% vs last period
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- KPI 3 -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="text-muted small fw-bold text-uppercase tracking-wide">Avg Order Value</div>
+                    <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-1">$71.63</h3>
+                <div class="small fw-medium text-danger">
+                    <i class="bi bi-arrow-down-right me-1"></i> 2.1% vs last period
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- KPI 4 -->
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="text-muted small fw-bold text-uppercase tracking-wide">Conversion Rate</div>
+                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-1">3.2%</h3>
+                <div class="small fw-medium text-success">
+                    <i class="bi bi-arrow-up-right me-1"></i> 0.4% vs last period
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row g-4 mb-4">
+    <!-- Main Line Chart -->
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                <h6 class="fw-bold mb-0">Revenue Over Time</h6>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Doughnut Chart -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                <h6 class="fw-bold mb-0">Sales by Category</h6>
+            </div>
+            <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                <canvas id="categoryChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Data Table -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4">
+        <h6 class="fw-bold mb-0">Top Selling Products</h6>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4 py-3 text-muted small fw-semibold border-bottom-0">Product</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0 text-center">Units Sold</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0 text-end">Revenue</th>
+                    <th class="pe-4 py-3 text-end text-muted small fw-semibold border-bottom-0">Trend</th>
+                </tr>
+            </thead>
+            <tbody class="border-top-0">
+                <tr>
+                    <td class="ps-4 py-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-image text-muted"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 small text-dark">Premium Wireless Headphones</h6>
+                                <p class="text-muted small mb-0">Audio</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 text-center fw-medium small">142</td>
+                    <td class="py-3 text-end fw-medium small">$28,385.80</td>
+                    <td class="pe-4 py-3 text-end text-success small"><i class="bi bi-graph-up-arrow"></i></td>
+                </tr>
+                <tr>
+                    <td class="ps-4 py-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-image text-muted"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 small text-dark">Ergonomic Office Chair</h6>
+                                <p class="text-muted small mb-0">Furniture</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 text-center fw-medium small">89</td>
+                    <td class="py-3 text-end fw-medium small">$17,799.11</td>
+                    <td class="pe-4 py-3 text-end text-success small"><i class="bi bi-graph-up-arrow"></i></td>
+                </tr>
+                <tr>
+                    <td class="ps-4 py-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-image text-muted"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 small text-dark">Smart Fitness Watch</h6>
+                                <p class="text-muted small mb-0">Electronics</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 text-center fw-medium small">120</td>
+                    <td class="py-3 text-end fw-medium small">$11,998.80</td>
+                    <td class="pe-4 py-3 text-end text-danger small"><i class="bi bi-graph-down-arrow"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal: Custom Date Range -->
+<div class="modal fade" id="customRangeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Select Date Range</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Start Date</label>
+                        <input type="date" class="form-control shadow-none rounded-3" id="startDate">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">End Date</label>
+                        <input type="date" class="form-control shadow-none rounded-3" id="endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" onclick="applyCustomRange()">Apply Range</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        let customRangeModal;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            customRangeModal = new bootstrap.Modal(document.getElementById('customRangeModal'));
+            document.body.appendChild(document.getElementById('customRangeModal'));
+            
+            // Shared styling variables
+            const primaryColor = '#0d6efd';
+            const primaryColorAlpha = 'rgba(13, 110, 253, 0.1)';
+            const gridColor = '#f3f4f6';
+            const textColor = '#6c757d';
+
+            // 1. Revenue Line Chart
+            const ctxRev = document.getElementById('revenueChart').getContext('2d');
+            
+            // Create a gradient for the line chart fill
+            let gradient = ctxRev.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, primaryColorAlpha);
+            gradient.addColorStop(1, 'rgba(255,255,255,0)');
+
+            new Chart(ctxRev, {
+                type: 'line',
+                data: {
+                    labels: ['Jan 1', 'Jan 5', 'Jan 10', 'Jan 15', 'Jan 20', 'Jan 25', 'Jan 30'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [1200, 1900, 1500, 2200, 1800, 2800, 3100],
+                        borderColor: primaryColor,
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: primaryColor,
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4 // Smooth curves
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#fff',
+                            titleColor: '#000',
+                            bodyColor: '#6c757d',
+                            borderColor: '#e9ecef',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: gridColor, drawBorder: false },
+                            ticks: { 
+                                color: textColor,
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        },
+                        x: {
+                            grid: { display: false, drawBorder: false },
+                            ticks: { color: textColor }
+                        }
+                    }
+                }
+            });
+
+            // 2. Sales by Category Doughnut Chart
+            const ctxCat = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctxCat, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Electronics', 'Clothing', 'Home & Garden', 'Sports'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                            '#0d6efd', // Primary
+                            '#0dcaf0', // Info
+                            '#ffc107', // Warning
+                            '#e9ecef'  // Light gray
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%', // Make it thin
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                color: textColor,
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+
+        function handleDateRangeChange() {
+            const select = document.getElementById('dateRangeSelect');
+            if (select.value === 'custom') {
+                customRangeModal.show();
+            }
+        }
+
+        function applyCustomRange() {
+            const start = document.getElementById('startDate').value;
+            const end = document.getElementById('endDate').value;
+            if (start && end) {
+                // Just close modal and reset select to look nice for UI mock
+                customRangeModal.hide();
+                const select = document.getElementById('dateRangeSelect');
+                select.options[select.selectedIndex].text = `${start} to ${end}`;
+            } else {
+                alert("Please select both start and end dates.");
+            }
+        }
+    </script>
+}

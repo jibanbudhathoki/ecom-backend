@@ -43,7 +43,13 @@
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <h5 class="fw-bold mb-0">Store Editor</h5>
-                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-2 small">System Role</span>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-link text-muted p-0 shadow-none" type="button" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
+                            <li><button class="dropdown-item small" onclick="openRoleModal('Store Editor')"><i class="bi bi-pencil me-2 text-muted"></i> Edit Role</button></li>
+                            <li><button class="dropdown-item small text-danger" onclick="deleteRole(this)"><i class="bi bi-trash me-2"></i> Delete Role</button></li>
+                        </ul>
+                    </div>
                 </div>
                 <p class="text-muted small mb-4">Can manage products, inventory, orders, and storefront pages. Cannot access settings or users.</p>
                 <div class="d-flex align-items-center justify-content-between">
@@ -118,8 +124,10 @@
                         </div>
                         <div class="row g-3 ps-4 border-start ms-2 mt-1">
                             <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">View Products</label></div></div>
-                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Create/Edit</label></div></div>
-                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Delete</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Products</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Categories</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Collections</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Brands</label></div></div>
                             <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Inventory</label></div></div>
                         </div>
                     </div>
@@ -135,9 +143,11 @@
                         </div>
                         <div class="row g-3 ps-4 border-start ms-2 mt-1">
                             <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">View Orders</label></div></div>
-                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Process/Fulfill</label></div></div>
-                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Refunds</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Process & Fulfill</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Issue Refunds</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Reviews</label></div></div>
                             <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">View Customers</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Edit Customers</label></div></div>
                         </div>
                     </div>
                 </div>
@@ -145,14 +155,17 @@
                 <div class="card border-0 shadow-sm rounded-4 mb-3">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="mb-0 fw-bold"><i class="bi bi-window-sidebar me-2 text-primary"></i> Storefront Design</h6>
+                            <h6 class="mb-0 fw-bold"><i class="bi bi-window-sidebar me-2 text-primary"></i> Storefront & Reports</h6>
                             <div class="form-check form-switch m-0">
                                 <input class="form-check-input shadow-none" type="checkbox" role="switch">
                             </div>
                         </div>
                         <div class="row g-3 ps-4 border-start ms-2 mt-1 opacity-50">
-                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Edit Pages</label></div></div>
-                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Edit Navigation</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Manage Pages</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Manage Navigation</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Manage Banners</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Manage Promotions</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">View Reports</label></div></div>
                         </div>
                     </div>
                 </div>
