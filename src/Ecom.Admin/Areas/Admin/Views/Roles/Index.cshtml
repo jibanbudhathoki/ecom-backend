@@ -1,9 +1,270 @@
 @{
-    ViewData["Title"] = "Roles";
+    ViewData["Title"] = "Roles & Permissions";
 }
 
+<!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Roles</h2>
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Roles & Permissions</h2>
+        <p class="text-muted mb-0 small">Create custom roles and manage granular access permissions.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm fw-medium" onclick="openRoleModal()">
+            <i class="bi bi-shield-plus me-1"></i> Create Custom Role
+        </button>
+    </div>
 </div>
 
-<p class="text-muted">This is the simple, empty placeholder page for Roles. You can start adding your tables and forms here!</p>
+<!-- Main Content -->
+<div class="row g-4">
+    
+    <!-- Role Card: Admin -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 position-relative border-top border-primary border-4">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="fw-bold mb-0">Admin</h5>
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2 small">System Role</span>
+                </div>
+                <p class="text-muted small mb-4">Full access to all modules, settings, and team management.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="text-muted small fw-medium">
+                        <i class="bi bi-people-fill me-1 text-primary"></i> 1 User
+                    </div>
+                    <button class="btn btn-sm btn-light border rounded-pill px-3 shadow-none fw-medium" onclick="openRoleModal('Admin')">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Card: Store Editor -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="fw-bold mb-0">Store Editor</h5>
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-2 small">System Role</span>
+                </div>
+                <p class="text-muted small mb-4">Can manage products, inventory, orders, and storefront pages. Cannot access settings or users.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="text-muted small fw-medium">
+                        <i class="bi bi-people-fill me-1 text-primary"></i> 2 Users
+                    </div>
+                    <button class="btn btn-sm btn-light border rounded-pill px-3 shadow-none fw-medium" onclick="openRoleModal('Store Editor')">Edit Role</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Card: Support Agent -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="fw-bold mb-0">Support Agent</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-link text-muted p-0 shadow-none" type="button" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
+                            <li><button class="dropdown-item small" onclick="openRoleModal('Support Agent')"><i class="bi bi-pencil me-2 text-muted"></i> Edit Role</button></li>
+                            <li><button class="dropdown-item small text-danger" onclick="deleteRole(this)"><i class="bi bi-trash me-2"></i> Delete Role</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-muted small mb-4">Custom role. Can view orders, manage customers, and reply to reviews.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="text-muted small fw-medium">
+                        <i class="bi bi-people-fill me-1 text-primary"></i> 3 Users
+                    </div>
+                    <button class="btn btn-sm btn-light border rounded-pill px-3 shadow-none fw-medium" onclick="openRoleModal('Support Agent')">Edit Role</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal: Create / Edit Role -->
+<div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-bottom pt-4 pb-3 px-4">
+                <h5 class="modal-title fw-bold" id="roleModalTitle">Create Custom Role</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 bg-light">
+                
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Role Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control shadow-none rounded-3" id="roleNameInput" placeholder="e.g. Content Manager">
+                        </div>
+                        <div class="mb-0">
+                            <label class="form-label small fw-bold">Description</label>
+                            <textarea class="form-control shadow-none rounded-3" rows="2" placeholder="Briefly describe what this role can do..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold mb-3">Permissions</h6>
+
+                <div class="card border-0 shadow-sm rounded-4 mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0 fw-bold"><i class="bi bi-box-seam me-2 text-primary"></i> Catalog & Inventory</h6>
+                            <div class="form-check form-switch m-0">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                            </div>
+                        </div>
+                        <div class="row g-3 ps-4 border-start ms-2 mt-1">
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">View Products</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Create/Edit</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Delete</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Manage Inventory</label></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0 fw-bold"><i class="bi bi-cart me-2 text-primary"></i> Orders & Customers</h6>
+                            <div class="form-check form-switch m-0">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                            </div>
+                        </div>
+                        <div class="row g-3 ps-4 border-start ms-2 mt-1">
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">View Orders</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">Process/Fulfill</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Refunds</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox" checked><label class="form-check-label small">View Customers</label></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0 fw-bold"><i class="bi bi-window-sidebar me-2 text-primary"></i> Storefront Design</h6>
+                            <div class="form-check form-switch m-0">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch">
+                            </div>
+                        </div>
+                        <div class="row g-3 ps-4 border-start ms-2 mt-1 opacity-50">
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Edit Pages</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Edit Navigation</label></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 mb-0">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0 fw-bold"><i class="bi bi-gear me-2 text-primary"></i> Settings & Administration</h6>
+                            <div class="form-check form-switch m-0">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch">
+                            </div>
+                        </div>
+                        <div class="row g-3 ps-4 border-start ms-2 mt-1 opacity-50">
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">General Settings</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Manage Users</label></div></div>
+                            <div class="col-md-3"><div class="form-check"><input class="form-check-input shadow-none" type="checkbox"><label class="form-check-label small">Manage Roles</label></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer border-top px-4 py-3 bg-white rounded-bottom-4">
+                <button type="button" class="btn btn-light rounded-pill px-4 shadow-none" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4 shadow-none" onclick="saveRole()"><i class="bi bi-check2 me-1"></i> Save Role</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toasts Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="actionToast" class="toast align-items-center text-white bg-success border-0 rounded-3 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body fw-medium" id="toastMessage">
+                Action completed successfully.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let roleModal;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            roleModal = new bootstrap.Modal(document.getElementById('roleModal'));
+            document.body.appendChild(document.getElementById('roleModal'));
+
+            // Basic UI interaction for toggles
+            const mainSwitches = document.querySelectorAll('.form-switch .form-check-input');
+            mainSwitches.forEach(sw => {
+                sw.addEventListener('change', function() {
+                    const block = this.closest('.card-body').querySelector('.row');
+                    const checkboxes = block.querySelectorAll('input[type="checkbox"]');
+                    if (this.checked) {
+                        block.classList.remove('opacity-50');
+                        checkboxes.forEach(c => c.disabled = false);
+                    } else {
+                        block.classList.add('opacity-50');
+                        checkboxes.forEach(c => {
+                            c.disabled = true;
+                            c.checked = false;
+                        });
+                    }
+                });
+            });
+        });
+
+        function showToast(message, type = 'success') {
+            const toastEl = document.getElementById('actionToast');
+            const toastMsg = document.getElementById('toastMessage');
+            
+            toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+            toastEl.classList.add('bg-' + type);
+            toastMsg.innerText = message;
+            
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        function openRoleModal(roleName = '') {
+            document.getElementById('roleModalTitle').innerText = roleName ? 'Edit Role: ' + roleName : 'Create Custom Role';
+            document.getElementById('roleNameInput').value = roleName;
+            
+            if (roleName === 'Admin') {
+                document.getElementById('roleNameInput').disabled = true;
+                // Check all
+                document.querySelectorAll('input[type="checkbox"]').forEach(c => { c.checked = true; c.disabled = true; });
+                document.querySelectorAll('.row').forEach(r => r.classList.remove('opacity-50'));
+            } else {
+                document.getElementById('roleNameInput').disabled = false;
+                // Just let the mock UI checkboxes stay as is for demonstration
+                document.querySelectorAll('input[type="checkbox"]').forEach(c => { c.disabled = false; });
+            }
+
+            roleModal.show();
+        }
+
+        function saveRole() {
+            roleModal.hide();
+            showToast('Role permissions saved successfully!', 'success');
+        }
+
+        function deleteRole(btn) {
+            const card = btn.closest('.col-md-4');
+            card.style.transition = "opacity 0.3s";
+            card.style.opacity = "0";
+            setTimeout(() => {
+                card.remove();
+                showToast('Custom role deleted successfully.', 'success');
+            }, 300);
+        }
+    </script>
+}

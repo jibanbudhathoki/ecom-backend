@@ -1,0 +1,100 @@
+@{
+    ViewData["Title"] = "Pages";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Pages</h2>
+        <p class="text-muted mb-0 small">Create and manage static pages for your online store.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Add Page
+        </button>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="input-group input-group-sm" style="width: 300px;">
+                <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                <input type="text" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="Search pages...">
+            </div>
+            <button class="btn btn-sm btn-light border rounded-pill px-3"><i class="bi bi-funnel"></i></button>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4 py-3 text-muted small fw-semibold border-bottom-0" style="width: 40px;">
+                        <input class="form-check-input shadow-none" type="checkbox">
+                    </th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0">Title</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0">Status</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0">Last Updated</th>
+                    <th class="pe-4 py-3 text-end text-muted small fw-semibold border-bottom-0">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top-0">
+                <tr class="bg-primary bg-opacity-10">
+                    <td class="ps-4 py-3"><input class="form-check-input shadow-none" type="checkbox" disabled></td>
+                    <td class="py-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-house-door-fill text-primary"></i>
+                            <h6 class="fw-bold mb-0 small text-dark">Home Page</h6>
+                            <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.65rem;">Frontpage</span>
+                        </div>
+                        <p class="text-muted small mb-0 mt-1">/</p>
+                    </td>
+                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2">Visible</span></td>
+                    <td class="py-3 text-muted small">Just now</td>
+                    <td class="pe-4 py-3 text-end">
+                        <a href="/admin/Pages/Builder" class="btn btn-sm btn-primary rounded-pill shadow-none px-3 small fw-medium">Customize</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ps-4 py-3"><input class="form-check-input shadow-none" type="checkbox"></td>
+                    <td class="py-3">
+                        <h6 class="fw-bold mb-1 small text-dark">About Us</h6>
+                        <p class="text-muted small mb-0">/pages/about-us</p>
+                    </td>
+                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2">Visible</span></td>
+                    <td class="py-3 text-muted small">Oct 1, 2026</td>
+                    <td class="pe-4 py-3 text-end">
+                        <button class="btn btn-sm btn-light rounded-circle shadow-none me-1"><i class="bi bi-pencil text-muted"></i></button>
+                        <button class="btn btn-sm btn-light rounded-circle shadow-none"><i class="bi bi-trash text-danger"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ps-4 py-3"><input class="form-check-input shadow-none" type="checkbox"></td>
+                    <td class="py-3">
+                        <h6 class="fw-bold mb-1 small text-dark">Contact</h6>
+                        <p class="text-muted small mb-0">/pages/contact</p>
+                    </td>
+                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2">Visible</span></td>
+                    <td class="py-3 text-muted small">Sep 28, 2026</td>
+                    <td class="pe-4 py-3 text-end">
+                        <button class="btn btn-sm btn-light rounded-circle shadow-none me-1"><i class="bi bi-pencil text-muted"></i></button>
+                        <button class="btn btn-sm btn-light rounded-circle shadow-none"><i class="bi bi-trash text-danger"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ps-4 py-3"><input class="form-check-input shadow-none" type="checkbox"></td>
+                    <td class="py-3">
+                        <h6 class="fw-bold mb-1 small text-dark">Privacy Policy</h6>
+                        <p class="text-muted small mb-0">/pages/privacy-policy</p>
+                    </td>
+                    <td class="py-3"><span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-2">Hidden</span></td>
+                    <td class="py-3 text-muted small">Sep 15, 2026</td>
+                    <td class="pe-4 py-3 text-end">
+                        <button class="btn btn-sm btn-light rounded-circle shadow-none me-1"><i class="bi bi-pencil text-muted"></i></button>
+                        <button class="btn btn-sm btn-light rounded-circle shadow-none"><i class="bi bi-trash text-danger"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -69,10 +69,10 @@
                                 </div>
                                 <label class="form-label fw-semibold small mb-0" for="enableSpecs" style="cursor: pointer;">Technical Specifications</label>
                             </div>
-                            <button type="button" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Spec</button>
+                            <button type="button" id="addSpecBtn" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Spec</button>
                         </div>
                         
-                        <div class="d-flex flex-column gap-2 ps-4">
+                        <div id="specsContainer" class="d-flex flex-column gap-2 ps-4">
                             <!-- Spec Row 1 -->
                             <div class="d-flex gap-2 align-items-center">
                                 <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Weight" value="Weight" style="flex: 1;">
@@ -99,10 +99,10 @@
                     <div class="mb-0">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <label class="form-label fw-semibold small mb-0">About this item (Key Highlights)</label>
-                            <button type="button" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Bullet</button>
+                            <button type="button" id="addBulletBtn" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Bullet</button>
                         </div>
                         
-                        <div class="d-flex flex-column gap-2">
+                        <div id="highlightsContainer" class="d-flex flex-column gap-2">
                             <!-- Highlight Row 1 -->
                             <div class="d-flex gap-2 align-items-start">
                                 <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
@@ -358,6 +358,52 @@
                     richTextToolbar.classList.remove('d-none');
                 } else {
                     richTextToolbar.classList.add('d-none');
+                }
+            });
+        }
+
+        // --- Dynamic Specs & Highlights ---
+        const specsContainer = document.getElementById('specsContainer');
+        const addSpecBtn = document.getElementById('addSpecBtn');
+        const highlightsContainer = document.getElementById('highlightsContainer');
+        const addBulletBtn = document.getElementById('addBulletBtn');
+
+        if (specsContainer && addSpecBtn) {
+            addSpecBtn.addEventListener('click', () => {
+                const row = document.createElement('div');
+                row.className = 'd-flex gap-2 align-items-center';
+                row.innerHTML = `
+                    <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Memory" style="flex: 1;">
+                    <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. 16GB" style="flex: 2;">
+                    <button type="button" class="btn btn-sm text-danger btn-light border-0 remove-row-btn"><i class="bi bi-x"></i></button>
+                `;
+                specsContainer.appendChild(row);
+            });
+
+            specsContainer.addEventListener('click', (e) => {
+                const btn = e.target.closest('.remove-row-btn') || e.target.closest('.btn-light');
+                if (btn && btn.querySelector('.bi-x')) {
+                    btn.closest('.d-flex').remove();
+                }
+            });
+        }
+
+        if (highlightsContainer && addBulletBtn) {
+            addBulletBtn.addEventListener('click', () => {
+                const row = document.createElement('div');
+                row.className = 'd-flex gap-2 align-items-start';
+                row.innerHTML = `
+                    <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
+                    <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="Add a key feature or highlight..." style="flex: 1;">
+                    <button type="button" class="btn btn-sm text-danger btn-light border-0 remove-row-btn"><i class="bi bi-x"></i></button>
+                `;
+                highlightsContainer.appendChild(row);
+            });
+
+            highlightsContainer.addEventListener('click', (e) => {
+                const btn = e.target.closest('.remove-row-btn') || e.target.closest('.btn-light');
+                if (btn && btn.querySelector('.bi-x')) {
+                    btn.closest('.d-flex').remove();
                 }
             });
         }

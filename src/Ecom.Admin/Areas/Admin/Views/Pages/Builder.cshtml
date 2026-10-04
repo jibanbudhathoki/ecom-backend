@@ -1,0 +1,785 @@
+@{
+    ViewData["Title"] = "Home Page Builder";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Home Page Builder</h2>
+        <p class="text-muted mb-0 small">Design your storefront home page by adding and arranging content blocks.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-light px-4 py-2 rounded-pill shadow-sm border text-muted">
+            <i class="bi bi-eye me-1"></i> Preview
+        </button>
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" onclick="showSaveToast()">
+            <i class="bi bi-check2 me-1"></i> Save Layout
+        </button>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Builder Area -->
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0 fw-bold">Active Blocks</h5>
+            <span class="badge bg-primary rounded-pill" id="blockCountBadge">4 Blocks</span>
+        </div>
+
+        <div class="accordion custom-builder-accordion" id="homePageBuilder">
+            
+            <!-- Block 1: Hero Slider -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
+                <div class="card-header bg-white border-bottom-0 p-0" id="headingOne">
+                    <div class="d-flex align-items-center justify-content-between p-3 cursor-pointer" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-grip-vertical text-muted fs-5 drag-handle"></i>
+                            <div class="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-images fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark">Hero Slider</h6>
+                                <p class="text-muted small mb-0">Main banner at the top of the page</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="form-check form-switch m-0" onclick="event.stopPropagation();">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                            </div>
+                            <button class="btn btn-sm btn-light rounded-circle shadow-none text-danger" onclick="event.stopPropagation(); this.closest('.card').remove(); updateBlockCount();"><i class="bi bi-trash"></i></button>
+                            <i class="bi bi-chevron-down text-muted ms-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseOne" class="collapse show border-top" aria-labelledby="headingOne" data-bs-parent="#homePageBuilder">
+                    <div class="card-body bg-light p-4">
+                        <div class="mb-4">
+                            <label class="form-label small fw-semibold text-dark">Slides</label>
+                            <!-- Slide 1 -->
+                            <div class="card border mb-3 rounded-3 shadow-none bg-white">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="fw-bold small mb-0">Slide 1</h6>
+                                        <button class="btn btn-sm text-danger p-0 shadow-none"><i class="bi bi-x-circle"></i></button>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="border border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center text-muted bg-light" style="height: 120px; cursor: pointer;">
+                                                <i class="bi bi-cloud-arrow-up fs-3 mb-1"></i>
+                                                <span class="small fw-medium">Upload Image</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <input type="text" class="form-control form-control-sm shadow-none" value="New Summer Collection">
+                                            </div>
+                                            <div class="mb-2">
+                                                <input type="text" class="form-control form-control-sm shadow-none" value="Discover the latest trends for this season.">
+                                            </div>
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm shadow-none" value="Shop Now">
+                                                </div>
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm shadow-none" value="/collections/summer">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 2 -->
+                            <div class="card border mb-3 rounded-3 shadow-none bg-white">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="fw-bold small mb-0">Slide 2</h6>
+                                        <button class="btn btn-sm text-danger p-0 shadow-none"><i class="bi bi-x-circle"></i></button>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="border border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center text-muted bg-light" style="height: 120px; cursor: pointer;">
+                                                <i class="bi bi-cloud-arrow-up fs-3 mb-1"></i>
+                                                <span class="small fw-medium">Upload Image</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <input type="text" class="form-control form-control-sm shadow-none" value="Exclusive Winter Preview">
+                                            </div>
+                                            <div class="mb-2">
+                                                <input type="text" class="form-control form-control-sm shadow-none" value="Get early access to our upcoming winter styles.">
+                                            </div>
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm shadow-none" value="View Collection">
+                                                </div>
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm shadow-none" value="/collections/winter-preview">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-sm btn-outline-primary rounded-pill fw-medium"><i class="bi bi-plus-lg me-1"></i> Add Slide</button>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-dark">Slider Height</label>
+                                <select class="form-select form-select-sm shadow-none">
+                                    <option>Small</option>
+                                    <option selected>Medium</option>
+                                    <option>Large</option>
+                                    <option>Full Screen</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-dark">Auto-play Speed</label>
+                                <select class="form-select form-select-sm shadow-none">
+                                    <option>3 seconds</option>
+                                    <option selected>5 seconds</option>
+                                    <option>7 seconds</option>
+                                    <option>Disable Auto-play</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 2: Content Grid (Categories/Collections) -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
+                <div class="card-header bg-white border-bottom-0 p-0" id="headingTwo">
+                    <div class="d-flex align-items-center justify-content-between p-3 cursor-pointer collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-grip-vertical text-muted fs-5 drag-handle"></i>
+                            <div class="bg-success bg-opacity-10 text-success rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-grid-fill fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark">Content Grid</h6>
+                                <p class="text-muted small mb-0">Grid of selected categories or collections</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="form-check form-switch m-0" onclick="event.stopPropagation();">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                            </div>
+                            <button class="btn btn-sm btn-light rounded-circle shadow-none text-danger" onclick="event.stopPropagation(); this.closest('.card').remove(); updateBlockCount();"><i class="bi bi-trash"></i></button>
+                            <i class="bi bi-chevron-down text-muted ms-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseTwo" class="collapse border-top" aria-labelledby="headingTwo" data-bs-parent="#homePageBuilder">
+                    <div class="card-body bg-light p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-dark">Section Title</label>
+                            <input type="text" class="form-control form-control-sm shadow-none" value="Shop by Category">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-dark">Grid Content Type</label>
+                            <select class="form-select form-select-sm shadow-none" onchange="document.getElementById('grid-categories').classList.toggle('d-none', this.value !== 'categories'); document.getElementById('grid-collections').classList.toggle('d-none', this.value !== 'collections');">
+                                <option value="categories" selected>Categories</option>
+                                <option value="collections">Collections</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="grid-categories">
+                            <label class="form-label small fw-semibold text-dark">Select Multiple Categories</label>
+                            <div class="border rounded-3 p-3 bg-white" style="max-height: 150px; overflow-y: auto;">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="cat1" checked>
+                                    <label class="form-check-label small" for="cat1">Electronics</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="cat2" checked>
+                                    <label class="form-check-label small" for="cat2">Fashion</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="cat3" checked>
+                                    <label class="form-check-label small" for="cat3">Home & Garden</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="cat4">
+                                    <label class="form-check-label small" for="cat4">Sports</label>
+                                </div>
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="cat5">
+                                    <label class="form-check-label small" for="cat5">Toys</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 d-none" id="grid-collections">
+                            <label class="form-label small fw-semibold text-dark">Select Multiple Collections</label>
+                            <div class="border rounded-3 p-3 bg-white" style="max-height: 150px; overflow-y: auto;">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="col1" checked>
+                                    <label class="form-check-label small" for="col1">Summer Sale</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="col2" checked>
+                                    <label class="form-check-label small" for="col2">Winter Clearance</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="col3" checked>
+                                    <label class="form-check-label small" for="col3">New Arrivals</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="col4">
+                                    <label class="form-check-label small" for="col4">Trending Now</label>
+                                </div>
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="col5">
+                                    <label class="form-check-label small" for="col5">Gifts under $50</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 3: Best Sellers (Products) -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
+                <div class="card-header bg-white border-bottom-0 p-0" id="headingThree">
+                    <div class="d-flex align-items-center justify-content-between p-3 cursor-pointer collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-grip-vertical text-muted fs-5 drag-handle"></i>
+                            <div class="bg-warning bg-opacity-10 text-warning rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-star-fill fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark">Product Grid</h6>
+                                <p class="text-muted small mb-0">Show products from a specific collection</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="form-check form-switch m-0" onclick="event.stopPropagation();">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                            </div>
+                            <button class="btn btn-sm btn-light rounded-circle shadow-none text-danger" onclick="event.stopPropagation(); this.closest('.card').remove(); updateBlockCount();"><i class="bi bi-trash"></i></button>
+                            <i class="bi bi-chevron-down text-muted ms-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseThree" class="collapse border-top" aria-labelledby="headingThree" data-bs-parent="#homePageBuilder">
+                    <div class="card-body bg-light p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-dark">Section Title</label>
+                            <input type="text" class="form-control form-control-sm shadow-none" value="Best Sellers">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-dark">Data Source Type</label>
+                            <select class="form-select form-select-sm shadow-none" onchange="document.getElementById('ds-collection').classList.toggle('d-none', this.value !== 'collection'); document.getElementById('ds-category').classList.toggle('d-none', this.value !== 'category'); document.getElementById('ds-custom').classList.toggle('d-none', this.value !== 'custom'); document.getElementById('ds-max').classList.toggle('d-none', this.value === 'custom');">
+                                <option value="collection" selected>Specific Collection</option>
+                                <option value="category">Specific Category</option>
+                                <option value="custom">Custom Selected Products</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3" id="ds-collection">
+                            <label class="form-label small fw-semibold text-dark">Select Collection</label>
+                            <select class="form-select form-select-sm shadow-none">
+                                <option>New Arrivals</option>
+                                <option selected>Best Sellers</option>
+                                <option>Trending Now</option>
+                                <option>On Sale</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 d-none" id="ds-category">
+                            <label class="form-label small fw-semibold text-dark">Select Category</label>
+                            <select class="form-select form-select-sm shadow-none">
+                                <option>Electronics</option>
+                                <option>Fashion</option>
+                                <option>Home & Garden</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 d-none" id="ds-custom">
+                            <label class="form-label small fw-semibold text-dark">Selected Products</label>
+                            <div class="border rounded-3 bg-white">
+                                <div class="p-2 border-bottom">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control border-0 bg-light shadow-none" placeholder="Search products to add...">
+                                    </div>
+                                </div>
+                                <div class="p-2" style="max-height: 200px; overflow-y: auto;">
+                                    <!-- Product 1 -->
+                                    <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded border bg-light">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-white border rounded d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                                                <img src="https://placehold.co/40x40?text=WE" alt="Product" class="img-fluid rounded">
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <span class="small fw-bold text-dark lh-sm">Wireless Earbuds Pro</span>
+                                                <div class="d-flex align-items-center gap-2 mt-1">
+                                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border fw-normal" style="font-size: 0.65rem;">Electronics</span>
+                                                    <span class="badge bg-primary bg-opacity-10 text-primary border fw-normal" style="font-size: 0.65rem;">SKU: EAR-PRO-01</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-sm text-danger p-0 shadow-none"><i class="bi bi-x-lg"></i></button>
+                                    </div>
+                                    <!-- Product 2 -->
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded border bg-light">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-white border rounded d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                                                <img src="https://placehold.co/40x40?text=GL" alt="Product" class="img-fluid rounded">
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <span class="small fw-bold text-dark lh-sm">Gaming Laptop X</span>
+                                                <div class="d-flex align-items-center gap-2 mt-1">
+                                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border fw-normal" style="font-size: 0.65rem;">Computers</span>
+                                                    <span class="badge bg-primary bg-opacity-10 text-primary border fw-normal" style="font-size: 0.65rem;">SKU: GL-X-2024</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-sm text-danger p-0 shadow-none"><i class="bi bi-x-lg"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-0" id="ds-max">
+                            <label class="form-label small fw-semibold text-dark">Maximum Products</label>
+                            <input type="number" class="form-control form-control-sm shadow-none" value="8" style="max-width: 150px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 4: Promotional Banners -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
+                <div class="card-header bg-white border-bottom-0 p-0" id="headingFour">
+                    <div class="d-flex align-items-center justify-content-between p-3 cursor-pointer collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-grip-vertical text-muted fs-5 drag-handle"></i>
+                            <div class="bg-info bg-opacity-10 text-info rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-megaphone-fill fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark">Promotional Banners</h6>
+                                <p class="text-muted small mb-0">Grid of custom promotional images</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="form-check form-switch m-0" onclick="event.stopPropagation();">
+                                <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                            </div>
+                            <button class="btn btn-sm btn-light rounded-circle shadow-none text-danger" onclick="event.stopPropagation(); this.closest('.card').remove(); updateBlockCount();"><i class="bi bi-trash"></i></button>
+                            <i class="bi bi-chevron-down text-muted ms-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseFour" class="collapse border-top" aria-labelledby="headingFour" data-bs-parent="#homePageBuilder">
+                    <div class="card-body bg-light p-4">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-dark">Desktop Layout</label>
+                                <select class="form-select form-select-sm shadow-none">
+                                    <option>1 Column (Full Width)</option>
+                                    <option selected>2 Columns (50/50)</option>
+                                    <option>3 Columns</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-dark">Mobile Layout</label>
+                                <select class="form-select form-select-sm shadow-none">
+                                    <option selected>1 Column (Stacked)</option>
+                                    <option>2 Columns</option>
+                                    <option>Horizontal Scroll (Swipe)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label small fw-semibold text-dark">Banners</label>
+                            
+                            <!-- Banner 1 -->
+                            <div class="card border mb-3 rounded-3 shadow-none bg-white">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-grip-vertical text-muted drag-handle"></i>
+                                            <h6 class="fw-bold small mb-0">Banner 1</h6>
+                                        </div>
+                                        <button class="btn btn-sm text-danger p-0 shadow-none"><i class="bi bi-x-circle"></i></button>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="border border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center text-muted bg-light" style="height: 100px; cursor: pointer;">
+                                                <i class="bi bi-cloud-arrow-up fs-4 mb-1"></i>
+                                                <span class="small" style="font-size: 0.75rem;">Upload Image</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <input type="text" class="form-control form-control-sm shadow-none" placeholder="Link URL (e.g. /sale)" value="/collections/mens-sale">
+                                            </div>
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm shadow-none" placeholder="Alt Text" value="Summer Mens Sale">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check form-switch mt-1">
+                                                        <input class="form-check-input" type="checkbox" id="openNewTab1">
+                                                        <label class="form-check-label small text-muted" for="openNewTab1">Open in new tab</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Banner 2 -->
+                            <div class="card border mb-3 rounded-3 shadow-none bg-white">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-grip-vertical text-muted drag-handle"></i>
+                                            <h6 class="fw-bold small mb-0">Banner 2</h6>
+                                        </div>
+                                        <button class="btn btn-sm text-danger p-0 shadow-none"><i class="bi bi-x-circle"></i></button>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="border border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center text-muted bg-light" style="height: 100px; cursor: pointer;">
+                                                <i class="bi bi-cloud-arrow-up fs-4 mb-1"></i>
+                                                <span class="small" style="font-size: 0.75rem;">Upload Image</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <input type="text" class="form-control form-control-sm shadow-none" placeholder="Link URL (e.g. /sale)" value="/collections/womens-sale">
+                                            </div>
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm shadow-none" placeholder="Alt Text" value="Summer Womens Sale">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check form-switch mt-1">
+                                                        <input class="form-check-input" type="checkbox" id="openNewTab2">
+                                                        <label class="form-check-label small text-muted" for="openNewTab2">Open in new tab</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-sm btn-outline-primary rounded-pill fw-medium"><i class="bi bi-plus-lg me-1"></i> Add Another Banner</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="d-grid mt-4">
+            <button class="btn btn-light border border-dashed rounded-4 py-3 fw-bold text-primary shadow-none" data-bs-toggle="modal" data-bs-target="#addBlockModal">
+                <i class="bi bi-plus-circle me-2"></i> Add New Block
+            </button>
+        </div>
+    </div>
+
+    <!-- Right Sidebar: Block Library & Global Settings -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 20px;">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4">
+                <h6 class="mb-0 fw-bold">Add Block</h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="d-flex flex-column gap-2">
+                    <button class="btn btn-outline-secondary text-start p-3 rounded-3 shadow-none border-opacity-50 hover-bg-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-images fs-4 text-primary"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark small">Hero Slider</h6>
+                                <p class="mb-0 text-muted" style="font-size: 0.7rem;">Image carousel with text overlay.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="btn btn-outline-secondary text-start p-3 rounded-3 shadow-none border-opacity-50 hover-bg-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-grid-fill fs-4 text-success"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark small">Category Grid</h6>
+                                <p class="mb-0 text-muted" style="font-size: 0.7rem;">Showcase your collections.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="btn btn-outline-secondary text-start p-3 rounded-3 shadow-none border-opacity-50 hover-bg-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-box fs-4 text-warning"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark small">Product Grid</h6>
+                                <p class="mb-0 text-muted" style="font-size: 0.7rem;">Display a list of products.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button onclick="addBlock('tpl-testimonials')" class="btn btn-outline-secondary text-start p-3 rounded-3 shadow-none border-opacity-50 hover-bg-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-chat-quote-fill fs-4 text-info"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark small">Testimonials</h6>
+                                <p class="mb-0 text-muted" style="font-size: 0.7rem;">Customer reviews and feedback.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button onclick="addBlock('tpl-newsletter')" class="btn btn-outline-secondary text-start p-3 rounded-3 shadow-none border-opacity-50 hover-bg-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-envelope-paper-fill fs-4 text-danger"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark small">Newsletter Signup</h6>
+                                <p class="mb-0 text-muted" style="font-size: 0.7rem;">Collect customer emails.</p>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="saveToast" class="toast align-items-center text-bg-success border-0 rounded-3 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body d-flex align-items-center fw-medium">
+                <i class="bi bi-check-circle-fill fs-5 me-2"></i>
+                Home page layout saved successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Templates for New Blocks -->
+<template id="tpl-testimonials">
+    <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
+        <div class="card-header bg-white border-bottom-0 p-0">
+            <div class="d-flex align-items-center justify-content-between p-3 cursor-pointer collapsed" data-bs-toggle="collapse" aria-expanded="false">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-grip-vertical text-muted fs-5 drag-handle"></i>
+                    <div class="bg-info bg-opacity-10 text-info rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        <i class="bi bi-chat-quote-fill fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold text-dark">Testimonials</h6>
+                        <p class="text-muted small mb-0">Customer reviews and feedback</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="form-check form-switch m-0" onclick="event.stopPropagation();">
+                        <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                    </div>
+                    <button class="btn btn-sm btn-light rounded-circle shadow-none text-danger" onclick="event.stopPropagation(); this.closest('.card').remove(); updateBlockCount();"><i class="bi bi-trash"></i></button>
+                    <i class="bi bi-chevron-down text-muted ms-2 transition-transform"></i>
+                </div>
+            </div>
+        </div>
+        <div class="collapse border-top" data-bs-parent="#homePageBuilder">
+            <div class="card-body bg-light p-4">
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-dark">Section Title</label>
+                    <input type="text" class="form-control form-control-sm shadow-none" value="What Our Customers Say">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-dark">Select Reviews to Feature</label>
+                    <div class="border rounded-3 p-2 bg-white" style="max-height: 220px; overflow-y: auto;">
+                        
+                        <!-- Review 1 -->
+                        <div class="d-flex align-items-start gap-2 p-2 mb-2 border rounded bg-light">
+                            <input class="form-check-input mt-1 shadow-none" type="checkbox" checked>
+                            <img src="https://ui-avatars.com/api/?name=Sarah+J&background=random" class="rounded-circle" width="32" height="32" alt="Avatar">
+                            <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small fw-bold text-dark text-truncate d-block">Sarah J.</span>
+                                    <div class="text-warning small flex-shrink-0" style="font-size: 0.75rem;">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted mb-0 text-truncate">"Amazing product, highly recommend! The quality exceeded my expectations."</p>
+                            </div>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="d-flex align-items-start gap-2 p-2 mb-2 border rounded bg-light">
+                            <input class="form-check-input mt-1 shadow-none" type="checkbox" checked>
+                            <img src="https://ui-avatars.com/api/?name=Michael+T&background=random" class="rounded-circle" width="32" height="32" alt="Avatar">
+                            <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small fw-bold text-dark text-truncate d-block">Michael T.</span>
+                                    <div class="text-warning small flex-shrink-0" style="font-size: 0.75rem;">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted mb-0 text-truncate">"Best purchase I've made this year. Shipping was fast and the item is exactly as described."</p>
+                            </div>
+                        </div>
+
+                        <!-- Review 3 -->
+                        <div class="d-flex align-items-start gap-2 p-2 mb-2 border rounded bg-light">
+                            <input class="form-check-input mt-1 shadow-none" type="checkbox" checked>
+                            <img src="https://ui-avatars.com/api/?name=Emily+R&background=random" class="rounded-circle" width="32" height="32" alt="Avatar">
+                            <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small fw-bold text-dark text-truncate d-block">Emily R.</span>
+                                    <div class="text-warning small flex-shrink-0" style="font-size: 0.75rem;">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted mb-0 text-truncate">"Good quality and fast shipping. I wish it came in more colors though."</p>
+                            </div>
+                        </div>
+
+                        <!-- Review 4 -->
+                        <div class="d-flex align-items-start gap-2 p-2 border rounded bg-light">
+                            <input class="form-check-input mt-1 shadow-none" type="checkbox">
+                            <img src="https://ui-avatars.com/api/?name=David+L&background=random" class="rounded-circle" width="32" height="32" alt="Avatar">
+                            <div class="flex-grow-1 min-w-0" style="overflow: hidden;">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small fw-bold text-dark text-truncate d-block">David L.</span>
+                                    <div class="text-warning small flex-shrink-0" style="font-size: 0.75rem;">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted mb-0 text-truncate">"Customer service was excellent when I had a question about sizing."</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="tpl-newsletter">
+    <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
+        <div class="card-header bg-white border-bottom-0 p-0">
+            <div class="d-flex align-items-center justify-content-between p-3 cursor-pointer collapsed" data-bs-toggle="collapse" aria-expanded="false">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-grip-vertical text-muted fs-5 drag-handle"></i>
+                    <div class="bg-danger bg-opacity-10 text-danger rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        <i class="bi bi-envelope-paper-fill fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold text-dark">Newsletter Signup</h6>
+                        <p class="text-muted small mb-0">Collect customer emails</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="form-check form-switch m-0" onclick="event.stopPropagation();">
+                        <input class="form-check-input shadow-none" type="checkbox" role="switch" checked>
+                    </div>
+                    <button class="btn btn-sm btn-light rounded-circle shadow-none text-danger" onclick="event.stopPropagation(); this.closest('.card').remove(); updateBlockCount();"><i class="bi bi-trash"></i></button>
+                    <i class="bi bi-chevron-down text-muted ms-2 transition-transform"></i>
+                </div>
+            </div>
+        </div>
+        <div class="collapse border-top" data-bs-parent="#homePageBuilder">
+            <div class="card-body bg-light p-4">
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-dark">Heading</label>
+                    <input type="text" class="form-control form-control-sm shadow-none" value="Subscribe to our Newsletter">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-dark">Description</label>
+                    <textarea class="form-control form-control-sm shadow-none" rows="2">Get the latest updates on new products and upcoming sales.</textarea>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold text-dark">Button Text</label>
+                        <input type="text" class="form-control form-control-sm shadow-none" value="Subscribe">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold text-dark">Background Color</label>
+                        <input type="color" class="form-control form-control-sm form-control-color shadow-none" value="#f8f9fa">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .cursor-pointer { cursor: pointer; }
+    .drag-handle { cursor: grab; }
+    .drag-handle:active { cursor: grabbing; }
+    
+    .custom-builder-accordion .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .custom-builder-accordion .collapse.show {
+        background-color: #f8f9fa;
+    }
+    
+    .transition-transform {
+        transition: transform 0.3s ease;
+    }
+    .custom-builder-accordion .cursor-pointer:not(.collapsed) .transition-transform {
+        transform: rotate(-180deg);
+    }
+    
+    .hover-bg-light:hover {
+        background-color: #f8f9fa !important;
+        border-color: #dee2e6 !important;
+    }
+    .border-dashed {
+        border-style: dashed !important;
+        border-width: 2px !important;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var el = document.getElementById('homePageBuilder');
+        new Sortable(el, {
+            handle: '.drag-handle',
+            animation: 150,
+            ghostClass: 'bg-light'
+        });
+    });
+
+    function showSaveToast() {
+        const toast = new bootstrap.Toast(document.getElementById('saveToast'));
+        toast.show();
+    }
+    
+    function updateBlockCount() {
+        const count = document.querySelectorAll('#homePageBuilder > .card').length;
+        document.getElementById('blockCountBadge').innerText = count + ' Blocks';
+    }
+
+    function addBlock(templateId) {
+        const template = document.getElementById(templateId);
+        if (!template) return;
+        
+        // Clone the template content
+        const clone = template.content.cloneNode(true);
+        
+        // Generate unique IDs so Bootstrap collapse works correctly
+        const uniqueId = Date.now();
+        const cardHeader = clone.querySelector('.card-header');
+        const collapseDiv = clone.querySelector('.collapse');
+        const toggleBtn = clone.querySelector('[data-bs-toggle="collapse"]');
+        
+        cardHeader.id = 'heading_' + uniqueId;
+        collapseDiv.id = 'collapse_' + uniqueId;
+        collapseDiv.setAttribute('aria-labelledby', cardHeader.id);
+        toggleBtn.setAttribute('data-bs-target', '#collapse_' + uniqueId);
+        toggleBtn.setAttribute('aria-controls', 'collapse_' + uniqueId);
+        
+        // Append to builder list
+        document.getElementById('homePageBuilder').appendChild(clone);
+        
+        // Update the count and scroll to the bottom
+        updateBlockCount();
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>

@@ -2,8 +2,334 @@
     ViewData["Title"] = "Orders";
 }
 
+<!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Orders</h2>
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Orders</h2>
+        <p class="text-muted mb-0 small">Manage and track customer orders, fulfillments, and returns.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-light px-4 py-2 rounded-pill shadow-sm border text-muted">
+            <i class="bi bi-download me-1"></i> Export
+        </button>
+        <a href="#" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Create Draft Order
+        </a>
+    </div>
 </div>
 
-<p class="text-muted">This is the simple, empty placeholder page for Orders. You can start adding your tables and forms here!</p>
+<!-- Filters and Analytics Summary -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                    <i class="bi bi-box-seam fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold mb-1">Total Orders</h6>
+                    <h3 class="mb-0 fw-bold">1,284</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                    <i class="bi bi-clock-history fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold mb-1">Pending Fulfillment</h6>
+                    <h3 class="mb-0 fw-bold">42</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                    <i class="bi bi-check2-circle fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold mb-1">Completed (7d)</h6>
+                    <h3 class="mb-0 fw-bold">389</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                    <i class="bi bi-arrow-return-left fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold mb-1">Returns / Refunds</h6>
+                    <h3 class="mb-0 fw-bold">14</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-3">
+        <div class="row g-2">
+            <div class="col-md-4">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" class="form-control bg-light border-0 shadow-none" placeholder="Search by order ID, customer, email...">
+                </div>
+            </div>
+            <div class="col-md-6 d-flex gap-2">
+                <button class="btn btn-sm btn-light border rounded-pill px-3 active-filter">All</button>
+                <button class="btn btn-sm btn-light border rounded-pill px-3 text-muted">Unfulfilled</button>
+                <button class="btn btn-sm btn-light border rounded-pill px-3 text-muted">Unpaid</button>
+                <button class="btn btn-sm btn-light border rounded-pill px-3 text-muted">Open</button>
+            </div>
+            <div class="col-md-2 text-end">
+                <button class="btn btn-light rounded-pill w-100 border text-muted">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orders Table -->
+<div class="card border-0 shadow-sm rounded-4">
+    <!-- Table Header Toolbar -->
+    <div class="card-header bg-white border-bottom-0 pt-4 pb-2 px-4 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <div class="form-check mb-0">
+                <input class="form-check-input shadow-none" type="checkbox" id="selectAll" style="cursor: pointer;">
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light border text-muted dropdown-toggle rounded-pill px-3" type="button" id="bulkActions" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                    Bulk Actions
+                </button>
+                <ul class="dropdown-menu shadow border-0" aria-labelledby="bulkActions">
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-check2-circle me-2"></i>Mark as Fulfilled</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-printer me-2"></i>Print Packing Slips</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-envelope me-2"></i>Email Customers</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Cancel Orders</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-muted small fw-semibold">Showing 20 of 1,284 orders</div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 custom-table">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 py-3" style="width: 40px; border-top-left-radius: 1rem;"></th>
+                        <th class="py-3 text-muted fw-semibold">Order</th>
+                        <th class="py-3 text-muted fw-semibold">Date</th>
+                        <th class="py-3 text-muted fw-semibold">Customer</th>
+                        <th class="py-3 text-muted fw-semibold">Total</th>
+                        <th class="py-3 text-muted fw-semibold">Payment</th>
+                        <th class="py-3 text-muted fw-semibold">Fulfillment</th>
+                        <th class="py-3 text-muted fw-semibold">Items</th>
+                        <th class="pe-4 py-3 text-end text-muted fw-semibold" style="border-top-right-radius: 1rem;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    <!-- Order 1 -->
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <input class="form-check-input shadow-none row-checkbox" type="checkbox" style="cursor: pointer;">
+                        </td>
+                        <td class="py-3">
+                            <a asp-action="Details" asp-route-id="1001" class="fw-bold text-decoration-none">#ORD-1001</a>
+                        </td>
+                        <td class="py-3 text-secondary">
+                            Oct 4, 10:23 AM
+                        </td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-secondary bg-opacity-10 text-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: 600;">
+                                    JD
+                                </div>
+                                <div class="fw-semibold text-dark">Jane Doe</div>
+                            </div>
+                        </td>
+                        <td class="py-3 fw-medium">
+                            $1,299.00
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-1"><i class="bi bi-check-circle me-1"></i> Paid</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-2 py-1"><i class="bi bi-clock me-1"></i> Unfulfilled</span>
+                        </td>
+                        <td class="py-3 text-secondary">
+                            2 items
+                        </td>
+                        <td class="pe-4 py-3 text-end">
+                            <a asp-action="Details" asp-route-id="1001" class="btn btn-sm btn-light rounded-pill px-3 border text-primary fw-medium">View</a>
+                        </td>
+                    </tr>
+                    
+                    <!-- Order 2 -->
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <input class="form-check-input shadow-none row-checkbox" type="checkbox" style="cursor: pointer;">
+                        </td>
+                        <td class="py-3">
+                            <a asp-action="Details" asp-route-id="1002" class="fw-bold text-decoration-none">#ORD-1002</a>
+                        </td>
+                        <td class="py-3 text-secondary">
+                            Oct 3, 08:45 PM
+                        </td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-secondary bg-opacity-10 text-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: 600;">
+                                    MS
+                                </div>
+                                <div class="fw-semibold text-dark">Michael Smith</div>
+                            </div>
+                        </td>
+                        <td class="py-3 fw-medium">
+                            $349.50
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-1"><i class="bi bi-check-circle me-1"></i> Paid</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 rounded-pill px-2 py-1"><i class="bi bi-truck me-1"></i> Fulfilled</span>
+                        </td>
+                        <td class="py-3 text-secondary">
+                            1 item
+                        </td>
+                        <td class="pe-4 py-3 text-end">
+                            <a asp-action="Details" asp-route-id="1002" class="btn btn-sm btn-light rounded-pill px-3 border text-primary fw-medium">View</a>
+                        </td>
+                    </tr>
+
+                    <!-- Order 3 -->
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <input class="form-check-input shadow-none row-checkbox" type="checkbox" style="cursor: pointer;">
+                        </td>
+                        <td class="py-3">
+                            <a asp-action="Details" asp-route-id="1003" class="fw-bold text-decoration-none">#ORD-1003</a>
+                        </td>
+                        <td class="py-3 text-secondary">
+                            Oct 3, 03:12 PM
+                        </td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-secondary bg-opacity-10 text-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: 600;">
+                                    EL
+                                </div>
+                                <div class="fw-semibold text-dark">Emma Larson</div>
+                            </div>
+                        </td>
+                        <td class="py-3 fw-medium">
+                            $89.99
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-2 py-1"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-2 py-1"><i class="bi bi-clock me-1"></i> Unfulfilled</span>
+                        </td>
+                        <td class="py-3 text-secondary">
+                            3 items
+                        </td>
+                        <td class="pe-4 py-3 text-end">
+                            <a asp-action="Details" asp-route-id="1003" class="btn btn-sm btn-light rounded-pill px-3 border text-primary fw-medium">View</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="card-footer bg-white border-top py-3 d-flex justify-content-center" style="border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem;">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm mb-0 gap-2">
+                <li class="page-item disabled">
+                    <a class="page-link rounded-circle border-0 text-muted" href="#" tabindex="-1" aria-disabled="true"><i class="bi bi-chevron-left"></i></a>
+                </li>
+                <li class="page-item active"><a class="page-link rounded-circle border-0 shadow-sm" href="#">1</a></li>
+                <li class="page-item"><a class="page-link rounded-circle border-0 text-muted" href="#">2</a></li>
+                <li class="page-item"><a class="page-link rounded-circle border-0 text-muted" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link rounded-circle border-0 text-muted" href="#"><i class="bi bi-chevron-right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectAll = document.getElementById('selectAll');
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        const bulkActionsBtn = document.getElementById('bulkActions');
+
+        function updateBulkActions() {
+            const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            bulkActionsBtn.disabled = !anyChecked;
+            if (anyChecked) {
+                bulkActionsBtn.classList.remove('btn-light', 'text-muted');
+                bulkActionsBtn.classList.add('btn-primary');
+            } else {
+                bulkActionsBtn.classList.add('btn-light', 'text-muted');
+                bulkActionsBtn.classList.remove('btn-primary');
+            }
+        }
+
+        if(selectAll) {
+            selectAll.addEventListener('change', function() {
+                checkboxes.forEach(cb => cb.checked = selectAll.checked);
+                updateBulkActions();
+            });
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                const allChecked = Array.from(checkboxes).every(c => c.checked);
+                if(selectAll) selectAll.checked = allChecked;
+                updateBulkActions();
+            });
+        });
+    });
+</script>
+
+<style>
+    .custom-table th {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .custom-table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+    .custom-table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    .active-filter {
+        background-color: #e9ecef !important;
+        font-weight: 600;
+        color: #495057 !important;
+    }
+    .page-link {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        color: white;
+    }
+</style>

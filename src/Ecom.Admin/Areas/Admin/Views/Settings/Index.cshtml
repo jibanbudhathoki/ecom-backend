@@ -2,8 +2,1485 @@
     ViewData["Title"] = "Settings";
 }
 
+<!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Settings</h2>
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Settings</h2>
+        <p class="text-muted mb-0 small">Manage your store preferences and configurations.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-light px-4 py-2 rounded-pill shadow-sm border text-muted">Cancel</button>
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Save Changes</button>
+    </div>
 </div>
 
-<p class="text-muted">This is the simple, empty placeholder page for Settings. You can start adding your tables and forms here!</p>
+<div class="row align-items-start">
+    <!-- Sidebar Navigation -->
+    <div class="col-md-3 mb-4">
+        <div class="nav flex-column nav-pills custom-v-pills gap-1" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-general-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general" type="button" role="tab" aria-controls="v-pills-general" aria-selected="true">
+                <i class="bi bi-gear me-2 opacity-75"></i> General
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-branding-tab" data-bs-toggle="pill" data-bs-target="#v-pills-branding" type="button" role="tab" aria-controls="v-pills-branding" aria-selected="false">
+                <i class="bi bi-palette me-2 opacity-75"></i> Branding & Assets
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-payments-tab" data-bs-toggle="pill" data-bs-target="#v-pills-payments" type="button" role="tab" aria-controls="v-pills-payments" aria-selected="false">
+                <i class="bi bi-credit-card me-2 opacity-75"></i> Payments
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-shipping-tab" data-bs-toggle="pill" data-bs-target="#v-pills-shipping" type="button" role="tab" aria-controls="v-pills-shipping" aria-selected="false">
+                <i class="bi bi-truck me-2 opacity-75"></i> Shipping & Delivery
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-taxes-tab" data-bs-toggle="pill" data-bs-target="#v-pills-taxes" type="button" role="tab" aria-controls="v-pills-taxes" aria-selected="false">
+                <i class="bi bi-calculator me-2 opacity-75"></i> Taxes & Duties
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-emailsms-tab" data-bs-toggle="pill" data-bs-target="#v-pills-emailsms" type="button" role="tab" aria-controls="v-pills-emailsms" aria-selected="false">
+                <i class="bi bi-envelope-paper me-2 opacity-75"></i> Email & SMS
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-notifications" type="button" role="tab" aria-controls="v-pills-notifications" aria-selected="false">
+                <i class="bi bi-bell me-2 opacity-75"></i> Notifications
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-security-tab" data-bs-toggle="pill" data-bs-target="#v-pills-security" type="button" role="tab" aria-controls="v-pills-security" aria-selected="false">
+                <i class="bi bi-shield-lock me-2 opacity-75"></i> Security
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-api-tab" data-bs-toggle="pill" data-bs-target="#v-pills-api" type="button" role="tab" aria-controls="v-pills-api" aria-selected="false">
+                <i class="bi bi-code-slash me-2 opacity-75"></i> API & Webhooks
+            </button>
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center" id="v-pills-seo-tab" data-bs-toggle="pill" data-bs-target="#v-pills-seo" type="button" role="tab" aria-controls="v-pills-seo" aria-selected="false">
+                <i class="bi bi-search me-2 opacity-75"></i> SEO & Social
+            </button>
+            <hr class="text-muted opacity-25 my-2">
+            <button class="nav-link text-start rounded-3 px-3 py-2 fw-medium d-flex align-items-center text-danger" id="v-pills-delete-tab" data-bs-toggle="pill" data-bs-target="#v-pills-delete" type="button" role="tab" aria-controls="v-pills-delete" aria-selected="false">
+                <i class="bi bi-trash me-2 opacity-75"></i> Delete Store
+            </button>
+        </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="col-md-9">
+        <div class="tab-content" id="v-pills-tabContent">
+            
+            <!-- 1. GENERAL -->
+            <div class="tab-pane fade show active" id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab" tabindex="0">
+                
+                <!-- Store Information -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Store Information</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Store Name</label>
+                                <input type="text" class="form-control bg-light border-0" value="My Premium Store">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Store Description</label>
+                                <textarea class="form-control bg-light border-0" rows="2">Your premium destination for quality products.</textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Store Email</label>
+                                <input type="email" class="form-control bg-light border-0" value="contact@mystore.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Support Email</label>
+                                <input type="email" class="form-control bg-light border-0" value="support@mystore.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Business Phone</label>
+                                <input type="tel" class="form-control bg-light border-0" value="+1 (555) 123-4567">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Support Phone</label>
+                                <input type="tel" class="form-control bg-light border-0" value="+1 (555) 987-6543">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Country</label>
+                                <select class="form-select bg-light border-0">
+                                    <option>United States</option>
+                                    <option selected>Nepal</option>
+                                    <option>India</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Province/State</label>
+                                <input type="text" class="form-control bg-light border-0" value="Bagmati">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">City</label>
+                                <input type="text" class="form-control bg-light border-0" value="Kathmandu">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Postal Code</label>
+                                <input type="text" class="form-control bg-light border-0" value="44600">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Business Address</label>
+                                <input type="text" class="form-control bg-light border-0" value="Baneshwor, Kathmandu, Nepal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regional Settings -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Regional Settings</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Currency</label>
+                                <select class="form-select bg-light border-0">
+                                    <option selected>NPR - Nepalese Rupee</option>
+                                    <option>USD - US Dollar</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Currency Symbol</label>
+                                <input type="text" class="form-control bg-light border-0" value="Rs.">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Currency Position</label>
+                                <select class="form-select bg-light border-0">
+                                    <option selected>Left (Rs. 100)</option>
+                                    <option>Right (100 Rs.)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Language</label>
+                                <select class="form-select bg-light border-0">
+                                    <option selected>English</option>
+                                    <option>Nepali</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Time Zone</label>
+                                <select class="form-select bg-light border-0">
+                                    <option selected>(GMT+05:45) Kathmandu</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Date Format</label>
+                                <select class="form-select bg-light border-0">
+                                    <option selected>DD/MM/YYYY</option>
+                                    <option>MM/DD/YYYY</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Time Format</label>
+                                <select class="form-select bg-light border-0">
+                                    <option selected>12 Hour (AM/PM)</option>
+                                    <option>24 Hour</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Store Behavior & Order Config -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm rounded-4 h-100">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Store Behavior</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-3 d-flex justify-content-between align-items-center">
+                                    <label class="form-label fw-semibold small mb-0">Store Status</label>
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Active</span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="maintenanceMode">
+                                    <label class="form-check-label text-dark small" for="maintenanceMode">Maintenance Mode</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small">Maintenance Message</label>
+                                    <input type="text" class="form-control bg-light border-0 small" value="We are currently updating our store.">
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="guestCheckout" checked>
+                                    <label class="form-check-label text-dark small" for="guestCheckout">Guest Checkout</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="customerRegistration" checked>
+                                    <label class="form-check-label text-dark small" for="customerRegistration">Customer Registration</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm rounded-4 h-100">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Order Configuration</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small">Minimum Order Amount</label>
+                                    <input type="number" class="form-control bg-light border-0" value="0">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small">Maximum Order Amount</label>
+                                    <input type="number" class="form-control bg-light border-0" value="500000">
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="allowOrderCancel" checked>
+                                    <label class="form-check-label text-dark small" for="allowOrderCancel">Allow Order Cancellation (Before Shipping)</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="allowOrderMod">
+                                    <label class="form-check-label text-dark small" for="allowOrderMod">Allow Order Modification</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. BRANDING & ASSETS -->
+            <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab" tabindex="0">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm rounded-4 h-100">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Store Branding</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold small">Store Logo</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 100px; height: 60px;">
+                                            <i class="bi bi-image text-muted fs-3"></i>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Replace</button>
+                                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold small">Favicon</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                            <i class="bi bi-globe text-muted fs-4"></i>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">Upload</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold small">Default Product Image</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-box-seam text-muted fs-4"></i>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">Upload</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label fw-semibold small">Default Social/OG Image</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 120px; height: 60px;">
+                                            <i class="bi bi-share text-muted fs-4"></i>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Admin Branding</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold small">Admin Logo</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-dark border rounded d-flex align-items-center justify-content-center" style="width: 100px; height: 40px;">
+                                            <span class="text-white small fw-bold">ADMIN</span>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">Replace</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label fw-semibold small">Login Page Logo</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="width: 100px; height: 60px;">
+                                            <i class="bi bi-box-arrow-in-right text-muted fs-3"></i>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Brand Appearance</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Primary Brand Color</label>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <input type="color" class="form-control form-control-color border-0 bg-transparent p-0" value="#0d6efd" title="Choose your color">
+                                            <input type="text" class="form-control bg-light border-0 form-control-sm w-50" value="#0d6efd">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Secondary Brand Color</label>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <input type="color" class="form-control form-control-color border-0 bg-transparent p-0" value="#6c757d" title="Choose your color">
+                                            <input type="text" class="form-control bg-light border-0 form-control-sm w-50" value="#6c757d">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Accent Color</label>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <input type="color" class="form-control form-control-color border-0 bg-transparent p-0" value="#ffc107" title="Choose your color">
+                                            <input type="text" class="form-control bg-light border-0 form-control-sm w-50" value="#ffc107">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PAYMENTS -->
+            <div class="tab-pane fade" id="v-pills-payments" role="tabpanel" aria-labelledby="v-pills-payments-tab" tabindex="0">
+                <div class="row g-3 mb-4">
+                    <!-- COD -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-success bg-opacity-10 text-success rounded p-3" style="font-size: 1.5rem;">
+                                        <i class="bi bi-cash-stack"></i>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h6 class="fw-bold mb-0">Cash on Delivery</h6>
+                                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2">● ON</span>
+                                        </div>
+                                        <p class="text-muted small mb-1">Pay with cash upon delivery.</p>
+                                        <p class="small text-secondary mb-0">Test Mode: <span class="fw-medium text-dark">OFF</span></p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#paymentConfigModal">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- eSewa -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-success text-white rounded p-3 d-flex align-items-center justify-content-center font-monospace fw-bold" style="font-size: 1rem; width: 56px; height: 56px;">
+                                        eSewa
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h6 class="fw-bold mb-0">eSewa</h6>
+                                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2">● ON</span>
+                                        </div>
+                                        <p class="text-muted small mb-1">Online payment gateway.</p>
+                                        <p class="small text-secondary mb-0">Test Mode: <span class="fw-medium text-warning">ON</span></p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#paymentConfigModal">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Khalti -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4 opacity-75">
+                            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-purple text-white rounded p-3 d-flex align-items-center justify-content-center fw-bold" style="background-color:#5c2d91; font-size: 1rem; width: 56px; height: 56px;">
+                                        K
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h6 class="fw-bold mb-0">Khalti</h6>
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">● OFF</span>
+                                        </div>
+                                        <p class="text-muted small mb-1">Digital wallet integration.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#paymentConfigModal">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fonepay -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4 opacity-75">
+                            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-danger text-white rounded p-3 d-flex align-items-center justify-content-center fw-bold" style="font-size: 1rem; width: 56px; height: 56px;">
+                                        F
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h6 class="fw-bold mb-0">Fonepay</h6>
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">● OFF</span>
+                                        </div>
+                                        <p class="text-muted small mb-1">QR Code payments.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#paymentConfigModal">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bank Transfer -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-info bg-opacity-10 text-info rounded p-3" style="font-size: 1.5rem;">
+                                        <i class="bi bi-bank"></i>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h6 class="fw-bold mb-0">Bank Transfer</h6>
+                                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2">● ON</span>
+                                        </div>
+                                        <p class="text-muted small mb-1">Direct bank deposit.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#paymentConfigModal">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Payment -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4 opacity-75">
+                            <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-10 text-primary rounded p-3" style="font-size: 1.5rem;">
+                                        <i class="bi bi-credit-card-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h6 class="fw-bold mb-0">Card Payment (Stripe)</h6>
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">● OFF</span>
+                                        </div>
+                                        <p class="text-muted small mb-1">Accept Visa, Mastercard, etc.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#paymentConfigModal">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. SHIPPING & DELIVERY -->
+            <div class="tab-pane fade" id="v-pills-shipping" role="tabpanel" aria-labelledby="v-pills-shipping-tab" tabindex="0">
+                <!-- Shipping Methods -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Shipping Methods</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check form-switch p-3 border rounded-3 bg-light">
+                                    <input class="form-check-input ms-0 me-3 shadow-none fs-5 mt-0" type="checkbox" id="sm-cod" checked>
+                                    <label class="form-check-label text-dark fw-medium d-flex flex-column" for="sm-cod">
+                                        Cash on Delivery
+                                        <span class="text-muted small fw-normal">Available in select zones</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check form-switch p-3 border rounded-3 bg-light">
+                                    <input class="form-check-input ms-0 me-3 shadow-none fs-5 mt-0" type="checkbox" id="sm-flat" checked>
+                                    <label class="form-check-label text-dark fw-medium d-flex flex-column" for="sm-flat">
+                                        Flat Rate
+                                        <span class="text-muted small fw-normal">Standard delivery fee</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check form-switch p-3 border rounded-3 bg-light">
+                                    <input class="form-check-input ms-0 me-3 shadow-none fs-5 mt-0" type="checkbox" id="sm-free" checked>
+                                    <label class="form-check-label text-dark fw-medium d-flex flex-column" for="sm-free">
+                                        Free Shipping
+                                        <span class="text-muted small fw-normal">Over specific threshold</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check form-switch p-3 border rounded-3 bg-light">
+                                    <input class="form-check-input ms-0 me-3 shadow-none fs-5 mt-0" type="checkbox" id="sm-weight">
+                                    <label class="form-check-label text-dark fw-medium d-flex flex-column" for="sm-weight">
+                                        Weight Based
+                                        <span class="text-muted small fw-normal">Calculated by total weight</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check form-switch p-3 border rounded-3 bg-light">
+                                    <input class="form-check-input ms-0 me-3 shadow-none fs-5 mt-0" type="checkbox" id="sm-distance">
+                                    <label class="form-check-label text-dark fw-medium d-flex flex-column" for="sm-distance">
+                                        Distance Based
+                                        <span class="text-muted small fw-normal">Calculated by distance</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Zones -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0">Shipping Zones</h6>
+                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3 fw-medium">Add Zone</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4 py-3 text-muted small fw-semibold">Zone</th>
+                                    <th class="py-3 text-muted small fw-semibold">Areas</th>
+                                    <th class="py-3 text-muted small fw-semibold">Delivery Fee</th>
+                                    <th class="py-3 text-muted small fw-semibold">Status</th>
+                                    <th class="pe-4 py-3 text-end text-muted small fw-semibold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium">Kathmandu Valley</td>
+                                    <td class="py-3 text-muted small">KTM, Lalitpur, Bhaktapur</td>
+                                    <td class="py-3">Rs. 100</td>
+                                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium">Bagmati Province</td>
+                                    <td class="py-3 text-muted small">Outside Valley</td>
+                                    <td class="py-3">Rs. 150</td>
+                                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium">Nationwide</td>
+                                    <td class="py-3 text-muted small">Rest of Nepal</td>
+                                    <td class="py-3">Rs. 250</td>
+                                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Delivery Configuration -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Delivery Configuration</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Free Shipping Threshold</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0">Rs.</span>
+                                    <input type="number" class="form-control bg-light border-0" value="2000">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Default Delivery Fee</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0">Rs.</span>
+                                    <input type="number" class="form-control bg-light border-0" value="100">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Estimated Delivery Time</label>
+                                <input type="text" class="form-control bg-light border-0" value="2-4 Business Days">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Maximum Order Weight (kg)</label>
+                                <input type="number" class="form-control bg-light border-0" value="20">
+                            </div>
+                            
+                            <hr class="text-muted opacity-25 my-4 w-100">
+                            
+                            <div class="col-md-6">
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="sdDelivery" checked>
+                                    <label class="form-check-label text-dark small fw-medium" for="sdDelivery">Same-Day Delivery</label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="codAvail" checked>
+                                    <label class="form-check-label text-dark small fw-medium" for="codAvail">COD Availability</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="provAvail" checked>
+                                    <label class="form-check-label text-dark small fw-medium" for="provAvail">Province Availability Restriction</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="cityAvail">
+                                    <label class="form-check-label text-dark small fw-medium" for="cityAvail">City Availability Restriction</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. TAXES & DUTIES -->
+            <div class="tab-pane fade" id="v-pills-taxes" role="tabpanel" aria-labelledby="v-pills-taxes-tab" tabindex="0">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Tax Configuration</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="enableTax" checked>
+                                    <label class="form-check-label text-dark fw-medium" for="enableTax">Enable Tax</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="taxIncluded" checked>
+                                    <label class="form-check-label text-dark fw-medium" for="taxIncluded">Tax Included in Product Price</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="vatEnabled" checked>
+                                    <label class="form-check-label text-dark fw-medium" for="vatEnabled">VAT Enabled</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Default Tax Rate</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control bg-light border-0 shadow-none" value="13">
+                                    <span class="input-group-text bg-light border-0">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0">Tax Rules</h6>
+                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3 fw-medium">Add Rule</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4 py-3 text-muted small fw-semibold">Rule</th>
+                                    <th class="py-3 text-muted small fw-semibold">Location</th>
+                                    <th class="py-3 text-muted small fw-semibold">Rate</th>
+                                    <th class="py-3 text-muted small fw-semibold">Status</th>
+                                    <th class="pe-4 py-3 text-end text-muted small fw-semibold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium">VAT</td>
+                                    <td class="py-3 text-muted small">Nepal</td>
+                                    <td class="py-3 fw-bold">13%</td>
+                                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium text-muted">Reduced Tax</td>
+                                    <td class="py-3 text-muted small">Example</td>
+                                    <td class="py-3 text-muted">5%</td>
+                                    <td class="py-3"><span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">Inactive</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <button class="btn btn-sm btn-light text-primary rounded-pill px-3">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Tax Display</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex gap-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input shadow-none" type="checkbox" id="dispProd" checked>
+                                <label class="form-check-label text-dark fw-medium small" for="dispProd">Show Tax on Product</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input shadow-none" type="checkbox" id="dispCheck" checked>
+                                <label class="form-check-label text-dark fw-medium small" for="dispCheck">Show Tax at Checkout</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input shadow-none" type="checkbox" id="dispInv" checked>
+                                <label class="form-check-label text-dark fw-medium small" for="dispInv">Show Tax on Invoice</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. EMAIL & SMS -->
+            <div class="tab-pane fade" id="v-pills-emailsms" role="tabpanel" aria-labelledby="v-pills-emailsms-tab" tabindex="0">
+                <ul class="nav nav-pills mb-4 gap-2" id="emailsms-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill px-4" id="email-tab" data-bs-toggle="pill" data-bs-target="#email-content" type="button" role="tab" aria-controls="email-content" aria-selected="true">Email</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill px-4" id="sms-tab" data-bs-toggle="pill" data-bs-target="#sms-content" type="button" role="tab" aria-controls="sms-content" aria-selected="false">SMS</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="emailsms-tabContent">
+                    <!-- Email Content -->
+                    <div class="tab-pane fade show active" id="email-content" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                                <h6 class="fw-bold mb-0">SMTP Configuration</h6>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Send Test Email</button>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">SMTP Host</label>
+                                        <input type="text" class="form-control bg-light border-0" value="smtp.example.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">SMTP Port</label>
+                                        <input type="text" class="form-control bg-light border-0" value="587">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Username</label>
+                                        <input type="text" class="form-control bg-light border-0" value="no-reply@mystore.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Password</label>
+                                        <input type="password" class="form-control bg-light border-0" value="••••••••••••">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold small">Encryption</label>
+                                        <select class="form-select bg-light border-0">
+                                            <option selected>TLS</option>
+                                            <option>SSL</option>
+                                            <option>None</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold small">From Name</label>
+                                        <input type="text" class="form-control bg-light border-0" value="My Store">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold small">From Email</label>
+                                        <input type="email" class="form-control bg-light border-0" value="no-reply@mystore.com">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Reply-To Email</label>
+                                        <input type="email" class="form-control bg-light border-0" value="support@mystore.com">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Email Notifications</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    @{ string[] emailNotifs = { "Email Verification", "Password Reset", "Order Confirmation", "Order Shipped", "Order Delivered", "Order Cancelled", "Payment Confirmation", "Refund Notification", "Low Stock", "New Customer", "New Review" }; }
+                                    @foreach(var notif in emailNotifs)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch d-flex justify-content-between px-0 align-items-center">
+                                                <label class="form-check-label text-dark fw-medium small mb-0" for="e_@notif.Replace(" ", "")">@notif</label>
+                                                <input class="form-check-input shadow-none m-0" type="checkbox" id="e_@notif.Replace(" ", "")" checked>
+                                            </div>
+                                            <hr class="text-muted opacity-25 my-2">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SMS Content -->
+                    <div class="tab-pane fade" id="sms-content" role="tabpanel" aria-labelledby="sms-tab" tabindex="0">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">SMS Configuration</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">SMS Provider</label>
+                                        <select class="form-select bg-light border-0">
+                                            <option selected>Sparrow SMS</option>
+                                            <option>Aakash SMS</option>
+                                            <option>Twilio</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Sender ID</label>
+                                        <input type="text" class="form-control bg-light border-0" value="MYSTORE">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">API Key</label>
+                                        <input type="password" class="form-control bg-light border-0" value="v2_token_xxxx">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">API Secret</label>
+                                        <input type="password" class="form-control bg-light border-0" value="secret_xxxx">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">SMS Notifications</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    @{ string[] smsNotifs = { "OTP", "Order Confirmation", "Order Shipped", "Order Delivered", "Payment Notification", "Promotional SMS" }; }
+                                    @foreach(var notif in smsNotifs)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch d-flex justify-content-between px-0 align-items-center">
+                                                <label class="form-check-label text-dark fw-medium small mb-0" for="s_@notif.Replace(" ", "")">@notif</label>
+                                                <input class="form-check-input shadow-none m-0" type="checkbox" id="s_@notif.Replace(" ", "")" @(notif == "Promotional SMS" ? "" : "checked")>
+                                            </div>
+                                            <hr class="text-muted opacity-25 my-2">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. NOTIFICATIONS -->
+            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab" tabindex="0">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Notification Preferences</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4 py-3 text-muted small fw-semibold">Notification</th>
+                                    <th class="py-3 text-center text-muted small fw-semibold">Email</th>
+                                    <th class="py-3 text-center text-muted small fw-semibold">SMS</th>
+                                    <th class="py-3 text-center text-muted small fw-semibold">Push</th>
+                                    <th class="pe-4 py-3 text-center text-muted small fw-semibold">Admin</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                @{ string[] prefNotifs = { "New Order", "Order Confirmed", "Order Shipped", "Order Delivered", "Order Cancelled", "Payment Successful", "Payment Failed", "Refund Created", "Low Stock", "Out of Stock", "New Customer", "New Review" }; }
+                                @foreach(var notif in prefNotifs)
+                                {
+                                    <tr>
+                                        <td class="ps-4 py-3 fw-medium small">@notif</td>
+                                        <td class="py-3 text-center"><input class="form-check-input shadow-none" type="checkbox" checked></td>
+                                        <td class="py-3 text-center"><input class="form-check-input shadow-none" type="checkbox" @(notif.Contains("Order") || notif.Contains("Payment") ? "checked" : "")></td>
+                                        <td class="py-3 text-center"><input class="form-check-input shadow-none" type="checkbox" checked></td>
+                                        <td class="pe-4 py-3 text-center"><input class="form-check-input shadow-none" type="checkbox" @(notif == "New Order" || notif.Contains("Stock") || notif.Contains("New") ? "checked" : "")></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Admin Notifications</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="browserNotif" checked>
+                                    <label class="form-check-label text-dark fw-medium small" for="browserNotif">Enable Browser Notifications</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="dashNotif" checked>
+                                    <label class="form-check-label text-dark fw-medium small" for="dashNotif">Enable Dashboard Notifications</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="notifSound" checked>
+                                    <label class="form-check-label text-dark fw-medium small" for="notifSound">Notification Sound</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. SECURITY -->
+            <div class="tab-pane fade" id="v-pills-security" role="tabpanel" aria-labelledby="v-pills-security-tab" tabindex="0">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-8">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Password & Authentication</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <h6 class="fw-semibold mb-1 small">Change Password</h6>
+                                        <p class="text-muted small mb-0">Update your account password securely.</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Update</button>
+                                </div>
+                                <hr class="text-muted opacity-25">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <h6 class="fw-semibold mb-1 small">Two-Factor Authentication</h6>
+                                        <p class="text-muted small mb-0">Add an extra layer of security using an authenticator app.</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input shadow-none fs-5" type="checkbox" checked>
+                                    </div>
+                                </div>
+                                <hr class="text-muted opacity-25">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input shadow-none" type="checkbox" id="sec_email" checked>
+                                            <label class="form-check-label text-dark fw-medium small" for="sec_email">Email Verification</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input shadow-none" type="checkbox" id="sec_phone">
+                                            <label class="form-check-label text-dark fw-medium small" for="sec_phone">Phone Verification</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Login Security & Admin Security</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Maximum Login Attempts</label>
+                                        <input type="number" class="form-control bg-light border-0" value="5">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Account Lockout Duration (mins)</label>
+                                        <input type="number" class="form-control bg-light border-0" value="30">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Session Timeout (hours)</label>
+                                        <input type="number" class="form-control bg-light border-0" value="24">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Admin Session Timeout (mins)</label>
+                                        <input type="number" class="form-control bg-light border-0" value="60">
+                                    </div>
+                                </div>
+                                <hr class="text-muted opacity-25 my-4">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input shadow-none" type="checkbox" id="logNotif" checked>
+                                            <label class="form-check-label text-dark fw-medium small" for="logNotif">Login Notifications</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input shadow-none" type="checkbox" id="remMe" checked>
+                                            <label class="form-check-label text-dark fw-medium small" for="remMe">Remember Me</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 bg-primary bg-opacity-10 text-primary mb-4">
+                            <div class="card-body p-4">
+                                <h6 class="fw-bold mb-3"><i class="bi bi-shield-check me-2"></i>Security Status</h6>
+                                <div class="small fw-medium mb-2 d-flex align-items-center gap-2"><i class="bi bi-check-circle-fill text-success"></i> Strong Password Policy</div>
+                                <div class="small fw-medium mb-2 d-flex align-items-center gap-2"><i class="bi bi-check-circle-fill text-success"></i> 2FA Enabled</div>
+                                <div class="small fw-medium mb-2 d-flex align-items-center gap-2"><i class="bi bi-check-circle-fill text-success"></i> Login Protection Enabled</div>
+                                <div class="small fw-medium mb-0 d-flex align-items-center gap-2"><i class="bi bi-check-circle-fill text-success"></i> Session Security Enabled</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Sessions -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                        <h6 class="fw-bold mb-0">Active Sessions</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4 py-3 text-muted small fw-semibold">Device</th>
+                                    <th class="py-3 text-muted small fw-semibold">Location</th>
+                                    <th class="py-3 text-muted small fw-semibold">Last Active</th>
+                                    <th class="py-3 text-muted small fw-semibold">Status</th>
+                                    <th class="pe-4 py-3 text-end text-muted small fw-semibold">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium small">
+                                        <i class="bi bi-laptop text-muted me-2"></i> Mac OS (Chrome)
+                                    </td>
+                                    <td class="py-3 text-muted small">Kathmandu, NP</td>
+                                    <td class="py-3 text-muted small">Current Session</td>
+                                    <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <span class="text-muted small">Current</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 py-3 fw-medium small">
+                                        <i class="bi bi-phone text-muted me-2"></i> iPhone 14 (Safari)
+                                    </td>
+                                    <td class="py-3 text-muted small">Kathmandu, NP</td>
+                                    <td class="py-3 text-muted small">2 hours ago</td>
+                                    <td class="py-3"><span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">Inactive</span></td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <a href="#" class="text-danger small fw-medium text-decoration-none">Revoke</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. API & WEBHOOKS -->
+            <div class="tab-pane fade" id="v-pills-api" role="tabpanel" aria-labelledby="v-pills-api-tab" tabindex="0">
+                <ul class="nav nav-pills mb-4 gap-2" id="api-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill px-4" id="apikeys-tab" data-bs-toggle="pill" data-bs-target="#apikeys-content" type="button" role="tab" aria-controls="apikeys-content" aria-selected="true">API Keys</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill px-4" id="webhooks-tab" data-bs-toggle="pill" data-bs-target="#webhooks-content" type="button" role="tab" aria-controls="webhooks-content" aria-selected="false">Webhooks</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="api-tabContent">
+                    <div class="tab-pane fade show active" id="apikeys-content" role="tabpanel" aria-labelledby="apikeys-tab" tabindex="0">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                                <h6 class="fw-bold mb-0">API Keys</h6>
+                                <button class="btn btn-sm btn-primary rounded-pill px-3 fw-medium" data-bs-toggle="modal" data-bs-target="#apiKeyModal">Generate New Key</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table mb-0 align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="ps-4 py-3 text-muted small fw-semibold">Key Name</th>
+                                            <th class="py-3 text-muted small fw-semibold">Permissions</th>
+                                            <th class="py-3 text-muted small fw-semibold">Created</th>
+                                            <th class="py-3 text-muted small fw-semibold">Last Used</th>
+                                            <th class="pe-4 py-3 text-end text-muted small fw-semibold">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border-top-0">
+                                        <tr>
+                                            <td class="ps-4 py-3 fw-medium small">Frontend Storefront</td>
+                                            <td class="py-3"><span class="badge bg-light text-dark border rounded-pill">Read-Only</span></td>
+                                            <td class="py-3 text-muted small">Oct 1, 2026</td>
+                                            <td class="py-3 text-muted small">Just now</td>
+                                            <td class="pe-4 py-3 text-end">
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">View</button>
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">Edit</button>
+                                                <button class="btn btn-sm btn-light text-danger rounded-pill px-2">Revoke</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4 py-3 fw-medium small">Mobile App Backend</td>
+                                            <td class="py-3"><span class="badge bg-light text-dark border rounded-pill">Read & Write</span></td>
+                                            <td class="py-3 text-muted small">Oct 4, 2026</td>
+                                            <td class="py-3 text-muted small">2 hours ago</td>
+                                            <td class="pe-4 py-3 text-end">
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">View</button>
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">Edit</button>
+                                                <button class="btn btn-sm btn-light text-danger rounded-pill px-2">Revoke</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="webhooks-content" role="tabpanel" aria-labelledby="webhooks-tab" tabindex="0">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                                <h6 class="fw-bold mb-0">Webhooks</h6>
+                                <button class="btn btn-sm btn-primary rounded-pill px-3 fw-medium">Create Webhook</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table mb-0 align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="ps-4 py-3 text-muted small fw-semibold">Event</th>
+                                            <th class="py-3 text-muted small fw-semibold">Endpoint</th>
+                                            <th class="py-3 text-muted small fw-semibold">Status</th>
+                                            <th class="py-3 text-muted small fw-semibold">Last Triggered</th>
+                                            <th class="pe-4 py-3 text-end text-muted small fw-semibold">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border-top-0">
+                                        <tr>
+                                            <td class="ps-4 py-3 fw-medium small">Order Created</td>
+                                            <td class="py-3 text-muted small font-monospace">https://api.myerp.com/webhook</td>
+                                            <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                            <td class="py-3 text-muted small">Yesterday</td>
+                                            <td class="pe-4 py-3 text-end">
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">Edit</button>
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">Test</button>
+                                                <button class="btn btn-sm btn-light text-danger rounded-pill px-2">Disable</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4 py-3 fw-medium small">Payment Successful</td>
+                                            <td class="py-3 text-muted small font-monospace">https://hooks.slack.com/services/...</td>
+                                            <td class="py-3"><span class="badge bg-success bg-opacity-10 text-success rounded-pill">Active</span></td>
+                                            <td class="py-3 text-muted small">2 hours ago</td>
+                                            <td class="pe-4 py-3 text-end">
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">Edit</button>
+                                                <button class="btn btn-sm btn-light text-primary rounded-pill px-2 me-1">Test</button>
+                                                <button class="btn btn-sm btn-light text-danger rounded-pill px-2">Disable</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. SEO & SOCIAL -->
+            <div class="tab-pane fade" id="v-pills-seo" role="tabpanel" aria-labelledby="v-pills-seo-tab" tabindex="0">
+                <ul class="nav nav-pills mb-4 gap-2" id="seo-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill px-4" id="seotab" data-bs-toggle="pill" data-bs-target="#seo-content" type="button" role="tab" aria-controls="seo-content" aria-selected="true">SEO</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill px-4" id="social-tab" data-bs-toggle="pill" data-bs-target="#social-content" type="button" role="tab" aria-controls="social-content" aria-selected="false">Social Media</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="seo-tabContent">
+                    <div class="tab-pane fade show active" id="seo-content" role="tabpanel" aria-labelledby="seotab" tabindex="0">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Search Engine Optimization</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Site Title</label>
+                                        <input type="text" class="form-control bg-light border-0" value="My Premium Store | Quality Products">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Meta Description</label>
+                                        <textarea class="form-control bg-light border-0" rows="2">Shop the best premium products online. Fast delivery and secure payments.</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold small">Meta Keywords</label>
+                                        <input type="text" class="form-control bg-light border-0" value="premium, shop, online, ecommerce">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Google Site Verification</label>
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Verification ID">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small">Canonical URL</label>
+                                        <input type="text" class="form-control bg-light border-0" value="https://www.mystore.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input shadow-none" type="checkbox" id="genSitemap" checked>
+                                            <label class="form-check-label text-dark fw-medium small" for="genSitemap">Auto-generate Sitemap</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input shadow-none" type="checkbox" id="genRobots" checked>
+                                            <label class="form-check-label text-dark fw-medium small" for="genRobots">Enable default Robots.txt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                                <h6 class="fw-bold mb-0">Social Preview (Open Graph)</h6>
+                            </div>
+                            <div class="card-body p-4 row g-4">
+                                <div class="col-md-7">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold small">OG Title</label>
+                                        <input type="text" class="form-control bg-light border-0" value="My Premium Store">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold small">OG Description</label>
+                                        <textarea class="form-control bg-light border-0" rows="2">Shop the best premium products online.</textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold small">OG Image URL</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0" value="https://mystore.com/og-image.jpg">
+                                            <button class="btn btn-outline-secondary">Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label fw-semibold small">Preview</label>
+                                    <div class="border rounded shadow-sm overflow-hidden bg-white">
+                                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                            <i class="bi bi-image text-muted fs-1"></i>
+                                        </div>
+                                        <div class="p-3 bg-light border-top">
+                                            <small class="text-muted text-uppercase" style="font-size:0.7rem;">MYSTORE.COM</small>
+                                            <h6 class="fw-bold mb-1 text-truncate">My Premium Store</h6>
+                                            <p class="small text-muted mb-0 text-truncate">Shop the best premium products online.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="social-content" role="tabpanel" aria-labelledby="social-tab" tabindex="0">
+                        <div class="row g-3 mb-4">
+                            @{ 
+                                var socials = new [] {
+                                    new { Name="Facebook", Icon="bi-facebook", Color="#1877F2", Conn=true },
+                                    new { Name="Instagram", Icon="bi-instagram", Color="#E4405F", Conn=true },
+                                    new { Name="TikTok", Icon="bi-tiktok", Color="#000000", Conn=false },
+                                    new { Name="YouTube", Icon="bi-youtube", Color="#FF0000", Conn=false },
+                                    new { Name="X / Twitter", Icon="bi-twitter-x", Color="#000000", Conn=true },
+                                    new { Name="WhatsApp", Icon="bi-whatsapp", Color="#25D366", Conn=false }
+                                };
+                            }
+                            @foreach(var social in socials)
+                            {
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm rounded-4 @(!social.Conn ? "opacity-75" : "")">
+                                        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="rounded p-2 text-white d-flex align-items-center justify-content-center" style="background-color: @social.Color; font-size: 1.5rem; width: 48px; height: 48px;">
+                                                    <i class="bi @social.Icon"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                                        <h6 class="fw-bold mb-0">@social.Name</h6>
+                                                    </div>
+                                                    @if(social.Conn)
+                                                    {
+                                                        <p class="text-muted small mb-0 text-truncate" style="max-width:150px;">mystore_official</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-muted small mb-0">Not Connected</p>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Configure</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. DELETE STORE -->
+            <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab" tabindex="0">
+                <div class="card border border-danger shadow-sm rounded-4 bg-danger bg-opacity-10 mb-4">
+                    <div class="card-body p-5 text-center">
+                        <i class="bi bi-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                        <h4 class="fw-bold text-danger mt-3 mb-2">Delete Store</h4>
+                        <p class="text-danger mb-4">Permanently delete your store and its data. This action cannot be undone.</p>
+                        <button class="btn btn-danger rounded-pill px-5 py-2 fw-medium shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteStoreModal">
+                            Delete Store
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+
+<!-- API Key Generate Modal -->
+<div class="modal fade" id="apiKeyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Generate API Key</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Key Name</label>
+                    <input type="text" class="form-control bg-light border-0" placeholder="e.g. Warehouse Integration">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold small">Permissions</label>
+                    <select class="form-select bg-light border-0">
+                        <option>Read Only</option>
+                        <option>Read & Write</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary w-100 rounded-pill py-2">Generate Key</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Config Modal -->
+<div class="modal fade" id="paymentConfigModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Configure Payment Gateway</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input shadow-none" type="checkbox" id="testMode" checked>
+                    <label class="form-check-label text-dark fw-medium small" for="testMode">Enable Test Mode</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Merchant ID</label>
+                    <input type="text" class="form-control bg-light border-0" value="MERCH_12345">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">API Key</label>
+                    <input type="password" class="form-control bg-light border-0" value="apikey_xxxxx">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Secret Key</label>
+                    <input type="password" class="form-control bg-light border-0" value="secret_xxxxx">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold small">Webhook URL</label>
+                    <input type="text" class="form-control bg-light border-0 text-muted small" value="https://mystore.com/api/webhooks/payment" readonly>
+                </div>
+                <button class="btn btn-primary w-100 rounded-pill py-2">Save Configuration</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Store Modal -->
+<div class="modal fade" id="deleteStoreModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold text-danger">Delete Store?</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-dark fw-medium">This action is permanent.</p>
+                <ul class="text-muted small mb-4">
+                    <li>Store data will be deleted.</li>
+                    <li>Products/orders/customers/settings will be removed.</li>
+                    <li>This cannot be undone.</li>
+                </ul>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold small text-danger">Type DELETE to confirm</label>
+                    <input type="text" class="form-control border-danger bg-danger bg-opacity-10 text-danger fw-bold" placeholder="">
+                </div>
+                <button class="btn btn-danger w-100 rounded-pill py-2 shadow-sm" data-bs-dismiss="modal">I Understand, Delete Store</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Notification Toast (Mock) -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+    <div id="saveToast" class="toast align-items-center text-white bg-success border-0 rounded-3 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body fw-medium">
+                <i class="bi bi-check-circle me-2"></i> Settings saved successfully.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-v-pills .nav-link {
+        color: #495057;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+    .custom-v-pills .nav-link:hover {
+        background-color: #f8f9fa;
+    }
+    .custom-v-pills .nav-link.active {
+        color: #0d6efd;
+        background-color: #e9ecef;
+        font-weight: 600;
+    }
+    @@media (max-width: 768px) {
+        .custom-v-pills {
+            flex-direction: row !important;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+        }
+        .custom-v-pills .nav-link {
+            white-space: nowrap;
+            margin-right: 0.5rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fix modal backdrop issues by moving modals to body
+        document.body.appendChild(document.getElementById('apiKeyModal'));
+        document.body.appendChild(document.getElementById('paymentConfigModal'));
+        document.body.appendChild(document.getElementById('deleteStoreModal'));
+        
+        // Mock save button
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const toast = new bootstrap.Toast(document.getElementById('saveToast'));
+            toast.show();
+        });
+    });
+</script>

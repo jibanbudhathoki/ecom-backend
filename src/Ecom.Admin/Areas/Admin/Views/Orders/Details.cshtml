@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Orders</a></li>
+                <li class="breadcrumb-item active" aria-current="page">#ORD-1001</li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-3">
+            <h2 class="h3 mb-0 text-gray-800 fw-bold">#ORD-1001</h2>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2"><i class="bi bi-check-circle me-1"></i> Paid</span>
+            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-3 py-2"><i class="bi bi-clock me-1"></i> Unfulfilled</span>
+        </div>
+        <p class="text-muted mt-2 mb-0 small">Oct 4, 2026 at 10:23 AM</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-light px-4 py-2 rounded-pill shadow-sm border text-muted">
+            <i class="bi bi-printer me-1"></i> Print
+        </button>
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+            Fulfill Items
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                <h6 class="fw-bold mb-0">Order Items (2)</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="text-center p-5 text-muted">
+                    <i class="bi bi-box-seam fs-1 mb-3 text-secondary opacity-50"></i>
+                    <p class="mb-0">Item breakdown UI coming soon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">Customer</h6>
+                <a href="#" class="text-decoration-none small text-primary fw-medium">Edit</a>
+            </div>
+            <div class="card-body p-4">
+                 <div class="text-center py-4 text-muted">
+                    <i class="bi bi-person fs-1 mb-3 text-secondary opacity-50"></i>
+                    <p class="mb-0">Customer details coming soon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

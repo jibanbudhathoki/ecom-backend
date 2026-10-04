@@ -1,0 +1,381 @@
+@{
+    ViewData["Title"] = "Navigation";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Navigation</h2>
+        <p class="text-muted mb-0 small">Manage your store's menus and links.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Left Column: Menu List -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Menus</h6>
+                <button class="btn btn-sm btn-outline-primary shadow-none rounded-pill fw-medium"><i class="bi bi-plus-lg me-1"></i> Add Menu</button>
+            </div>
+            <div class="list-group list-group-flush rounded-bottom-4" id="menuList">
+                <button class="list-group-item list-group-item-action p-4 border-bottom active" onclick="switchMenu('main', this)">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <h6 class="mb-1 fw-bold menu-title">Main Menu</h6>
+                        <small>5 items</small>
+                    </div>
+                    <p class="mb-0 small opacity-75">Used in header</p>
+                </button>
+                <button class="list-group-item list-group-item-action p-4 border-bottom" onclick="switchMenu('footer', this)">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <h6 class="mb-1 fw-bold text-dark menu-title">Footer Menu</h6>
+                        <small class="text-muted">3 items</small>
+                    </div>
+                    <p class="mb-0 small text-muted">Used in footer</p>
+                </button>
+                <button class="list-group-item list-group-item-action p-4 border-bottom" onclick="switchMenu('top', this)">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <h6 class="mb-1 fw-bold text-dark menu-title">Top Menu</h6>
+                        <small class="text-muted">2 items</small>
+                    </div>
+                    <p class="mb-0 small text-muted">Used in top bar</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Menu Editor -->
+    <div class="col-md-8">
+        
+        <!-- Editor: Main Menu -->
+        <div class="card border-0 shadow-sm rounded-4 menu-editor" id="editor-main">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Main Menu Links</h6>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-danger rounded-pill shadow-none fw-medium"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-light border rounded-pill shadow-none fw-medium text-dark">Rename</button>
+                    <button class="btn btn-sm btn-primary rounded-pill shadow-none fw-medium" onclick="showSaveToast()"><i class="bi bi-check2 me-1"></i> Save Links</button>
+                </div>
+            </div>
+            
+            <div class="card-body p-4 bg-light">
+                <div class="d-flex justify-content-between mb-3">
+                    <p class="text-muted small mb-0">Drag and drop to reorder. You can also nest links to create dropdown menus.</p>
+                </div>
+
+                <div id="navigationBuilderMain" class="d-flex flex-column gap-2 mb-4 sortable-root">
+                    
+                    <!-- Link 1 -->
+                    <div class="card border shadow-sm rounded-3">
+                        <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3 w-100">
+                                <i class="bi bi-grip-vertical text-muted drag-handle fs-5"></i>
+                                <div class="row g-2 flex-grow-1 align-items-center">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control form-control-sm shadow-none" value="Home">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                            <input type="text" class="form-control shadow-none border-start-0" value="/">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-light rounded-circle text-danger shadow-none" title="Remove Link"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Link 2 with Sub-links -->
+                    <div class="card border shadow-sm rounded-3">
+                        <div class="card-body p-3">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center gap-3 w-100">
+                                    <i class="bi bi-grip-vertical text-muted drag-handle fs-5"></i>
+                                    <div class="row g-2 flex-grow-1 align-items-center">
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control form-control-sm shadow-none" value="Shop">
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                                <input type="text" class="form-control shadow-none border-start-0" value="/collections/all">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ms-3 flex-shrink-0">
+                                    <button class="btn btn-sm btn-light rounded-circle text-danger shadow-none" title="Remove Link"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                            
+                            <!-- Nested links list -->
+                            <div class="ms-4 ps-3 border-start border-2 mt-3 nested-sortable" style="min-height: 10px;">
+                                <div class="card border-0 bg-light rounded-3 mb-2">
+                                    <div class="card-body p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center gap-2 w-100">
+                                            <i class="bi bi-grip-vertical text-muted drag-handle"></i>
+                                            <div class="row g-2 flex-grow-1">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-control-sm shadow-none bg-white" value="Electronics">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                                        <input type="text" class="form-control shadow-none border-start-0 bg-white" value="/collections/electronics">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ms-2 flex-shrink-0">
+                                            <button class="btn btn-sm btn-link text-danger shadow-none p-0"><i class="bi bi-x-circle"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card border-0 bg-light rounded-3 mb-2">
+                                    <div class="card-body p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center gap-2 w-100">
+                                            <i class="bi bi-grip-vertical text-muted drag-handle"></i>
+                                            <div class="row g-2 flex-grow-1">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-control-sm shadow-none bg-white" value="Fashion">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                                        <input type="text" class="form-control shadow-none border-start-0 bg-white" value="/collections/fashion">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ms-2 flex-shrink-0">
+                                            <button class="btn btn-sm btn-link text-danger shadow-none p-0"><i class="bi bi-x-circle"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-4 ps-3 mt-2">
+                                <button class="btn btn-sm btn-link text-primary text-decoration-none p-0 small fw-medium"><i class="bi bi-plus"></i> Add Sub-link</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline-primary border-dashed rounded-3 w-100 py-3 fw-medium shadow-none"><i class="bi bi-plus-circle me-2"></i>Add New Link</button>
+            </div>
+        </div>
+
+        <!-- Editor: Footer Menu -->
+        <div class="card border-0 shadow-sm rounded-4 menu-editor d-none" id="editor-footer">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Footer Menu Links</h6>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-danger rounded-pill shadow-none fw-medium"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-light border rounded-pill shadow-none fw-medium text-dark">Rename</button>
+                    <button class="btn btn-sm btn-primary rounded-pill shadow-none fw-medium" onclick="showSaveToast()"><i class="bi bi-check2 me-1"></i> Save Links</button>
+                </div>
+            </div>
+            
+            <div class="card-body p-4 bg-light">
+                <div class="d-flex justify-content-between mb-3">
+                    <p class="text-muted small mb-0">Drag and drop to reorder. You can also nest links to create dropdown menus.</p>
+                </div>
+
+                <div id="navigationBuilderFooter" class="d-flex flex-column gap-2 mb-4 sortable-root">
+                    
+                    <!-- Link 1 -->
+                    <div class="card border shadow-sm rounded-3">
+                        <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3 w-100">
+                                <i class="bi bi-grip-vertical text-muted drag-handle fs-5"></i>
+                                <div class="row g-2 flex-grow-1 align-items-center">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control form-control-sm shadow-none" value="Support">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                            <input type="text" class="form-control shadow-none border-start-0" value="/pages/support">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-light rounded-circle text-danger shadow-none"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Link 2 -->
+                    <div class="card border shadow-sm rounded-3">
+                        <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3 w-100">
+                                <i class="bi bi-grip-vertical text-muted drag-handle fs-5"></i>
+                                <div class="row g-2 flex-grow-1 align-items-center">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control form-control-sm shadow-none" value="FAQ">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                            <input type="text" class="form-control shadow-none border-start-0" value="/pages/faq">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-light rounded-circle text-danger shadow-none"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="btn btn-outline-primary border-dashed rounded-3 w-100 py-3 fw-medium shadow-none"><i class="bi bi-plus-circle me-2"></i>Add New Link</button>
+            </div>
+        </div>
+
+
+
+        <!-- Editor: Top Links -->
+        <div class="card border-0 shadow-sm rounded-4 menu-editor d-none" id="editor-top">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Top Menu Links</h6>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-danger rounded-pill shadow-none fw-medium"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-light border rounded-pill shadow-none fw-medium text-dark">Rename</button>
+                    <button class="btn btn-sm btn-primary rounded-pill shadow-none fw-medium" onclick="showSaveToast()"><i class="bi bi-check2 me-1"></i> Save Links</button>
+                </div>
+            </div>
+            
+            <div class="card-body p-4 bg-light">
+                <div class="d-flex justify-content-between mb-3">
+                    <p class="text-muted small mb-0">Drag and drop to reorder. You can also nest links to create dropdown menus.</p>
+                </div>
+
+                <div id="navigationBuilderTop" class="d-flex flex-column gap-2 mb-4 sortable-root">
+                    
+                    <!-- Link 1 -->
+                    <div class="card border shadow-sm rounded-3">
+                        <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3 w-100">
+                                <i class="bi bi-grip-vertical text-muted drag-handle fs-5"></i>
+                                <div class="row g-2 flex-grow-1 align-items-center">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control form-control-sm shadow-none" value="Track Order">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                            <input type="text" class="form-control shadow-none border-start-0" value="/orders/track">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-light rounded-circle text-danger shadow-none"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Link 2 -->
+                    <div class="card border shadow-sm rounded-3">
+                        <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3 w-100">
+                                <i class="bi bi-grip-vertical text-muted drag-handle fs-5"></i>
+                                <div class="row g-2 flex-grow-1 align-items-center">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control form-control-sm shadow-none" value="Help Center">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-link-45deg"></i></span>
+                                            <input type="text" class="form-control shadow-none border-start-0" value="/pages/help">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-light rounded-circle text-danger shadow-none"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="btn btn-outline-primary border-dashed rounded-3 w-100 py-3 fw-medium shadow-none"><i class="bi bi-plus-circle me-2"></i>Add New Link</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="saveToast" class="toast align-items-center text-bg-success border-0 rounded-3 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body d-flex align-items-center fw-medium">
+                <i class="bi bi-check-circle-fill fs-5 me-2"></i>
+                Menu links saved successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .drag-handle { cursor: grab; }
+    .drag-handle:active { cursor: grabbing; }
+    .border-dashed { border-style: dashed !important; border-width: 2px !important; }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all main sortable roots
+        document.querySelectorAll('.sortable-root').forEach(function(el) {
+            new Sortable(el, {
+                group: 'nested', 
+                handle: '.drag-handle',
+                animation: 150,
+                fallbackOnBody: true,
+                swapThreshold: 0.65
+            });
+        });
+
+        // Initialize nested containers
+        document.querySelectorAll('.nested-sortable').forEach(function(el) {
+            new Sortable(el, {
+                group: 'nested',
+                handle: '.drag-handle',
+                animation: 150,
+                fallbackOnBody: true,
+                swapThreshold: 0.65
+            });
+        });
+    });
+
+    function showSaveToast() {
+        const toast = new bootstrap.Toast(document.getElementById('saveToast'));
+        toast.show();
+    }
+
+    function switchMenu(menuId, btn) {
+        // Update active state in left sidebar
+        const buttons = document.querySelectorAll('#menuList .list-group-item');
+        buttons.forEach(b => {
+            b.classList.remove('active');
+            b.querySelector('.menu-title').classList.add('text-dark');
+        });
+        
+        btn.classList.add('active');
+        btn.querySelector('.menu-title').classList.remove('text-dark');
+
+        // Hide all editors
+        document.querySelectorAll('.menu-editor').forEach(editor => {
+            editor.classList.add('d-none');
+        });
+
+        // Show the selected editor
+        document.getElementById('editor-' + menuId).classList.remove('d-none');
+    }
+</script>
