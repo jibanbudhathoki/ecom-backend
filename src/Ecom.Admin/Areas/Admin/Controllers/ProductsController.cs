@@ -1,5 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using Ecom.Application.Features.Products.Queries;
+using Ecom.Application.Features.Products.Commands;
+using Ecom.Application.Features.Categories.Queries;
+using Ecom.Application.Features.Brands.Queries;
+using System.Threading.Tasks;
 
 namespace Ecom.Admin.Areas.Admin.Controllers
 {
@@ -7,22 +13,55 @@ namespace Ecom.Admin.Areas.Admin.Controllers
     [Authorize]
     public class ProductsController : Controller
     {
-        public IActionResult Index()
+        private readonly IMediator _mediator;
+
+        public ProductsController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var products = await _mediator.Send(new GetProductsQuery());
+            return View(products);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["Action"] = "Create";
+            await PopulateDropdowns();
             return View();
         }
 
-        public IActionResult Edit(int id)
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductCommand command)
         {
-            ViewData["Action"] = "Edit";
-            return View("Create");
+            if (!ModelState.IsValid)
+            {
+                await PopulateDropdowns();
+                return View(command);
+            }
+
+            var result = await _mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                await PopulateDropdowns();
+                return View(command);
+            }
+
+            TempData["SuccessMessage"] = "Product created successfully!";
+            return RedirectToAction(nameof(Index));
+        }
+        
+        private async Task PopulateDropdowns()
+        {
+            ViewBag.Categories = await _mediator.Send(new GetCategoriesQuery());
+            ViewBag.Brands = await _mediator.Send(new GetBrandsQuery());
         }
     }
 }

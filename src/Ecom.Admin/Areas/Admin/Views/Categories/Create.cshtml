@@ -1,5 +1,7 @@
+@model Ecom.Application.Features.Categories.Commands.CreateCategoryCommand
+
 @{
-    ViewData["Title"] = ViewData["Action"]?.ToString() == "Edit" ? "Edit Category" : "Add Category";
+    ViewData["Title"] = "Add Category";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -7,7 +9,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-1">
                 <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Categories</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@(ViewData["Action"]?.ToString() == "Edit" ? "Edit" : "Add") Category</li>
+                <li class="breadcrumb-item active" aria-current="page">Add Category</li>
             </ol>
         </nav>
         <h2 class="h3 mb-0 text-gray-800 fw-bold">Add New Category</h2>
@@ -20,7 +22,9 @@
     </div>
 </div>
 
-<form id="categoryForm">
+<form id="categoryForm" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
     <div class="row g-4">
         <!-- Left Column: Main Details -->
         <div class="col-lg-8">
@@ -30,13 +34,20 @@
                     <h6 class="fw-bold mb-3">Basic Information</h6>
                     
                     <div class="mb-3">
-                        <label for="name" class="form-label fw-semibold small">Category Name</label>
-                        <input type="text" class="form-control bg-light border-0" id="name" placeholder="e.g. Wearables" required>
+                        <label asp-for="Name" class="form-label fw-semibold small">Category Name</label>
+                        <input asp-for="Name" class="form-control bg-light border-0" placeholder="e.g. Electronics" required>
+                        <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="form-label fw-semibold small">Slug (URL)</label>
+                        <input asp-for="Slug" class="form-control bg-light border-0" placeholder="e.g. electronics" required>
+                        <span asp-validation-for="Slug" class="text-danger small mt-1 d-block"></span>
                     </div>
 
                     <div class="mb-0">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <label for="description" class="form-label fw-semibold small mb-0">Description</label>
+                            <label asp-for="Description" class="form-label fw-semibold small mb-0">Description</label>
                             <div class="form-check form-switch mb-0">
                                 <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText" checked>
                                 <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
@@ -54,31 +65,9 @@
                                 <div class="vr mx-1"></div>
                                 <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-link-45deg"></i></button>
                             </div>
-                            <textarea class="form-control border-0 bg-light shadow-none" id="description" rows="4" placeholder="Brief description of the category..."></textarea>
+                            <textarea asp-for="Description" class="form-control border-0 bg-light shadow-none" rows="4" placeholder="Brief description of the category..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small mt-1 d-block"></span>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Assign Products Card -->
-            <div class="card border-0 shadow-sm rounded-4 mb-3">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="fw-bold mb-0">Assign Products</h6>
-                        <span class="badge bg-light text-dark border rounded-pill">0 Selected</span>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
-                            <input type="text" class="form-control bg-light border-0 shadow-none" placeholder="Search products to add...">
-                        </div>
-                    </div>
-
-                    <!-- Selected Products Preview List -->
-                    <div class="border rounded bg-light p-3 text-center text-muted" style="border-style: dashed !important;">
-                        <i class="bi bi-box-seam fs-3 mb-2 d-block opacity-50"></i>
-                        <p class="small mb-0">Search and select products to add them to this category.</p>
                     </div>
                 </div>
             </div>
@@ -95,21 +84,39 @@
                     <h6 class="fw-bold mb-3">Organization</h6>
                     
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Parent Category</label>
-                        <select class="form-select bg-light border-0">
+                        <label asp-for="ParentCategoryId" class="form-label fw-semibold small">Parent Category</label>
+                        <select asp-for="ParentCategoryId" class="form-select bg-light border-0">
                             <option value="">None (Top Level)</option>
-                            <option value="1">Electronics</option>
-                            <option value="2">Accessories</option>
+                            @if (ViewBag.Categories != null)
+                            {
+                                foreach (var cat in ViewBag.Categories)
+                                {
+                                    <option value="@cat.Id">@cat.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="ParentCategoryId" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Status</label>
+                        <select asp-for="IsActive" class="form-select bg-light border-0">
+                            <option value="true">Active</option>
+                            <option value="false">Hidden</option>
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsFeatured" class="form-check-input shadow-none" type="checkbox">
+                            <label asp-for="IsFeatured" class="form-check-label small text-muted">Featured Category</label>
+                        </div>
+                    </div>
+                    
                     <div class="mb-0">
-                        <label class="form-label fw-semibold small">Status</label>
-                        <select class="form-select bg-light border-0">
-                            <option value="Active">Active</option>
-                            <option value="Hidden">Hidden</option>
-                            <option value="Draft">Draft</option>
-                        </select>
+                        <label asp-for="DisplayOrder" class="form-label fw-semibold small">Display Order</label>
+                        <input asp-for="DisplayOrder" type="number" class="form-control bg-light border-0" value="0">
+                        <span asp-validation-for="DisplayOrder" class="text-danger small mt-1 d-block"></span>
                     </div>
                 </div>
             </div>
@@ -130,19 +137,32 @@
     </div>
 </form>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Toggle Rich Text Toolbar
-        const toggleRichText = document.getElementById('toggleRichText');
-        const richTextToolbar = document.getElementById('richTextToolbar');
-        if (toggleRichText && richTextToolbar) {
-            toggleRichText.addEventListener('change', (e) => {
-                if(e.target.checked) {
-                    richTextToolbar.classList.remove('d-none');
-                } else {
-                    richTextToolbar.classList.add('d-none');
-                }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle Rich Text Toolbar
+            const toggleRichText = document.getElementById('toggleRichText');
+            const richTextToolbar = document.getElementById('richTextToolbar');
+            if (toggleRichText && richTextToolbar) {
+                toggleRichText.addEventListener('change', (e) => {
+                    if(e.target.checked) {
+                        richTextToolbar.classList.remove('d-none');
+                    } else {
+                        richTextToolbar.classList.add('d-none');
+                    }
+                });
+            }
+
+            // Auto-generate slug from name
+            document.getElementById('Name').addEventListener('input', function() {
+                let name = this.value;
+                let slug = name.toLowerCase()
+                               .replace(/[^a-z0-9]+/g, '-')
+                               .replace(/^-+|-+$/g, '');
+                document.getElementById('Slug').value = slug;
             });
-        }
-    });
-</script>
+        });
+    </script>
+}

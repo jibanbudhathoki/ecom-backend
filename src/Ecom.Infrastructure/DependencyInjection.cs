@@ -19,6 +19,8 @@ namespace Ecom.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
+            services.AddScoped<Ecom.Application.Common.Interfaces.IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -34,6 +36,7 @@ namespace Ecom.Infrastructure
             configuration.GetSection(JwtOptions.SectionName).Bind(jwtOptions);
             services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<Ecom.Application.Common.Interfaces.IIdentityService, IdentityService>();
 
             services.AddAuthentication(options =>
             {

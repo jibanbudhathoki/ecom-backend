@@ -1,9 +1,13 @@
 using Ecom.Infrastructure;
+using Ecom.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Application services
+builder.Services.AddApplicationServices();
 
 // Add Infrastructure services (DbContext, Identity)
 builder.Services.AddInfrastructureServices(builder.Configuration);

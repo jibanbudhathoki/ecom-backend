@@ -16,7 +16,13 @@ namespace Ecom.Infrastructure.Persistence
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-                var adminRole = new ApplicationRole { Name = "Admin" };
+                var adminRole = new ApplicationRole 
+                { 
+                    Name = "Admin",
+                    Description = "Super Administrator with full access.",
+                    IsSystemRole = true,
+                    PermissionsJson = "{\"All\": true}"
+                };
                 if (await roleManager.FindByNameAsync(adminRole.Name!) == null)
                 {
                     await roleManager.CreateAsync(adminRole);
@@ -26,6 +32,8 @@ namespace Ecom.Infrastructure.Persistence
                 {
                     UserName = "admin@ecom.com",
                     Email = "admin@ecom.com",
+                    FirstName = "System",
+                    LastName = "Administrator",
                     EmailConfirmed = true
                 };
 

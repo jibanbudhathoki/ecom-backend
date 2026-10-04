@@ -1,5 +1,8 @@
+@model Ecom.Application.Features.Products.Commands.CreateProductCommand
 @{
     ViewData["Title"] = ViewData["Action"]?.ToString() == "Edit" ? "Edit Product" : "Add Product";
+    var categories = ViewBag.Categories as List<Ecom.Application.Features.Categories.Queries.CategoryDto> ?? new();
+    var brands = ViewBag.Brands as List<Ecom.Application.Features.Brands.Queries.BrandDto> ?? new();
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -20,7 +23,8 @@
     </div>
 </div>
 
-<form id="productForm">
+<form id="productForm" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
     <div class="row g-4">
         <!-- Left Column: Main Details -->
         <div class="col-lg-8">
@@ -30,13 +34,14 @@
                     <h6 class="fw-bold mb-3">Basic Information</h6>
                     
                     <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold small">Product Title</label>
-                        <input type="text" class="form-control bg-light border-0" id="title" placeholder="e.g. Apple Watch Series 9" required>
+                        <label asp-for="Name" class="form-label fw-semibold small">Product Title</label>
+                        <input asp-for="Name" type="text" class="form-control bg-light border-0" placeholder="e.g. Apple Watch Series 9" required>
+                        <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
                     </div>
                     
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <label for="description" class="form-label fw-semibold small mb-0">Description</label>
+                            <label asp-for="Description" class="form-label fw-semibold small mb-0">Description</label>
                             <div class="form-check form-switch mb-0">
                                 <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText" checked>
                                 <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
@@ -55,7 +60,8 @@
                                 <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-link-45deg"></i></button>
                                 <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-image"></i></button>
                             </div>
-                            <textarea class="form-control border-0 bg-light shadow-none" id="description" rows="5" placeholder="Detailed product description..."></textarea>
+                            <textarea asp-for="Description" class="form-control border-0 bg-light shadow-none" rows="5" placeholder="Detailed product description..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small mt-1 d-block"></span>
                         </div>
                     </div>
 
@@ -148,17 +154,18 @@
                     
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label for="price" class="form-label fw-semibold small">Price</label>
+                            <label asp-for="Price" class="form-label fw-semibold small">Price</label>
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">$</span>
-                                <input type="number" step="0.01" class="form-control bg-light border-0 rounded-end-pill shadow-none" id="price" placeholder="0.00" required>
+                                <input asp-for="Price" type="number" step="0.01" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="0.00" required>
                             </div>
+                            <span asp-validation-for="Price" class="text-danger small mt-1 d-block"></span>
                         </div>
                         <div class="col-md-6">
-                            <label for="comparePrice" class="form-label fw-semibold small">Compare at Price</label>
+                            <label asp-for="OldPrice" class="form-label fw-semibold small">Compare at Price</label>
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">$</span>
-                                <input type="number" step="0.01" class="form-control bg-light border-0 rounded-end-pill shadow-none" id="comparePrice" placeholder="0.00">
+                                <input asp-for="OldPrice" type="number" step="0.01" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="0.00">
                             </div>
                             <div class="form-text mt-2" style="font-size: 0.7rem;"><i class="bi bi-info-circle me-1"></i>To show a reduced price, move original price here.</div>
                         </div>
@@ -229,7 +236,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="fw-medium small">Midnight</td>
+                                    <td class="fw-medium small">
+                                        <input type="hidden" name="Variants[0].Name" value="Midnight" />
+                                        <input type="hidden" name="Variants[0].IsActive" value="true" />
+                                        Midnight
+                                    </td>
                                     <td>
                                         <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
                                             <i class="bi bi-image"></i>
@@ -238,17 +249,21 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="$399.00" style="width: 80px;">
+                                        <input type="number" name="Variants[0].Price" step="0.01" class="form-control form-control-sm bg-light border-0" value="399.00" style="width: 80px;">
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm bg-light border-0" value="10" style="width: 70px;">
+                                        <input type="number" name="Variants[0].StockQuantity" class="form-control form-control-sm bg-light border-0" value="10" style="width: 70px;">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="APP-AW9-MID" style="width: 120px;">
+                                        <input type="text" name="Variants[0].SKU" class="form-control form-control-sm bg-light border-0" value="APP-AW9-MID" style="width: 120px;">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="fw-medium small">Starlight</td>
+                                    <td class="fw-medium small">
+                                        <input type="hidden" name="Variants[1].Name" value="Starlight" />
+                                        <input type="hidden" name="Variants[1].IsActive" value="true" />
+                                        Starlight
+                                    </td>
                                     <td>
                                         <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
                                             <i class="bi bi-image"></i>
@@ -257,13 +272,13 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="$399.00" style="width: 80px;">
+                                        <input type="number" name="Variants[1].Price" step="0.01" class="form-control form-control-sm bg-light border-0" value="399.00" style="width: 80px;">
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm bg-light border-0" value="15" style="width: 70px;">
+                                        <input type="number" name="Variants[1].StockQuantity" class="form-control form-control-sm bg-light border-0" value="15" style="width: 70px;">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control form-control-sm bg-light border-0" value="APP-AW9-STAR" style="width: 120px;">
+                                        <input type="text" name="Variants[1].SKU" class="form-control form-control-sm bg-light border-0" value="APP-AW9-STAR" style="width: 120px;">
                                     </td>
                                 </tr>
                             </tbody>
@@ -282,9 +297,9 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <h6 class="fw-bold mb-3">Status</h6>
-                    <select class="form-select bg-light border-0 shadow-none mb-3">
-                        <option value="active">Active</option>
-                        <option value="draft" selected>Draft</option>
+                    <select asp-for="IsActive" class="form-select bg-light border-0 shadow-none mb-3">
+                        <option value="true">Active</option>
+                        <option value="false">Draft</option>
                     </select>
                     <p class="text-muted small mb-0">This product will be hidden from all sales channels until published.</p>
                 </div>
@@ -296,32 +311,25 @@
                     <h6 class="fw-bold mb-3">Organization</h6>
                     
                     <div class="mb-3">
-                        <label class="form-label text-muted small fw-semibold text-uppercase">Category</label>
-                        <select class="form-select bg-light border-0 shadow-none">
+                        <label asp-for="CategoryId" class="form-label text-muted small fw-semibold text-uppercase">Category</label>
+                        <select asp-for="CategoryId" class="form-select bg-light border-0 shadow-none" required>
                             <option value="">Select Category...</option>
-                            <option value="1">Electronics</option>
-                            <option value="2">Clothing</option>
-                            <option value="3">Home & Garden</option>
+                            @foreach (var cat in categories)
+                            {
+                                <option value="@cat.Id">@cat.Name</option>
+                            }
                         </select>
+                        <span asp-validation-for="CategoryId" class="text-danger small mt-1 d-block"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small fw-semibold text-uppercase">Brand</label>
-                        <select class="form-select bg-light border-0 shadow-none">
+                        <label asp-for="BrandId" class="form-label text-muted small fw-semibold text-uppercase">Brand</label>
+                        <select asp-for="BrandId" class="form-select bg-light border-0 shadow-none">
                             <option value="">Select Brand...</option>
-                            <option value="1">Apple</option>
-                            <option value="2">Samsung</option>
-                            <option value="3">Sony</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-0">
-                        <label class="form-label text-muted small fw-semibold text-uppercase">Collection</label>
-                        <select class="form-select bg-light border-0 shadow-none">
-                            <option value="">Select Collection...</option>
-                            <option value="1">Summer 2026</option>
-                            <option value="2">New Arrivals</option>
-                            <option value="3">Clearance</option>
+                            @foreach (var brand in brands)
+                            {
+                                <option value="@brand.Id">@brand.Name</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -333,16 +341,19 @@
                     <h6 class="fw-bold mb-3">Inventory</h6>
                     
                     <div class="mb-3">
-                        <label class="form-label text-muted small fw-semibold text-uppercase">SKU (Stock Keeping Unit)</label>
-                        <input type="text" class="form-control bg-light border-0 shadow-none">
+                        <label asp-for="SKU" class="form-label text-muted small fw-semibold text-uppercase">SKU (Stock Keeping Unit)</label>
+                        <input asp-for="SKU" type="text" class="form-control bg-light border-0 shadow-none">
                     </div>
 
                     <div class="mb-0">
-                        <label class="form-label text-muted small fw-semibold text-uppercase">Quantity</label>
-                        <input type="number" class="form-control bg-light border-0 shadow-none" value="0">
+                        <label asp-for="StockQuantity" class="form-label text-muted small fw-semibold text-uppercase">Quantity</label>
+                        <input asp-for="StockQuantity" type="number" class="form-control bg-light border-0 shadow-none" value="0">
+                        <span asp-validation-for="StockQuantity" class="text-danger small mt-1 d-block"></span>
                     </div>
                 </div>
             </div>
+            
+            <input type="hidden" asp-for="Slug" id="Slug" />
         </div>
     </div>
 </form>
@@ -405,6 +416,19 @@
                 if (btn && btn.querySelector('.bi-x')) {
                     btn.closest('.d-flex').remove();
                 }
+            });
+        }
+        
+        // Auto-generate slug from name
+        const nameInput = document.getElementById('Name');
+        const slugInput = document.getElementById('Slug');
+        if (nameInput && slugInput) {
+            nameInput.addEventListener('input', function() {
+                let name = this.value;
+                let slug = name.toLowerCase()
+                               .replace(/[^a-z0-9]+/g, '-')
+                               .replace(/^-+|-+$/g, '');
+                slugInput.value = slug;
             });
         }
     });

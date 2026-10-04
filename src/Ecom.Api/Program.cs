@@ -1,5 +1,6 @@
 
 using Ecom.Infrastructure;
+using Ecom.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,9 @@ builder.Services.AddOpenApiDocument(config =>
     config.ApiGroupNames = new[] { "v1" };
 });
 builder.Services.AddHealthChecks();
+
+// Add Application services
+builder.Services.AddApplicationServices();
 
 // Add Infrastructure services
 builder.Services.AddInfrastructureServices(builder.Configuration);
