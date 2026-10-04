@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using MediatR;
+using Ecom.Application.Common.Models;
 
 namespace Ecom.Application.Features.Brands.Queries
 {
-    public class GetBrandsQuery : IRequest<List<BrandDto>>
+    public class GetBrandsQuery : PaginationRequest, IRequest<PagedResult<BrandDto>>
     {
     }
 }

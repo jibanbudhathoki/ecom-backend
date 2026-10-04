@@ -16,6 +16,9 @@ namespace Ecom.Application.Features.Categories.Queries
         public int SortOrder { get; set; }
         public int ProductCount { get; set; }
         
+        public string? MetaTitle { get; set; }
+        public string? MetaDescription { get; set; }
+        
         public ICollection<CategoryDto> SubCategories { get; set; } = new List<CategoryDto>();
         
         public DateTime CreatedAt { get; set; }

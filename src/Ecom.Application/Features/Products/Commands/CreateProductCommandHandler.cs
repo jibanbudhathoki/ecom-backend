@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ecom.Application.Common.Interfaces;
@@ -46,7 +42,10 @@ namespace Ecom.Application.Features.Products.Commands
                 MetaDescription = string.IsNullOrWhiteSpace(request.MetaDescription) ? request.ShortDescription ?? request.Description : request.MetaDescription,
                 CategoryId = request.CategoryId,
                 BrandId = request.BrandId,
-                Created = DateTime.UtcNow
+                Created = DateTime.UtcNow,
+                Images = request.Images ?? new(),
+                Highlights = request.Highlights ?? new(),
+                Specifications = request.Specifications ?? new()
             };
 
             foreach (var variantRequest in request.Variants)
@@ -58,6 +57,9 @@ namespace Ecom.Application.Features.Products.Commands
                     Price = variantRequest.Price,
                     StockQuantity = variantRequest.StockQuantity,
                     IsActive = variantRequest.IsActive,
+                    OptionName = variantRequest.OptionName,
+                    OptionValue = variantRequest.OptionValue,
+                    Images = variantRequest.Images ?? new(),
                     Created = DateTime.UtcNow
                 });
             }

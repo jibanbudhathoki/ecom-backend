@@ -8,6 +8,10 @@ namespace Ecom.Application.Features.Products.Queries
         public decimal? Price { get; set; }
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; }
+        
+        public string? OptionName { get; set; }
+        public string? OptionValue { get; set; }
+        public List<string> Images { get; set; } = new();
     }
 
     public class ProductDto
@@ -21,6 +25,10 @@ namespace Ecom.Application.Features.Products.Queries
         public string? ImageUrl { get; set; }
         public bool IsActive { get; set; }
         public bool IsFeatured { get; set; }
+        
+        public string? SKU { get; set; }
+        public int StockQuantity { get; set; }
+        public int VariantCount { get; set; }
         
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }

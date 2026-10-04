@@ -41,6 +41,12 @@ namespace Ecom.Infrastructure.Persistence
                     .WithMany()
                     .HasForeignKey(p => p.BrandId)
                     .OnDelete(DeleteBehavior.SetNull);
+                    
+                entity.PrimitiveCollection(p => p.Images);
+                entity.PrimitiveCollection(p => p.Highlights);
+                entity.OwnsMany(p => p.Specifications, a => {
+                    a.ToJson();
+                });
             });
 
             builder.Entity<ProductVariant>(entity =>
@@ -53,6 +59,8 @@ namespace Ecom.Infrastructure.Persistence
                     .WithMany(p => p.Variants)
                     .HasForeignKey(pv => pv.ProductId)
                     .OnDelete(DeleteBehavior.Cascade);
+                    
+                entity.PrimitiveCollection(pv => pv.Images);
             });
 
             builder.Entity<Category>(entity =>

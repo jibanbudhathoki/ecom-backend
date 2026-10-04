@@ -1,6 +1,5 @@
 using MediatR;
 using Ecom.Application.Common.Models;
-using System.Collections.Generic;
 
 namespace Ecom.Application.Features.Products.Commands
 {
@@ -11,6 +10,11 @@ namespace Ecom.Application.Features.Products.Commands
         public decimal? Price { get; set; }
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; } = true;
+        
+        public List<string> Images { get; set; } = new();
+        public List<Microsoft.AspNetCore.Http.IFormFile>? ImageFiles { get; set; }
+        public string? OptionName { get; set; }
+        public string? OptionValue { get; set; }
     }
 
     public class CreateProductCommand : IRequest<Result>
@@ -38,6 +42,11 @@ namespace Ecom.Application.Features.Products.Commands
         
         public int CategoryId { get; set; }
         public int? BrandId { get; set; }
+        
+        public List<string> Images { get; set; } = new();
+        public List<Microsoft.AspNetCore.Http.IFormFile>? ImageFiles { get; set; }
+        public List<Ecom.Domain.Entities.Catalog.ProductSpecification> Specifications { get; set; } = new();
+        public List<string> Highlights { get; set; } = new();
         
         public List<CreateProductVariantCommand> Variants { get; set; } = new List<CreateProductVariantCommand>();
     }

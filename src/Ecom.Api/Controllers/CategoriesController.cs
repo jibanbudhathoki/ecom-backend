@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ecom.Application.Features.Categories.Commands;
-using MediatR;
+using Ecom.Application.Features.Categories.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using Ecom.Application.Common.Models;
-using Ecom.Application.Features.Categories.Queries;
+using MediatR;
 
 namespace Ecom.Api.Controllers
 {
@@ -22,24 +19,10 @@ namespace Ecom.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ListResponse<CategoryDto>>> GetAll()
+        public async Task<ActionResult<PagedResult<CategoryDto>>> GetAll([FromQuery] GetCategoriesQuery query)
         {
-            var categories = await _mediator.Send(new GetCategoriesQuery());
-            return Ok(new ListResponse<CategoryDto>(categories));
+            var categories = await _mediator.Send(query ?? new GetCategoriesQuery());
+            return Ok(categories);
         }
-
-        [HttpGet("{slug}")]
-        public async Task<ActionResult<CategoryDetailDto>> GetBySlug(string slug)
-        {
-            var category = await _mediator.Send(new GetCategoryBySlugQuery(slug));
-            
-            if (category == null)
-            {
-                return NotFound(new { Message = $"Category with slug '{slug}' not found." });
-            }
-            
-            return Ok(category);
-        }
-
     }
 }

@@ -1,11 +1,12 @@
-
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ecom.Application.Common.Interfaces;
+using Ecom.Application.Common.Models;
+using Ecom.Application.Common.Extensions;
 
 namespace Ecom.Application.Features.Products.Queries
 {
-    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<ProductDto>>
+    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PagedResult<ProductDto>>
     {
         private readonly IApplicationDbContext _context;
 
@@ -14,14 +15,46 @@ namespace Ecom.Application.Features.Products.Queries
             _context = context;
         }
 
-        public async Task<List<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Products
+            var query = _context.Products
                 .AsNoTracking()
                 .Include(p => p.Category)
                 .Include(p => p.Brand)
-                .OrderByDescending(p => p.Created)
-                .Select(p => new ProductDto
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+            {
+                var search = request.SearchTerm.ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(search) || p.SKU.ToLower().Contains(search));
+            }
+
+            if (request.CategoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == request.CategoryId.Value);
+            }
+
+            if (request.BrandId.HasValue)
+            {
+                query = query.Where(p => p.BrandId == request.BrandId.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.SortBy))
+            {
+                query = request.SortBy.ToLower() switch
+                {
+                    "name" => request.SortDescending ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
+                    "price" => request.SortDescending ? query.OrderByDescending(p => p.Price) : query.OrderBy(p => p.Price),
+                    "stock" => request.SortDescending ? query.OrderByDescending(p => p.StockQuantity) : query.OrderBy(p => p.StockQuantity),
+                    _ => request.SortDescending ? query.OrderByDescending(p => p.Created) : query.OrderBy(p => p.Created)
+                };
+            }
+            else
+            {
+                query = query.OrderByDescending(p => p.Created);
+            }
+
+            return await query.Select(p => new ProductDto
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -32,11 +65,14 @@ namespace Ecom.Application.Features.Products.Queries
                     ImageUrl = p.ImageUrl,
                     IsActive = p.IsActive,
                     IsFeatured = p.IsFeatured,
+                    SKU = p.SKU,
+                    StockQuantity = p.StockQuantity,
+                    VariantCount = p.Variants.Count,
                     CategoryId = p.CategoryId,
-                    CategoryName = p.Category.Name,
+                    CategoryName = p.Category != null ? p.Category.Name : null,
                     BrandName = p.Brand != null ? p.Brand.Name : null
                 })
-                .ToListAsync(cancellationToken);
+                .ToPagedResultAsync(request.PageNumber, request.PageSize, cancellationToken);
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Ecom.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ListResponse<BrandDto>>> GetAll()
+        public async Task<ActionResult<PagedResult<BrandDto>>> GetAll([FromQuery] GetBrandsQuery query)
         {
-            var brands = await _mediator.Send(new GetBrandsQuery());
-            return Ok(new ListResponse<BrandDto>(brands));
+            var brands = await _mediator.Send(query ?? new GetBrandsQuery());
+            return Ok(brands);
         }
     }
 }

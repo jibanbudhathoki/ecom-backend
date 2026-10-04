@@ -49,7 +49,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <label asp-for="Description" class="form-label fw-semibold small mb-0">Description</label>
                             <div class="form-check form-switch mb-0">
-                                <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText" checked>
+                                <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText">
                                 <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
                             </div>
                         </div>
@@ -143,17 +143,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Toggle Rich Text Toolbar
-            const toggleRichText = document.getElementById('toggleRichText');
-            const richTextToolbar = document.getElementById('richTextToolbar');
-            if (toggleRichText && richTextToolbar) {
-                toggleRichText.addEventListener('change', (e) => {
-                    if(e.target.checked) {
-                        richTextToolbar.classList.remove('d-none');
-                    } else {
-                        richTextToolbar.classList.add('d-none');
-                    }
-                });
-            }
+
 
             // Auto-generate slug from name
             document.getElementById('Name').addEventListener('input', function() {

@@ -1,0 +1,156 @@
+@model Ecom.Application.Features.Brands.Commands.UpdateBrandCommand
+
+@{
+    ViewData["Title"] = ViewData["Action"]?.ToString() == "Edit" ? "Edit Brand" : "Add Brand";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Brands</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@(ViewData["Action"]?.ToString() == "Edit" ? "Edit" : "Add") Brand</li>
+            </ol>
+        </nav>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Add New Brand</h2>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Index" class="btn btn-light px-4 py-2 rounded-pill shadow-sm text-muted">Discard</a>
+        <button type="submit" form="brandForm" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+            <i class="bi bi-check2 me-1"></i> Save Brand
+        </button>
+    </div>
+</div>
+
+<form id="brandForm" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="row g-4">
+        <!-- Left Column: Main Details -->
+        <div class="col-lg-8">
+            <!-- Basic Info Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Basic Information</h6>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-semibold small">Brand Name</label>
+                        <input asp-for="Name" class="form-control bg-light border-0" placeholder="e.g. Wearables" required onkeyup="generateSlug()">
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="form-label fw-semibold small">Slug</label>
+                        <input asp-for="Slug" class="form-control bg-light border-0" placeholder="e.g. wearables" required>
+                        <span asp-validation-for="Slug" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-0">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label asp-for="Description" class="form-label fw-semibold small mb-0">Description</label>
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText">
+                                <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
+                            </div>
+                        </div>
+                        <div class="border rounded bg-light overflow-hidden">
+                            <!-- WYSIWYG Toolbar -->
+                            <div id="richTextToolbar" class="bg-white border-bottom p-2 d-flex gap-1 flex-wrap">
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-bold"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-italic"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-underline"></i></button>
+                                <div class="vr mx-1"></div>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-list-ul"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-list-ol"></i></button>
+                                <div class="vr mx-1"></div>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-link-45deg"></i></button>
+                            </div>
+                            <textarea asp-for="Description" class="form-control border-0 bg-light shadow-none" rows="4" placeholder="Brief description of the brand..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assign Products Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0">Assign Products</h6>
+                        <span class="badge bg-light text-dark border rounded-pill">0 Selected</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" class="form-control bg-light border-0 shadow-none" placeholder="Search products to add...">
+                        </div>
+                    </div>
+
+                    <!-- Selected Products Preview List -->
+                    <div class="border rounded bg-light p-3 text-center text-muted" style="border-style: dashed !important;">
+                        <i class="bi bi-box-seam fs-3 mb-2 d-block opacity-50"></i>
+                        <p class="small mb-0">Search and select products to add them to this brand.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Card Partial -->
+            <partial name="_SeoCard" model="@("brands")" />
+        </div>
+
+        <!-- Right Column: Organization & Media -->
+        <div class="col-lg-4">
+            <!-- Organization Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Organization</h6>
+                    
+                    <div class="mb-0">
+                        <label asp-for="IsActive" class="form-label fw-semibold small">Status</label>
+                        <select asp-for="IsActive" class="form-select bg-light border-0">
+                            <option value="true">Active</option>
+                            <option value="false">Hidden</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Brand Image</h6>
+                    <label class="border-2 border-dashed rounded-4 p-4 text-center d-block" style="background-color: #f8f9fa; border-color: #dee2e6; cursor: pointer; transition: all 0.2s;" onmouseover="this.classList.add('border-primary')" onmouseout="this.classList.remove('border-primary')">
+                        <i class="bi bi-image fs-2 text-primary mb-2"></i>
+                        <h6 class="fw-semibold mb-1">Add Image</h6>
+                        <p class="text-muted small mb-0">Drag and drop here</p>
+                        <input type="file" class="d-none" accept="image/*">
+                        <!-- Temporary input for URL -->
+                        <input asp-for="ImageUrl" type="hidden" />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function generateSlug() {
+        var name = document.getElementById('Name').value;
+        var slug = name.toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)+/g, '');
+        document.getElementById('Slug').value = slug;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle Rich Text Toolbar
+
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

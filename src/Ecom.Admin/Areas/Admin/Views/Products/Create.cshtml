@@ -23,8 +23,8 @@
     </div>
 </div>
 
-<form id="productForm" asp-action="Create" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+<form id="productForm" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
     <div class="row g-4">
         <!-- Left Column: Main Details -->
         <div class="col-lg-8">
@@ -38,12 +38,18 @@
                         <input asp-for="Name" type="text" class="form-control bg-light border-0" placeholder="e.g. Apple Watch Series 9" required>
                         <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
                     </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="form-label fw-semibold small">Slug (URL)</label>
+                        <input asp-for="Slug" class="form-control bg-light border-0" placeholder="e.g. apple-watch-series-9" required>
+                        <span asp-validation-for="Slug" class="text-danger small mt-1 d-block"></span>
+                    </div>
                     
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <label asp-for="Description" class="form-label fw-semibold small mb-0">Description</label>
                             <div class="form-check form-switch mb-0">
-                                <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText" checked>
+                                <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText">
                                 <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
                             </div>
                         </div>
@@ -79,23 +85,11 @@
                         </div>
                         
                         <div id="specsContainer" class="d-flex flex-column gap-2 ps-4">
-                            <!-- Spec Row 1 -->
-                            <div class="d-flex gap-2 align-items-center">
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Weight" value="Weight" style="flex: 1;">
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. 1.2 kg" value="38.8 g" style="flex: 2;">
-                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
-                            </div>
-                            <!-- Spec Row 2 -->
-                            <div class="d-flex gap-2 align-items-center">
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Material" value="Display" style="flex: 1;">
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Aluminum" value="Always-On Retina LTPO OLED" style="flex: 2;">
-                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
-                            </div>
                             <!-- Empty Spec Row -->
-                            <div class="d-flex gap-2 align-items-center">
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Processor" style="flex: 1;">
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="e.g. S9 SiP" style="flex: 2;">
-                                <button type="button" class="btn btn-sm text-muted btn-light border-0"><i class="bi bi-x"></i></button>
+                            <div class="d-flex gap-2 align-items-center spec-row">
+                                <input type="text" class="form-control form-control-sm bg-light border-0 spec-name" placeholder="e.g. Weight" style="flex: 1;">
+                                <input type="text" class="form-control form-control-sm bg-light border-0 spec-val" placeholder="e.g. 1.2 kg" style="flex: 2;">
+                                <button type="button" class="btn btn-sm text-danger btn-light border-0 remove-row-btn"><i class="bi bi-x"></i></button>
                             </div>
                         </div>
                     </div>
@@ -104,28 +98,21 @@
 
                     <div class="mb-0">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <label class="form-label fw-semibold small mb-0">About this item (Key Highlights)</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input shadow-none" type="checkbox" id="enableHighlights" checked style="cursor: pointer;">
+                                </div>
+                                <label class="form-label fw-semibold small mb-0" for="enableHighlights" style="cursor: pointer;">About this item (Key Highlights)</label>
+                            </div>
                             <button type="button" id="addBulletBtn" class="btn btn-sm btn-light text-primary fw-medium rounded-pill px-3"><i class="bi bi-plus"></i> Add Bullet</button>
                         </div>
                         
                         <div id="highlightsContainer" class="d-flex flex-column gap-2">
-                            <!-- Highlight Row 1 -->
-                            <div class="d-flex gap-2 align-items-start">
-                                <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
-                                <input type="text" class="form-control form-control-sm bg-light border-0" value="Advanced health features including temperature sensing and crash detection." style="flex: 1;">
-                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
-                            </div>
-                            <!-- Highlight Row 2 -->
-                            <div class="d-flex gap-2 align-items-start">
-                                <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
-                                <input type="text" class="form-control form-control-sm bg-light border-0" value="Crack-resistant front crystal and IP6X dust resistance." style="flex: 1;">
-                                <button type="button" class="btn btn-sm text-danger btn-light border-0"><i class="bi bi-x"></i></button>
-                            </div>
                             <!-- Empty Highlight Row -->
-                            <div class="d-flex gap-2 align-items-start">
+                            <div class="d-flex gap-2 align-items-start highlight-row">
                                 <div class="mt-2"><i class="bi bi-circle-fill text-muted" style="font-size: 0.4rem;"></i></div>
-                                <input type="text" class="form-control form-control-sm bg-light border-0" placeholder="Add a key feature or highlight..." style="flex: 1;">
-                                <button type="button" class="btn btn-sm text-muted btn-light border-0"><i class="bi bi-x"></i></button>
+                                <input type="text" class="form-control form-control-sm bg-light border-0 highlight-val" placeholder="Add a key feature or highlight..." style="flex: 1;">
+                                <button type="button" class="btn btn-sm text-danger btn-light border-0 remove-row-btn"><i class="bi bi-x"></i></button>
                             </div>
                         </div>
                     </div>
@@ -142,7 +129,7 @@
                         <h6 class="fw-semibold mb-1">Drag and drop images here</h6>
                         <p class="text-muted small mb-3">PNG, JPG, or GIF up to 5MB</p>
                         <span class="btn btn-sm btn-outline-primary rounded-pill px-4">Browse Files</span>
-                        <input type="file" class="d-none" multiple accept="image/*">
+                        <input type="file" name="ImageFiles" class="d-none" multiple accept="image/*">
                     </label>
                 </div>
             </div>
@@ -177,112 +164,35 @@
             <div class="card border-0 shadow-sm rounded-4 mb-3">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="fw-bold mb-0">Variants</h6>
-                        <a href="javascript:void(0)" id="addOptionBtn" class="text-decoration-none small text-primary"><i class="bi bi-plus"></i> Add options like size or color</a>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input shadow-none" type="checkbox" id="enableVariants" checked style="cursor: pointer;">
+                            </div>
+                            <h6 class="fw-bold mb-0" style="cursor: pointer;" onclick="document.getElementById('enableVariants').click()">Variants</h6>
+                        </div>
+                        <a href="javascript:void(0)" id="addVariantRowBtn" class="text-decoration-none small text-primary fw-medium"><i class="bi bi-plus-circle me-1"></i> Add Variant</a>
                     </div>
                     
-                    <!-- Options Container -->
-                    <div id="optionsContainer">
-                        <!-- Initial Option -->
-                        <div class="bg-light rounded p-3 mb-3 border option-row">
-                            <div class="row g-2 align-items-center">
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold small mb-1">Option Name</label>
-                                    <input type="text" class="form-control form-control-sm border-0" value="Color">
-                                </div>
-                                <div class="col-md-8">
-                                    <label class="form-label fw-semibold small mb-1">Option Values</label>
-                                    <div class="border rounded p-2 bg-white d-flex flex-wrap gap-2 align-items-center">
-                                        <!-- Chip 1 -->
-                                        <div class="badge bg-light text-dark border d-flex align-items-center p-1 px-2 rounded-pill">
-                                            <span class="fw-normal me-2">Midnight</span>
-                                            <a href="javascript:void(0)" class="text-muted"><i class="bi bi-x"></i></a>
-                                        </div>
-                                        
-                                        <!-- Chip 2 -->
-                                        <div class="badge bg-light text-dark border d-flex align-items-center p-1 px-2 rounded-pill">
-                                            <span class="fw-normal me-2">Starlight</span>
-                                            <a href="javascript:void(0)" class="text-muted"><i class="bi bi-x"></i></a>
-                                        </div>
-
-                                        <!-- Chip 3 -->
-                                        <div class="badge bg-light text-dark border d-flex align-items-center p-1 px-2 rounded-pill">
-                                            <span class="fw-normal me-2">Silver</span>
-                                            <a href="javascript:void(0)" class="text-muted"><i class="bi bi-x"></i></a>
-                                        </div>
-
-                                        <input type="text" class="border-0 shadow-none outline-none flex-grow-1" style="min-width: 100px; outline: none; background: transparent;" placeholder="Add another value...">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end mt-4">
-                                    <button type="button" class="btn btn-sm btn-light text-danger border-0 remove-option-btn"><i class="bi bi-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Variants Table -->
-                    <h6 class="fw-semibold small mt-4 mb-3 text-muted text-uppercase">Generated Variants</h6>
-                    <div class="table-responsive">
-                        <table class="table table-sm align-middle mb-0">
-                            <thead>
+                    <div class="table-responsive border rounded mt-3" id="variantsContainer">
+                        <table class="table table-sm align-middle mb-0" id="variantsTable">
+                            <thead class="bg-light">
                                 <tr>
-                                    <th class="border-0 text-muted small fw-semibold">Variant</th>
-                                    <th class="border-0 text-muted small fw-semibold">Images</th>
-                                    <th class="border-0 text-muted small fw-semibold">Price</th>
-                                    <th class="border-0 text-muted small fw-semibold">Quantity</th>
-                                    <th class="border-0 text-muted small fw-semibold">SKU</th>
+                                    <th class="border-0 text-muted small fw-semibold px-3 py-2">Option Type</th>
+                                    <th class="border-0 text-muted small fw-semibold py-2">Option Value</th>
+                                    <th class="border-0 text-muted small fw-semibold py-2">Images</th>
+                                    <th class="border-0 text-muted small fw-semibold py-2">Price</th>
+                                    <th class="border-0 text-muted small fw-semibold py-2">Quantity</th>
+                                    <th class="border-0 text-muted small fw-semibold py-2">SKU</th>
+                                    <th class="border-0 text-muted small fw-semibold py-2 text-end pe-3"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="fw-medium small">
-                                        <input type="hidden" name="Variants[0].Name" value="Midnight" />
-                                        <input type="hidden" name="Variants[0].IsActive" value="true" />
-                                        Midnight
-                                    </td>
-                                    <td>
-                                        <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
-                                            <i class="bi bi-image"></i>
-                                            <span style="font-size: 0.75rem;">Add Images</span>
-                                            <input type="file" class="d-none" multiple accept="image/*">
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <input type="number" name="Variants[0].Price" step="0.01" class="form-control form-control-sm bg-light border-0" value="399.00" style="width: 80px;">
-                                    </td>
-                                    <td>
-                                        <input type="number" name="Variants[0].StockQuantity" class="form-control form-control-sm bg-light border-0" value="10" style="width: 70px;">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="Variants[0].SKU" class="form-control form-control-sm bg-light border-0" value="APP-AW9-MID" style="width: 120px;">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-medium small">
-                                        <input type="hidden" name="Variants[1].Name" value="Starlight" />
-                                        <input type="hidden" name="Variants[1].IsActive" value="true" />
-                                        Starlight
-                                    </td>
-                                    <td>
-                                        <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
-                                            <i class="bi bi-image"></i>
-                                            <span style="font-size: 0.75rem;">Add Images</span>
-                                            <input type="file" class="d-none" multiple accept="image/*">
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <input type="number" name="Variants[1].Price" step="0.01" class="form-control form-control-sm bg-light border-0" value="399.00" style="width: 80px;">
-                                    </td>
-                                    <td>
-                                        <input type="number" name="Variants[1].StockQuantity" class="form-control form-control-sm bg-light border-0" value="15" style="width: 70px;">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="Variants[1].SKU" class="form-control form-control-sm bg-light border-0" value="APP-AW9-STAR" style="width: 120px;">
-                                    </td>
-                                </tr>
+                                <!-- Variant rows will be appended here -->
                             </tbody>
                         </table>
+                        <div id="noVariantsMsg" class="text-center py-4 text-muted small">
+                            No variants added. Click "Add Variant" to create one.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -353,7 +263,6 @@
                 </div>
             </div>
             
-            <input type="hidden" asp-for="Slug" id="Slug" />
         </div>
     </div>
 </form>
@@ -361,22 +270,43 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Toggle Rich Text Toolbar
-        const toggleRichText = document.getElementById('toggleRichText');
-        const richTextToolbar = document.getElementById('richTextToolbar');
-        if (toggleRichText && richTextToolbar) {
-            toggleRichText.addEventListener('change', (e) => {
-                if(e.target.checked) {
-                    richTextToolbar.classList.remove('d-none');
-                } else {
-                    richTextToolbar.classList.add('d-none');
-                }
-            });
-        }
+
 
         // --- Dynamic Specs & Highlights ---
+        const enableSpecs = document.getElementById('enableSpecs');
         const specsContainer = document.getElementById('specsContainer');
-        const addSpecBtn = document.getElementById('addSpecBtn');
+        if (enableSpecs && specsContainer) {
+            enableSpecs.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    specsContainer.classList.remove('d-none');
+                    specsContainer.classList.add('d-flex');
+                    document.getElementById('addSpecBtn').style.display = 'inline-block';
+                } else {
+                    specsContainer.classList.remove('d-flex');
+                    specsContainer.classList.add('d-none');
+                    document.getElementById('addSpecBtn').style.display = 'none';
+                }
+            });
+            enableSpecs.dispatchEvent(new Event('change'));
+        }
+
+        const enableHighlights = document.getElementById('enableHighlights');
         const highlightsContainer = document.getElementById('highlightsContainer');
+        if (enableHighlights && highlightsContainer) {
+            enableHighlights.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    highlightsContainer.classList.remove('d-none');
+                    highlightsContainer.classList.add('d-flex');
+                    document.getElementById('addBulletBtn').style.display = 'inline-block';
+                } else {
+                    highlightsContainer.classList.remove('d-flex');
+                    highlightsContainer.classList.add('d-none');
+                    document.getElementById('addBulletBtn').style.display = 'none';
+                }
+            });
+            enableHighlights.dispatchEvent(new Event('change'));
+        }
+        const addSpecBtn = document.getElementById('addSpecBtn');
         const addBulletBtn = document.getElementById('addBulletBtn');
 
         if (specsContainer && addSpecBtn) {
@@ -431,6 +361,43 @@
                 slugInput.value = slug;
             });
         }
+        // Index rows before submit
+        const form = document.getElementById('productForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // Specs
+                if (document.getElementById('enableSpecs').checked) {
+                    const specRows = document.querySelectorAll('.spec-row');
+                    let specIndex = 0;
+                    specRows.forEach(row => {
+                        const nameInput = row.querySelector('.spec-name');
+                        const valInput = row.querySelector('.spec-val');
+                        if (nameInput.value.trim() !== '') {
+                            nameInput.name = `Specifications[${specIndex}].Name`;
+                            valInput.name = `Specifications[${specIndex}].Value`;
+                            specIndex++;
+                        }
+                    });
+                } else {
+                    document.querySelectorAll('.spec-name, .spec-val').forEach(el => el.removeAttribute('name'));
+                }
+                
+                // Highlights
+                if (document.getElementById('enableHighlights').checked) {
+                    const highlightRows = document.querySelectorAll('.highlight-row');
+                    let highlightIndex = 0;
+                    highlightRows.forEach(row => {
+                        const valInput = row.querySelector('.highlight-val');
+                        if (valInput.value.trim() !== '') {
+                            valInput.name = `Highlights[${highlightIndex}]`;
+                            highlightIndex++;
+                        }
+                    });
+                } else {
+                    document.querySelectorAll('.highlight-val').forEach(el => el.removeAttribute('name'));
+                }
+            });
+        }
     });
 </script>
 
@@ -443,43 +410,91 @@
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const addOptionBtn = document.getElementById('addOptionBtn');
-            const optionsContainer = document.getElementById('optionsContainer');
+            const addVariantRowBtn = document.getElementById('addVariantRowBtn');
+            const variantsTableBody = document.getElementById('variantsTable').querySelector('tbody');
+            const noVariantsMsg = document.getElementById('noVariantsMsg');
 
-            // Template for a new option row
-            const optionTemplate = `
-                <div class="bg-light rounded p-3 mb-3 border option-row">
-                    <div class="row g-2 align-items-center">
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold small mb-1">Option Name</label>
-                            <input type="text" class="form-control form-control-sm border-0" placeholder="e.g. Size">
-                        </div>
-                        <div class="col-md-8">
-                            <label class="form-label fw-semibold small mb-1">Option Values</label>
-                            <input type="text" class="form-control form-control-sm border-0" placeholder="e.g. Small, Medium, Large">
-                        </div>
-                        <div class="col-md-1 text-end mt-4">
-                            <button type="button" class="btn btn-sm btn-light text-danger border-0 remove-option-btn"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-            `;
+            let variantRowIndex = 0;
 
-            // Add new option when clicking the link
-            addOptionBtn.addEventListener('click', function() {
-                optionsContainer.insertAdjacentHTML('beforeend', optionTemplate);
+            function updateNoVariantsMsg() {
+                if (variantsTableBody.children.length === 0) {
+                    noVariantsMsg.classList.remove('d-none');
+                } else {
+                    noVariantsMsg.classList.add('d-none');
+                }
+            }
+
+            addVariantRowBtn.addEventListener('click', function() {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-3">
+                        <input type="text" list="optionTypes" name="Variants[${variantRowIndex}].OptionName" class="form-control form-control-sm bg-light border-0" placeholder="e.g. Color" required>
+                        <datalist id="optionTypes">
+                            <option value="Color"></option>
+                            <option value="Size"></option>
+                            <option value="Material"></option>
+                            <option value="Style"></option>
+                        </datalist>
+                        <input type="hidden" name="Variants[${variantRowIndex}].Name" class="variant-name-hidden" value="" />
+                        <input type="hidden" name="Variants[${variantRowIndex}].IsActive" value="true" />
+                    </td>
+                    <td>
+                        <input type="text" name="Variants[${variantRowIndex}].OptionValue" class="form-control form-control-sm bg-light border-0 variant-val-input" placeholder="e.g. Red, XL" required>
+                    </td>
+                    <td>
+                        <label class="btn btn-sm btn-light border text-muted d-flex align-items-center justify-content-center gap-2 mb-0" style="cursor: pointer; width: max-content;">
+                            <i class="bi bi-image"></i>
+                            <span style="font-size: 0.75rem;">Add</span>
+                            <input type="file" name="Variants[${variantRowIndex}].ImageFiles" class="d-none" multiple accept="image/*">
+                        </label>
+                    </td>
+                    <td><input type="number" name="Variants[${variantRowIndex}].Price" step="0.01" class="form-control form-control-sm bg-light border-0" placeholder="0.00" style="width: 90px;"></td>
+                    <td><input type="number" name="Variants[${variantRowIndex}].StockQuantity" class="form-control form-control-sm bg-light border-0" placeholder="0" style="width: 80px;"></td>
+                    <td><input type="text" name="Variants[${variantRowIndex}].SKU" class="form-control form-control-sm bg-light border-0" placeholder="SKU-OPT" style="width: 120px;"></td>
+                    <td class="text-end pe-3">
+                        <button type="button" class="btn btn-sm btn-light text-danger border-0 remove-variant-btn"><i class="bi bi-trash"></i></button>
+                    </td>
+                `;
+                variantsTableBody.appendChild(tr);
+                
+                // Keep Name hidden field synced with OptionValue for the backend
+                const valInput = tr.querySelector('.variant-val-input');
+                const nameHidden = tr.querySelector('.variant-name-hidden');
+                valInput.addEventListener('input', (e) => {
+                    nameHidden.value = e.target.value;
+                });
+                
+                variantRowIndex++;
+                updateNoVariantsMsg();
             });
 
-            // Remove option when clicking the trash can
-            optionsContainer.addEventListener('click', function(e) {
-                const btn = e.target.closest('.remove-option-btn');
+            // Handle Row Remove
+            variantsTableBody.addEventListener('click', function(e) {
+                const btn = e.target.closest('.remove-variant-btn');
                 if (btn) {
-                    const row = btn.closest('.option-row');
-                    if (row) {
-                        row.remove();
-                    }
+                    btn.closest('tr').remove();
+                    updateNoVariantsMsg();
                 }
             });
+            
+            // Handle Toggle Variant feature
+            const enableVariants = document.getElementById('enableVariants');
+            const variantsContainer = document.getElementById('variantsContainer');
+            if (enableVariants && variantsContainer) {
+                enableVariants.addEventListener('change', (e) => {
+                    variantsContainer.style.display = e.target.checked ? 'block' : 'none';
+                    addVariantRowBtn.style.display = e.target.checked ? 'inline-block' : 'none';
+                    
+                    // If disabling variants, disable inputs so they don't submit to backend
+                    const inputs = variantsTableBody.querySelectorAll('input, select');
+                    inputs.forEach(input => {
+                        input.disabled = !e.target.checked;
+                    });
+                });
+            }
+            
+            // Add initial empty row by default
+            addVariantRowBtn.click();
         });
     </script>
 }

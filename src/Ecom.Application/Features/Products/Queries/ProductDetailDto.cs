@@ -26,6 +26,13 @@ namespace Ecom.Application.Features.Products.Queries
         public int? BrandId { get; set; }
         public string? BrandName { get; set; }
         
+        public string? MetaTitle { get; set; }
+        public string? MetaDescription { get; set; }
+        
+        public List<string> Images { get; set; } = new();
+        public List<string> Highlights { get; set; } = new();
+        public List<Ecom.Domain.Entities.Catalog.ProductSpecification> Specifications { get; set; } = new();
+        
         public ICollection<ProductVariantDto> Variants { get; set; } = new List<ProductVariantDto>();
         
         public DateTime CreatedAt { get; set; }

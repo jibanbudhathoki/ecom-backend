@@ -30,6 +30,8 @@ namespace Ecom.Application.Features.Categories.Queries
                     IsActive = c.IsActive,
                     IsFeatured = c.IsFeatured,
                     SortOrder = c.DisplayOrder,
+                    MetaTitle = c.MetaTitle,
+                    MetaDescription = c.MetaDescription,
                     ProductCount = 0, // Hardcoded for now
                     CreatedAt = c.Created,
                     UpdatedAt = c.LastModified,

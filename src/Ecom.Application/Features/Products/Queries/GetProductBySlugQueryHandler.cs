@@ -39,6 +39,11 @@ namespace Ecom.Application.Features.Products.Queries
                     SKU = p.SKU,
                     Barcode = p.Barcode,
                     ImageUrl = p.ImageUrl,
+                    MetaTitle = p.MetaTitle,
+                    MetaDescription = p.MetaDescription,
+                    Images = p.Images != null ? p.Images.ToList() : new List<string>(),
+                    Highlights = p.Highlights != null ? p.Highlights.ToList() : new List<string>(),
+                    Specifications = p.Specifications != null ? p.Specifications.Select(s => new Ecom.Domain.Entities.Catalog.ProductSpecification { Name = s.Name, Value = s.Value }).ToList() : new List<Ecom.Domain.Entities.Catalog.ProductSpecification>(),
                     CategoryId = p.CategoryId,
                     CategoryName = p.Category.Name,
                     BrandId = p.BrandId,
@@ -47,10 +52,13 @@ namespace Ecom.Application.Features.Products.Queries
                     {
                         Id = v.Id,
                         Name = v.Name,
+                        OptionName = v.OptionName,
+                        OptionValue = v.OptionValue,
                         SKU = v.SKU,
                         Price = v.Price,
                         StockQuantity = v.StockQuantity,
-                        IsActive = v.IsActive
+                        IsActive = v.IsActive,
+                        Images = v.Images != null ? v.Images.ToList() : new List<string>()
                     }).ToList(),
                     CreatedAt = p.Created,
                     UpdatedAt = p.LastModified

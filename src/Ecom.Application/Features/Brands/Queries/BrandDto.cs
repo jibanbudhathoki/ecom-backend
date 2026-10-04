@@ -10,6 +10,8 @@ namespace Ecom.Application.Features.Brands.Queries
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
         public bool IsActive { get; set; }
+        public string? MetaTitle { get; set; }
+        public string? MetaDescription { get; set; }
         // Include product count later if needed
     }
 }

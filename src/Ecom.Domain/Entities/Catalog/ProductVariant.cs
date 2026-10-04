@@ -13,5 +13,9 @@ namespace Ecom.Domain.Entities.Catalog
         public decimal? Price { get; set; } // If null, fallback to Product.Price
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; } = true;
+        
+        public List<string> Images { get; set; } = new List<string>();
+        public string? OptionName { get; set; }
+        public string? OptionValue { get; set; }
     }
 }

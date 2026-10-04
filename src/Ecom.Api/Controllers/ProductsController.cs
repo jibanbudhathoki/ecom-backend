@@ -21,10 +21,10 @@ namespace Ecom.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ListResponse<ProductDto>>> GetAll()
+        public async Task<ActionResult<PagedResult<ProductDto>>> GetAll([FromQuery] GetProductsQuery query)
         {
-            var products = await _mediator.Send(new GetProductsQuery());
-            return Ok(new ListResponse<ProductDto>(products));
+            var result = await _mediator.Send(query ?? new GetProductsQuery());
+            return Ok(result);
         }
 
         [HttpGet("{slug}")]
