@@ -1,9 +1,342 @@
 @{
-    ViewData["Title"] = "Inventory";
+    ViewData["Title"] = "Inventory Management";
 }
 
+<!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Inventory</h2>
+    <div>
+        <h2 class="h3 mb-0 text-gray-800 fw-bold">Inventory Management</h2>
+        <p class="text-muted mb-0 small">Track product stock levels and manage incoming inventory.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm fw-medium" onclick="openReceiveModal()">
+            <i class="bi bi-box-arrow-in-down me-1"></i> Receive Stock
+        </button>
+    </div>
 </div>
 
-<p class="text-muted">This is the simple, empty placeholder page for Inventory. You can start adding your tables and forms here!</p>
+<!-- Main Content -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 rounded-top-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <ul class="nav nav-pills custom-nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active px-3 py-2 rounded-pill small fw-medium" href="#">All Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted px-3 py-2 rounded-pill small fw-medium" href="#">Low Stock <span class="badge bg-danger rounded-pill ms-1">2</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted px-3 py-2 rounded-pill small fw-medium" href="#">Out of Stock <span class="badge bg-danger rounded-pill ms-1">1</span></a>
+                </li>
+            </ul>
+            <div class="d-flex gap-2">
+                <div class="input-group input-group-sm" style="width: 250px;">
+                    <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="Search by SKU or product...">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4 py-3 text-muted small fw-semibold border-bottom-0">Product & SKU</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0">Status</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0 text-center">Available</th>
+                    <th class="py-3 text-muted small fw-semibold border-bottom-0 text-center">Incoming</th>
+                    <th class="pe-4 py-3 text-end text-muted small fw-semibold border-bottom-0">Quick Action</th>
+                </tr>
+            </thead>
+            <tbody class="border-top-0">
+                <!-- Row 1: In Stock -->
+                <tr>
+                    <td class="ps-4 py-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                <i class="bi bi-headphones text-muted fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 small text-dark">Premium Wireless Headphones</h6>
+                                <p class="text-muted small mb-0 font-monospace">SKU: AUD-WH-001</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2">In Stock</span>
+                    </td>
+                    <td class="py-3 text-center fw-bold text-dark">
+                        142
+                    </td>
+                    <td class="py-3 text-center text-muted small">
+                        0
+                    </td>
+                    <td class="pe-4 py-3 text-end">
+                        <button class="btn btn-sm btn-light border rounded-pill px-3 shadow-none fw-medium text-primary" onclick="openAdjustModal(this, 'Premium Wireless Headphones', 'AUD-WH-001', 142)">
+                            <i class="bi bi-sliders me-1"></i> Adjust
+                        </button>
+                    </td>
+                </tr>
+                
+                <!-- Row 2: Low Stock -->
+                <tr>
+                    <td class="ps-4 py-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                <i class="bi bi-laptop text-muted fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 small text-dark">Ultra-thin Laptop Sleeve</h6>
+                                <p class="text-muted small mb-0 font-monospace">SKU: ACC-LS-092</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3">
+                        <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-2">Low Stock</span>
+                    </td>
+                    <td class="py-3 text-center fw-bold text-danger">
+                        8
+                    </td>
+                    <td class="py-3 text-center text-muted small">
+                        +50 (Expected Jun 12)
+                    </td>
+                    <td class="pe-4 py-3 text-end">
+                        <button class="btn btn-sm btn-light border rounded-pill px-3 shadow-none fw-medium text-primary" onclick="openAdjustModal(this, 'Ultra-thin Laptop Sleeve', 'ACC-LS-092', 8)">
+                            <i class="bi bi-sliders me-1"></i> Adjust
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- Row 3: Out of Stock -->
+                <tr class="bg-light bg-opacity-50">
+                    <td class="ps-4 py-3">
+                        <div class="d-flex align-items-center gap-3 opacity-75">
+                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                <i class="bi bi-watch text-muted fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 small text-dark text-decoration-line-through">Smart Fitness Watch</h6>
+                                <p class="text-muted small mb-0 font-monospace">SKU: ELE-SW-044</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3">
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-2">Out of Stock</span>
+                    </td>
+                    <td class="py-3 text-center fw-bold text-danger">
+                        0
+                    </td>
+                    <td class="py-3 text-center text-muted small">
+                        0
+                    </td>
+                    <td class="pe-4 py-3 text-end">
+                        <button class="btn btn-sm btn-light border rounded-pill px-3 shadow-none fw-medium text-primary" onclick="openAdjustModal(this, 'Smart Fitness Watch', 'ELE-SW-044', 0)">
+                            <i class="bi bi-sliders me-1"></i> Adjust
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal: Adjust Stock -->
+<div class="modal fade" id="adjustStockModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Adjust Inventory</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h6 class="fw-bold text-dark mb-0" id="adjProductName">Product Name</h6>
+                    <p class="text-muted small mb-0 font-monospace" id="adjProductSku">SKU: 000</p>
+                </div>
+                
+                <div class="card bg-light border-0 rounded-3 mb-4">
+                    <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                        <span class="text-muted small fw-medium">Current Available Stock</span>
+                        <span class="fw-bold fs-5" id="adjCurrentStock">0</span>
+                    </div>
+                </div>
+
+                <div class="row g-3 align-items-end mb-3">
+                    <div class="col-md-7">
+                        <label class="form-label small fw-semibold">Adjustment Type</label>
+                        <select class="form-select shadow-none rounded-3" id="adjType">
+                            <option value="add">Add (+)</option>
+                            <option value="subtract">Subtract (-)</option>
+                            <option value="set">Set exactly (=)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label small fw-semibold">Quantity</label>
+                        <input type="number" class="form-control shadow-none rounded-3" id="adjQty" value="1" min="0">
+                    </div>
+                </div>
+                
+                <div class="mb-0">
+                    <label class="form-label small fw-semibold">Reason for adjustment</label>
+                    <input type="text" class="form-control shadow-none rounded-3 text-muted small" placeholder="e.g. Damaged goods, inventory count...">
+                </div>
+            </div>
+            <div class="modal-footer border-top-0 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" onclick="saveAdjustment()">Save Adjustment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Receive Stock -->
+<div class="modal fade" id="receiveStockModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Receive Incoming Stock</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-5">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-upc-scan fs-3"></i>
+                </div>
+                <h6 class="fw-bold">Scan or Select Purchase Order</h6>
+                <p class="text-muted small mb-4">Connect a barcode scanner to quickly receive items, or manually select an incoming shipment.</p>
+                <select class="form-select shadow-none rounded-3 mb-3 text-start">
+                    <option selected disabled>Select expected shipment...</option>
+                    <option>PO-1002 (Expected: Jun 12)</option>
+                    <option>PO-1005 (Expected: Jun 18)</option>
+                </select>
+            </div>
+            <div class="modal-footer border-top-0 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" onclick="receiveStock()">Start Receiving</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toasts Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="actionToast" class="toast align-items-center text-white bg-success border-0 rounded-3 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body fw-medium" id="toastMessage">
+                Action completed successfully.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-nav-pills .nav-link {
+        color: #6c757d;
+    }
+    .custom-nav-pills .nav-link.active {
+        background-color: #e9ecef;
+        color: #212529;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        let adjustModal;
+        let receiveModal;
+        let currentAdjustRow = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            adjustModal = new bootstrap.Modal(document.getElementById('adjustStockModal'));
+            receiveModal = new bootstrap.Modal(document.getElementById('receiveStockModal'));
+            
+            document.body.appendChild(document.getElementById('adjustStockModal'));
+            document.body.appendChild(document.getElementById('receiveStockModal'));
+        });
+
+        function showToast(message, type = 'success') {
+            const toastEl = document.getElementById('actionToast');
+            const toastMsg = document.getElementById('toastMessage');
+            
+            toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+            toastEl.classList.add('bg-' + type);
+            toastMsg.innerText = message;
+            
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        function openAdjustModal(btn, name, sku, currentStock) {
+            currentAdjustRow = btn.closest('tr');
+            document.getElementById('adjProductName').innerText = name;
+            document.getElementById('adjProductSku').innerText = "SKU: " + sku;
+            document.getElementById('adjCurrentStock').innerText = currentStock;
+            document.getElementById('adjQty').value = 1;
+            document.getElementById('adjType').value = 'add';
+            adjustModal.show();
+        }
+
+        function saveAdjustment() {
+            const qty = parseInt(document.getElementById('adjQty').value) || 0;
+            const type = document.getElementById('adjType').value;
+            let current = parseInt(document.getElementById('adjCurrentStock').innerText);
+            
+            let newStock = current;
+            if (type === 'add') newStock += qty;
+            else if (type === 'subtract') newStock -= qty;
+            else if (type === 'set') newStock = qty;
+
+            if (newStock < 0) newStock = 0;
+
+            if (currentAdjustRow) {
+                // Find stock td
+                const stockCell = currentAdjustRow.querySelector('.fw-bold.text-dark') || currentAdjustRow.querySelector('.fw-bold.text-danger');
+                if (stockCell) {
+                    stockCell.innerText = newStock;
+                    
+                    // Update badge
+                    const badgeCell = currentAdjustRow.querySelector('.badge');
+                    if (newStock === 0) {
+                        stockCell.className = 'py-3 text-center fw-bold text-danger';
+                        badgeCell.className = 'badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-2';
+                        badgeCell.innerText = 'Out of Stock';
+                        currentAdjustRow.classList.add('bg-light', 'bg-opacity-50');
+                        currentAdjustRow.querySelector('.d-flex.align-items-center').classList.add('opacity-75');
+                        currentAdjustRow.querySelector('h6').classList.add('text-decoration-line-through');
+                    } else if (newStock <= 10) {
+                        stockCell.className = 'py-3 text-center fw-bold text-danger';
+                        badgeCell.className = 'badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-2';
+                        badgeCell.innerText = 'Low Stock';
+                        currentAdjustRow.classList.remove('bg-light', 'bg-opacity-50');
+                        currentAdjustRow.querySelector('.d-flex.align-items-center').classList.remove('opacity-75');
+                        currentAdjustRow.querySelector('h6').classList.remove('text-decoration-line-through');
+                    } else {
+                        stockCell.className = 'py-3 text-center fw-bold text-dark';
+                        badgeCell.className = 'badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2';
+                        badgeCell.innerText = 'In Stock';
+                        currentAdjustRow.classList.remove('bg-light', 'bg-opacity-50');
+                        currentAdjustRow.querySelector('.d-flex.align-items-center').classList.remove('opacity-75');
+                        currentAdjustRow.querySelector('h6').classList.remove('text-decoration-line-through');
+                    }
+
+                    // Update onClick args to the new stock so it opens correctly next time
+                    const btn = currentAdjustRow.querySelector('button');
+                    btn.setAttribute('onclick', btn.getAttribute('onclick').replace(/,\s*\d+\)$/, `, ${newStock})`));
+                }
+            }
+
+            adjustModal.hide();
+            showToast('Inventory successfully updated.', 'success');
+        }
+
+        function openReceiveModal() {
+            receiveModal.show();
+        }
+
+        function receiveStock() {
+            receiveModal.hide();
+            showToast('Ready to receive items for PO-1002.', 'primary');
+        }
+    </script>
+}
