@@ -146,6 +146,70 @@ namespace Ecom.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Ecom.Domain.Entities.Catalog.Collection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConditionsJson")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MetaTitle")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("Collections");
+                });
+
             modelBuilder.Entity("Ecom.Domain.Entities.Catalog.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -245,6 +309,24 @@ namespace Ecom.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Ecom.Domain.Entities.Catalog.ProductCollection", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CollectionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ProductId", "CollectionId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("ProductCollections");
                 });
 
             modelBuilder.Entity("Ecom.Domain.Entities.Catalog.ProductVariant", b =>
@@ -587,6 +669,25 @@ namespace Ecom.Infrastructure.Migrations
                     b.Navigation("Specifications");
                 });
 
+            modelBuilder.Entity("Ecom.Domain.Entities.Catalog.ProductCollection", b =>
+                {
+                    b.HasOne("Ecom.Domain.Entities.Catalog.Collection", "Collection")
+                        .WithMany("ProductCollections")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecom.Domain.Entities.Catalog.Product", "Product")
+                        .WithMany("ProductCollections")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Collection");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Ecom.Domain.Entities.Catalog.ProductVariant", b =>
                 {
                     b.HasOne("Ecom.Domain.Entities.Catalog.Product", "Product")
@@ -654,8 +755,15 @@ namespace Ecom.Infrastructure.Migrations
                     b.Navigation("SubCategories");
                 });
 
+            modelBuilder.Entity("Ecom.Domain.Entities.Catalog.Collection", b =>
+                {
+                    b.Navigation("ProductCollections");
+                });
+
             modelBuilder.Entity("Ecom.Domain.Entities.Catalog.Product", b =>
                 {
+                    b.Navigation("ProductCollections");
+
                     b.Navigation("Variants");
                 });
 #pragma warning restore 612, 618

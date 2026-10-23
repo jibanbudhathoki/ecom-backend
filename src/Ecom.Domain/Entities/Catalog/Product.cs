@@ -32,6 +32,7 @@ namespace Ecom.Domain.Entities.Catalog
         public Brand? Brand { get; set; }
         
         public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
+        public ICollection<ProductCollection> ProductCollections { get; set; } = new List<ProductCollection>();
         
         public List<string> Images { get; set; } = new List<string>();
         public List<ProductSpecification> Specifications { get; set; } = new List<ProductSpecification>();

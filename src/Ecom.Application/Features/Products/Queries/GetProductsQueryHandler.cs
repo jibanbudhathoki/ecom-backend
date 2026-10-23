@@ -39,6 +39,11 @@ namespace Ecom.Application.Features.Products.Queries
                 query = query.Where(p => p.BrandId == request.BrandId.Value);
             }
 
+            if (request.CollectionId.HasValue)
+            {
+                query = query.Where(p => p.ProductCollections.Any(pc => pc.CollectionId == request.CollectionId.Value));
+            }
+
             if (!string.IsNullOrWhiteSpace(request.SortBy))
             {
                 query = request.SortBy.ToLower() switch

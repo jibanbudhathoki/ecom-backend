@@ -25,6 +25,7 @@ namespace Ecom.Admin.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index([FromQuery] GetProductsQuery query)
         {
+            await PopulateDropdowns();
             var products = await _mediator.Send(query ?? new GetProductsQuery());
             return View(products);
         }
@@ -244,6 +245,8 @@ namespace Ecom.Admin.Areas.Admin.Controllers
             ViewBag.Categories = catRes.Items;
             var brandRes = await _mediator.Send(new GetBrandsQuery { PageSize = 1000 });
             ViewBag.Brands = brandRes.Items;
+            var colRes = await _mediator.Send(new Ecom.Application.Features.Collections.Queries.GetCollectionsQuery { PageSize = 1000 });
+            ViewBag.Collections = colRes.Items;
         }
         
         private async Task<string> SaveFileAsync(Microsoft.AspNetCore.Http.IFormFile file)

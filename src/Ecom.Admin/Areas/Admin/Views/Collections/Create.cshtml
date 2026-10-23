@@ -1,3 +1,5 @@
+@model Ecom.Application.Features.Collections.Commands.CreateCollectionCommand
+
 @{
     ViewData["Title"] = "Create Collection";
 }
@@ -20,7 +22,9 @@
     </div>
 </div>
 
-<form id="collectionForm">
+<form id="collectionForm" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-4 shadow-sm mb-3"></div>
+
     <div class="row g-4">
         <!-- Left Column: Main Details -->
         <div class="col-lg-8">
@@ -30,30 +34,33 @@
                     <h6 class="fw-bold mb-3">Collection Details</h6>
                     
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Title</label>
-                        <input type="text" class="form-control bg-light border-0" placeholder="e.g. Summer Collection, Under $50" required>
+                        <label asp-for="Name" class="form-label fw-semibold small">Title</label>
+                        <input asp-for="Name" class="form-control bg-light border-0" placeholder="e.g. Summer Collection, Under $50" required onkeyup="generateSlug()">
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="form-label fw-semibold small">Slug</label>
+                        <input asp-for="Slug" class="form-control bg-light border-0" placeholder="e.g. summer-collection" required>
+                        <span asp-validation-for="Slug" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-0">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <label class="form-label fw-semibold small mb-0">Description</label>
+                            <label asp-for="Description" class="form-label fw-semibold small mb-0">Description</label>
                             <div class="form-check form-switch mb-0">
                                 <input class="form-check-input shadow-none" type="checkbox" id="toggleRichText">
                                 <label class="form-check-label small text-muted" for="toggleRichText">Rich Text</label>
                             </div>
                         </div>
                         <div class="border rounded bg-light overflow-hidden">
-                            <div id="richTextToolbar" class="bg-white border-bottom p-2 d-flex gap-1 flex-wrap">
-                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-bold"></i></button>
-                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-italic"></i></button>
-                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-type-underline"></i></button>
-                                <div class="vr mx-1"></div>
-                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-list-ul"></i></button>
-                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-list-ol"></i></button>
-                                <div class="vr mx-1"></div>
-                                <button type="button" class="btn btn-sm btn-light text-muted border-0"><i class="bi bi-link-45deg"></i></button>
+                            <div id="richTextToolbar" class="bg-white border-bottom p-2 d-flex gap-1 flex-wrap d-none">
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0" onclick="formatText('bold')"><i class="bi bi-type-bold"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0" onclick="formatText('italic')"><i class="bi bi-type-italic"></i></button>
+                                <button type="button" class="btn btn-sm btn-light text-muted border-0" onclick="formatText('underline')"><i class="bi bi-type-underline"></i></button>
                             </div>
-                            <textarea class="form-control border-0 bg-light shadow-none" rows="4" placeholder="Brief description of the collection..."></textarea>
+                            <textarea asp-for="Description" id="descriptionInput" class="form-control border-0 bg-light shadow-none" rows="4" placeholder="Brief description of the collection..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
                         </div>
                     </div>
                 </div>
@@ -67,7 +74,7 @@
                     <div class="d-flex flex-column gap-3">
                         <label class="border rounded p-3 d-flex align-items-start gap-3" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.classList.add('border-primary')" onmouseout="this.classList.remove('border-primary')">
                             <div class="form-check mt-1">
-                                <input class="form-check-input shadow-none" type="radio" name="collectionType" id="typeManual" checked>
+                                <input class="form-check-input shadow-none" type="radio" asp-for="Type" value="Manual" id="typeManual" checked>
                             </div>
                             <div>
                                 <h6 class="fw-semibold mb-1">Manual</h6>
@@ -77,7 +84,7 @@
                         
                         <label class="border rounded p-3 d-flex align-items-start gap-3" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.classList.add('border-primary')" onmouseout="this.classList.remove('border-primary')">
                             <div class="form-check mt-1">
-                                <input class="form-check-input shadow-none" type="radio" name="collectionType" id="typeAutomated">
+                                <input class="form-check-input shadow-none" type="radio" asp-for="Type" value="Automated" id="typeAutomated">
                             </div>
                             <div>
                                 <h6 class="fw-semibold mb-1">Automated</h6>
@@ -101,24 +108,19 @@
                             </div>
                         </div>
                         
-                        <!-- Condition Row -->
                         <div class="d-flex gap-2 align-items-center mb-2">
                             <select class="form-select form-select-sm border-0 shadow-none w-25">
+                                <option>Product Title</option>
                                 <option>Product Tag</option>
                                 <option>Price</option>
-                                <option>Product Title</option>
-                                <option>Inventory Stock</option>
                             </select>
                             <select class="form-select form-select-sm border-0 shadow-none w-25">
+                                <option>contains</option>
                                 <option>is equal to</option>
                                 <option>is greater than</option>
-                                <option>contains</option>
                             </select>
                             <input type="text" class="form-control form-control-sm border-0 shadow-none flex-grow-1" placeholder="e.g. sale">
-                            <button type="button" class="btn btn-sm btn-light text-danger"><i class="bi bi-trash"></i></button>
                         </div>
-                        
-                        <button type="button" class="btn btn-sm btn-outline-secondary mt-2 px-3 rounded-pill"><i class="bi bi-plus"></i> Add Condition</button>
                     </div>
                 </div>
             </div>
@@ -128,15 +130,24 @@
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="fw-bold mb-0">Assign Products</h6>
-                        <span class="badge bg-light text-dark border rounded-pill">0 Selected</span>
+                        <span class="badge bg-light text-dark border rounded-pill" id="selectedCountBadge">0 Selected</span>
                     </div>
-                    <div class="mb-3">
+                    
+                    <div class="position-relative mb-3">
                         <div class="input-group">
                             <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
-                            <input type="text" class="form-control bg-light border-0 shadow-none" placeholder="Search products to add...">
+                            <input type="text" id="productSearchInput" class="form-control bg-light border-0 shadow-none" placeholder="Search products to add..." autocomplete="off">
+                            <button type="button" class="btn btn-light border-0" id="clearSearchBtn" style="display:none;"><i class="bi bi-x"></i></button>
+                        </div>
+                        <div id="productSearchResults" class="dropdown-menu w-100 shadow border-0 p-2 mt-1" style="display: none; max-height: 280px; overflow-y: auto;">
                         </div>
                     </div>
-                    <div class="border rounded bg-light p-3 text-center text-muted" style="border-style: dashed !important;">
+
+                    <div id="assignedProductsList" class="d-flex flex-column gap-2 mb-2">
+                        <!-- Dynamic items -->
+                    </div>
+
+                    <div id="noProductsPlaceholder" class="border rounded bg-light p-4 text-center text-muted" style="border-style: dashed !important;">
                         <i class="bi bi-box-seam fs-3 mb-2 d-block opacity-50"></i>
                         <p class="small mb-0">Search and select products to add them to this collection.</p>
                     </div>
@@ -144,19 +155,33 @@
             </div>
 
             <!-- SEO Card Partial -->
-            <partial name="_SeoCard" model="@("collections")" />
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0">Search Engine Optimization</h6>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="MetaTitle" class="form-label fw-semibold small">Page Title</label>
+                        <input asp-for="MetaTitle" class="form-control bg-light border-0" placeholder="70 characters max">
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="MetaDescription" class="form-label fw-semibold small">Meta Description</label>
+                        <textarea asp-for="MetaDescription" class="form-control bg-light border-0" rows="3" placeholder="320 characters max"></textarea>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Right Column: Media -->
+        <!-- Right Column: Status & Media -->
         <div class="col-lg-4">
             <!-- Publishing -->
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <h6 class="fw-bold mb-3">Publishing</h6>
-                    <label class="form-label fw-semibold small">Status</label>
-                    <select class="form-select bg-light border-0 mb-2">
-                        <option value="Active">Active</option>
-                        <option value="Draft">Draft</option>
+                    <label asp-for="IsActive" class="form-label fw-semibold small">Status</label>
+                    <select asp-for="IsActive" class="form-select bg-light border-0 mb-2">
+                        <option value="true">Active</option>
+                        <option value="false">Draft</option>
                     </select>
                 </div>
             </div>
@@ -165,11 +190,22 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <h6 class="fw-bold mb-3">Collection Image</h6>
-                    <label class="border-2 border-dashed rounded-4 p-4 text-center d-block" style="background-color: #f8f9fa; border-color: #dee2e6; cursor: pointer; transition: all 0.2s;" onmouseover="this.classList.add('border-primary')" onmouseout="this.classList.remove('border-primary')">
+                    <input asp-for="ImageUrl" type="hidden" id="imageUrlHidden" />
+                    
+                    <div id="imagePreviewContainer" class="mb-3 text-center d-none">
+                        <img id="imagePreview" src="" alt="Preview" class="img-fluid rounded-3 border" style="max-height: 180px; object-fit: cover;" />
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="removeImage()">
+                                <i class="bi bi-trash me-1"></i> Remove Image
+                            </button>
+                        </div>
+                    </div>
+
+                    <label id="uploadLabel" class="border-2 border-dashed rounded-4 p-4 text-center d-block" style="background-color: #f8f9fa; border-color: #dee2e6; cursor: pointer; transition: all 0.2s;" onmouseover="this.classList.add('border-primary')" onmouseout="this.classList.remove('border-primary')">
                         <i class="bi bi-image fs-2 text-primary mb-2"></i>
                         <h6 class="fw-semibold mb-1">Add Image</h6>
-                        <p class="text-muted small mb-0">Drag and drop here</p>
-                        <input type="file" class="d-none" accept="image/*">
+                        <p class="text-muted small mb-0">Choose image file</p>
+                        <input type="file" name="imageFile" id="imageFileInput" class="d-none" accept="image/*" onchange="previewSelectedImage(this)">
                     </label>
                 </div>
             </div>
@@ -178,35 +214,180 @@
 </form>
 
 <script>
+    function generateSlug() {
+        var name = document.getElementById('Name').value;
+        var slug = name.toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/[\s_-]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        document.getElementById('Slug').value = slug;
+    }
+
+    function previewSelectedImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imagePreview').src = e.target.result;
+                document.getElementById('imagePreviewContainer').classList.remove('d-none');
+                document.getElementById('uploadLabel').classList.add('d-none');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function removeImage() {
+        document.getElementById('imageFileInput').value = '';
+        document.getElementById('imageUrlHidden').value = '';
+        document.getElementById('imagePreview').src = '';
+        document.getElementById('imagePreviewContainer').classList.add('d-none');
+        document.getElementById('uploadLabel').classList.remove('d-none');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const manualRadio = document.getElementById('typeManual');
         const autoRadio = document.getElementById('typeAutomated');
         const conditionsBox = document.getElementById('automatedConditionsBox');
         const manualProductsBox = document.getElementById('manualProductsBox');
 
-        // Toggle condition box / manual product assign box
-        manualRadio.addEventListener('change', () => {
-            if(manualRadio.checked) {
+        function updateTypeDisplay() {
+            if (autoRadio.checked) {
+                conditionsBox.classList.remove('d-none');
+                manualProductsBox.classList.add('d-none');
+            } else {
                 conditionsBox.classList.add('d-none');
                 manualProductsBox.classList.remove('d-none');
             }
-        });
-        autoRadio.addEventListener('change', () => {
-            if(autoRadio.checked) {
-                conditionsBox.classList.remove('d-none');
-                manualProductsBox.classList.add('d-none');
-            }
-        });
+        }
 
-        // Toggle Rich Text Toolbar
+        manualRadio.addEventListener('change', updateTypeDisplay);
+        autoRadio.addEventListener('change', updateTypeDisplay);
+        updateTypeDisplay();
+
         const toggleRichText = document.getElementById('toggleRichText');
         const richTextToolbar = document.getElementById('richTextToolbar');
         toggleRichText.addEventListener('change', (e) => {
-            if(e.target.checked) {
+            if (e.target.checked) {
                 richTextToolbar.classList.remove('d-none');
             } else {
                 richTextToolbar.classList.add('d-none');
             }
         });
+
+        // Interactive product search & assign
+        const searchInput = document.getElementById('productSearchInput');
+        const searchResults = document.getElementById('productSearchResults');
+        const clearBtn = document.getElementById('clearSearchBtn');
+        const assignedList = document.getElementById('assignedProductsList');
+        const placeholder = document.getElementById('noProductsPlaceholder');
+        const countBadge = document.getElementById('selectedCountBadge');
+
+        let debounceTimer;
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length > 0) {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetch(`/Admin/Collections/SearchProducts?query=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(products => {
+                        searchResults.innerHTML = '';
+                        if (products.length === 0) {
+                            searchResults.innerHTML = '<div class="p-2 text-muted small text-center">No products found</div>';
+                        } else {
+                            products.forEach(p => {
+                                const isAlreadyAdded = document.querySelector(`input[name="ProductIds"][value="${p.id}"]`) !== null;
+                                const item = document.createElement('div');
+                                item.className = 'd-flex align-items-center justify-content-between p-2 rounded hover-bg border-bottom';
+                                item.style.cursor = 'pointer';
+                                item.innerHTML = `
+                                    <div class="d-flex align-items-center gap-2">
+                                        ${p.imageUrl ? `<img src="${p.imageUrl}" class="rounded" style="width: 36px; height: 36px; object-fit: cover;" />` : '<div class="bg-light rounded p-2 text-muted"><i class="bi bi-box"></i></div>'}
+                                        <div>
+                                            <div class="fw-semibold small">${p.name}</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">${p.sku || 'No SKU'} • $${p.price.toFixed(2)}</div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm ${isAlreadyAdded ? 'btn-secondary disabled' : 'btn-primary'} rounded-pill px-3 py-1">
+                                        ${isAlreadyAdded ? 'Added' : '<i class="bi bi-plus"></i> Add'}
+                                    </button>
+                                `;
+
+                                if (!isAlreadyAdded) {
+                                    item.addEventListener('click', function(e) {
+                                        e.preventDefault();
+                                        addProductToCollection(p);
+                                        searchResults.style.display = 'none';
+                                        searchInput.value = '';
+                                        clearBtn.style.display = 'none';
+                                    });
+                                }
+                                searchResults.appendChild(item);
+                            });
+                        }
+                        searchResults.style.display = 'block';
+                    });
+            }, 300);
+        });
+
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            searchResults.style.display = 'none';
+            clearBtn.style.display = 'none';
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        window.addProductToCollection = function(p) {
+            if (document.querySelector(`input[name="ProductIds"][value="${p.id}"]`)) return;
+
+            const div = document.createElement('div');
+            div.className = 'd-flex align-items-center justify-content-between p-2 border rounded bg-white assigned-item shadow-sm';
+            div.id = `assigned-prod-${p.id}`;
+            div.innerHTML = `
+                <input type="hidden" name="ProductIds" value="${p.id}" />
+                <div class="d-flex align-items-center gap-3">
+                    ${p.imageUrl ? `<img src="${p.imageUrl}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;" />` : '<div class="bg-light rounded p-2 text-muted"><i class="bi bi-box fs-5"></i></div>'}
+                    <div>
+                        <h6 class="mb-0 fw-semibold small text-dark">${p.name}</h6>
+                        <small class="text-muted">${p.sku || 'No SKU'} • $${Number(p.price).toFixed(2)}</small>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-light text-danger rounded-circle" onclick="removeAssignedProduct(${p.id})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `;
+            assignedList.appendChild(div);
+            updateAssignedUI();
+        };
+
+        window.removeAssignedProduct = function(id) {
+            const el = document.getElementById(`assigned-prod-${id}`);
+            if (el) el.remove();
+            updateAssignedUI();
+        };
+
+        function updateAssignedUI() {
+            const count = assignedList.querySelectorAll('input[name="ProductIds"]').length;
+            countBadge.innerText = `${count} Selected`;
+            if (count > 0) {
+                placeholder.classList.add('d-none');
+            } else {
+                placeholder.classList.remove('d-none');
+            }
+        }
+        updateAssignedUI();
     });
 </script>

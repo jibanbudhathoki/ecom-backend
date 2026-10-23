@@ -7,5 +7,6 @@ namespace Ecom.Application.Features.Products.Queries
     {
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
+        public int? CollectionId { get; set; }
     }
 }

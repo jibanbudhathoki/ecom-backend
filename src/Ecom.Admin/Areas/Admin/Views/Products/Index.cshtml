@@ -27,32 +27,62 @@
 <!-- Filters and Search -->
 <form method="get" class="card border-0 shadow-sm rounded-4 mb-4">
     <div class="card-body p-4">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <div class="input-group">
+        <div class="row g-2">
+            <div class="col-md-3">
+                <div class="input-group input-group-sm">
                     <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">
                         <i class="bi bi-search text-muted"></i>
                     </span>
                     <input type="text" name="SearchTerm" value="@Context.Request.Query["SearchTerm"]" class="form-control bg-light border-0 rounded-end-pill shadow-none" placeholder="Search products...">
                 </div>
             </div>
-            <div class="col-md-3">
-                <select name="CategoryId" class="form-select border-0 bg-light rounded-pill shadow-none" onchange="this.form.submit()">
+            <div class="col-md-2">
+                <select name="CategoryId" class="form-select form-select-sm border-0 bg-light rounded-pill shadow-none" onchange="this.form.submit()">
                     <option value="">All Categories</option>
-                    @* TODO: Populate options dynamically or handle via JS *@
+                    @if (ViewBag.Categories != null)
+                    {
+                        foreach (var cat in (IEnumerable<Ecom.Application.Features.Categories.Queries.CategoryDto>)ViewBag.Categories)
+                        {
+                            <option value="@cat.Id" selected="@(Context.Request.Query["CategoryId"] == cat.Id.ToString())">@cat.Name</option>
+                        }
+                    }
                 </select>
             </div>
-            <div class="col-md-3">
-                <select name="SortBy" class="form-select border-0 bg-light rounded-pill shadow-none" onchange="this.form.submit()">
+            <div class="col-md-2">
+                <select name="BrandId" class="form-select form-select-sm border-0 bg-light rounded-pill shadow-none" onchange="this.form.submit()">
+                    <option value="">All Brands</option>
+                    @if (ViewBag.Brands != null)
+                    {
+                        foreach (var b in (IEnumerable<Ecom.Application.Features.Brands.Queries.BrandDto>)ViewBag.Brands)
+                        {
+                            <option value="@b.Id" selected="@(Context.Request.Query["BrandId"] == b.Id.ToString())">@b.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="CollectionId" class="form-select form-select-sm border-0 bg-light rounded-pill shadow-none" onchange="this.form.submit()">
+                    <option value="">All Collections</option>
+                    @if (ViewBag.Collections != null)
+                    {
+                        foreach (var col in (IEnumerable<Ecom.Application.Features.Collections.Queries.CollectionDto>)ViewBag.Collections)
+                        {
+                            <option value="@col.Id" selected="@(Context.Request.Query["CollectionId"] == col.Id.ToString())">@col.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="SortBy" class="form-select form-select-sm border-0 bg-light rounded-pill shadow-none" onchange="this.form.submit()">
                     <option value="">Sort By</option>
                     <option value="name" selected="@(Context.Request.Query["SortBy"] == "name")">Name</option>
                     <option value="price" selected="@(Context.Request.Query["SortBy"] == "price")">Price</option>
                     <option value="stock" selected="@(Context.Request.Query["SortBy"] == "stock")">Stock</option>
                 </select>
             </div>
-            <div class="col-md-2 text-end">
-                <button type="submit" class="btn btn-light rounded-pill w-100 border text-muted">
-                    <i class="bi bi-funnel"></i> Filter
+            <div class="col-md-1 text-end">
+                <button type="submit" class="btn btn-light btn-sm rounded-pill w-100 border text-muted">
+                    <i class="bi bi-funnel"></i>
                 </button>
             </div>
         </div>

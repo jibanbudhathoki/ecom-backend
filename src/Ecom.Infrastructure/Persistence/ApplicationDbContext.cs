@@ -12,6 +12,8 @@ namespace Ecom.Infrastructure.Persistence
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
+        public DbSet<Collection> Collections { get; set; }
+        public DbSet<ProductCollection> ProductCollections { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -82,6 +84,30 @@ namespace Ecom.Infrastructure.Persistence
                 entity.Property(b => b.Name).IsRequired().HasMaxLength(200);
                 entity.Property(b => b.Slug).IsRequired().HasMaxLength(200);
                 entity.HasIndex(b => b.Slug).IsUnique();
+            });
+
+            builder.Entity<Collection>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Name).IsRequired().HasMaxLength(200);
+                entity.Property(c => c.Slug).IsRequired().HasMaxLength(200);
+                entity.Property(c => c.Type).IsRequired().HasMaxLength(50);
+                entity.HasIndex(c => c.Slug).IsUnique();
+            });
+
+            builder.Entity<ProductCollection>(entity =>
+            {
+                entity.HasKey(pc => new { pc.ProductId, pc.CollectionId });
+
+                entity.HasOne(pc => pc.Product)
+                      .WithMany(p => p.ProductCollections)
+                      .HasForeignKey(pc => pc.ProductId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(pc => pc.Collection)
+                      .WithMany(c => c.ProductCollections)
+                      .HasForeignKey(pc => pc.CollectionId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

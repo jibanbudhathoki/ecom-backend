@@ -11,6 +11,8 @@ namespace Ecom.Application.Common.Interfaces
         DbSet<Brand> Brands { get; }
         DbSet<Product> Products { get; }
         DbSet<ProductVariant> ProductVariants { get; }
+        DbSet<Collection> Collections { get; }
+        DbSet<ProductCollection> ProductCollections { get; }
         
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
